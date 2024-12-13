@@ -12,7 +12,7 @@ const AgentTemplates = () => {
   useEffect(()=>{
     setLoading(true)
     const fetchTemplates = async()=>{
-      const url ="http://localhost:8080/api/v1/template/all"
+      const url =process.env.REACT_APP_API_URL +"/api/v1/template/all"
       const response = await fetch(url,{
         method:'GET',
         headers:{

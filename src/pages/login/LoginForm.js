@@ -24,7 +24,7 @@ const RightSignUp = () => {
     };
     new Promise(async function (resolve, reject) {
       const url =
-        process.env.REACT_APP_API_BASE_URL + "/api/auth/v1/signup/google";
+         process.env.REACT_APP_API_URL +"/api/auth/v1/signup/google";
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -36,7 +36,7 @@ const RightSignUp = () => {
       if (response.ok) {
         const authToken = await response.json();
         localStorage.setItem("token", authToken.data);
-        const path = "http://localhost:3000/";
+        const path = "https://sirius.aqumenlabs.ai/";
         window.location.href = path;
         resolve("Created");
       } else {

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export const SubscriptionPopup = ({ agentId,visible, setVisible }: {agentId:string, visible: boolean; setVisible: (value: boolean) => void }) => {
   const navigate =useNavigate()
   const setPlan=async()=>{
-    const url = `http://localhost:8080/api/v1/payments/create/${agentId}`;
+    const url = process.env.REACT_APP_API_URL +`/api/v1/payments/create/${agentId}`;
       const response = await fetch(url,
         {
           method:'POST',

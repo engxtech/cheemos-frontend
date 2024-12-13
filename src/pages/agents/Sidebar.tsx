@@ -9,7 +9,7 @@ export const Sidebar = () => {
   const navigate = useNavigate();
   const CreateAgent =useSelector((State:RootState)=>State.agents.agent)
   const handleSave=async()=>{
-    const url ="http://localhost:8080/api/v1/agent/new"
+    const url =process.env.REACT_APP_API_URL +"/api/v1/agent/new"
     const response = await fetch(url,{
       method:'POST',
       headers:{

@@ -32,7 +32,7 @@ export const Sidebar = ({ visible, setVisible }) => {
   const [userData, setUserData] = useState<UserType>();
   useEffect(() => {
     const fetchUserDetails = async () => {
-      const url = "http://localhost:8080/api/v1/user";
+      const url = process.env.REACT_APP_API_URL +"/api/v1/user";
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -52,7 +52,7 @@ export const Sidebar = ({ visible, setVisible }) => {
 
   useEffect(() => {
     const getAgents = async () => {
-      const url = "http://localhost:8080/api/v1/user/agents";
+      const url = process.env.REACT_APP_API_URL +"/api/v1/user/agents";
       const response = await fetch(url, {
         method: "GET",
         headers: {

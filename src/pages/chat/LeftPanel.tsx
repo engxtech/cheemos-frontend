@@ -43,7 +43,7 @@ const TasksPanel = () => {
  const agentId =params.agentId
   useEffect(()=>{
    const fetchAgentDetails = async()=>{
-    const url =`http://localhost:8080/api/v1/agent/${agentId}`
+    const url =process.env.REACT_APP_API_URL +`/api/v1/agent/${agentId}`
       const response = await fetch(url,{
         method:'GET',
         headers:{

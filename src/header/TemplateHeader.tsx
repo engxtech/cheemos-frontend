@@ -22,7 +22,7 @@ export const TemplateHeader = () => {
 
   useEffect(() => {
     const getAgents = async () => {
-      const url = "http://localhost:8080/api/v1/user/agents";
+      const url = process.env.REACT_APP_API_URL + "/api/v1/user/agents";
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -35,7 +35,7 @@ export const TemplateHeader = () => {
     getAgents();
   }, []);
 const publishAgent=async(id)=>{
-  const url =`http://localhost:8080/api/v1/template/create`
+  const url =process.env.REACT_APP_API_URL +`/api/v1/template/create`
   const payload={
      agentId:id,
      releaseType:"MINOR"

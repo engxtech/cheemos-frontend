@@ -22,7 +22,7 @@ const AgentsDashboard = () => {
   useEffect(() => {
     setLoading(true)
     const getAgents = async () => {
-      const url = "http://localhost:8080/api/v1/user/agents"
+      const url = process.env.REACT_APP_API_URL +"/api/v1/user/agents"
       const response = await fetch(url,{
         method:'GET',
         headers:{
@@ -50,7 +50,7 @@ const AgentsDashboard = () => {
    
   }
   const handleDelete=async(id)=>{
-    const url = `http://localhost:8080/api/v1/agent/${id}`
+    const url = process.env.REACT_APP_API_URL +`/api/v1/agent/${id}`
     const response = await fetch(url,{
       method:'DELETE',
       headers:{
