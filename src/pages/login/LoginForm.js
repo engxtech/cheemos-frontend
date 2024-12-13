@@ -36,7 +36,7 @@ const RightSignUp = () => {
       if (response.ok) {
         const authToken = await response.json();
         localStorage.setItem("token", authToken.data);
-        const path = "https://sirius.aqumenlabs.ai/";
+        const path = "http://api-p-sirius.aqumenlabs.ai:3000/";
         window.location.href = path;
         resolve("Created");
       } else {
