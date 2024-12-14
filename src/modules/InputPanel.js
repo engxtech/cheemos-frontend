@@ -3,7 +3,7 @@ import { styled } from "@mui/joy/styles";
 import { useDropzone } from "react-dropzone";
 import Textarea from "@mui/joy/Textarea";
 import Box from "@mui/joy/Box";
-import Chip from "@mui/joy/Chip"
+import Chip from "@mui/joy/Chip";
 import ChipDelete from "@mui/joy/ChipDelete";
 import Button from "@mui/joy/Button";
 import IconButton from "@mui/joy/IconButton";
@@ -11,107 +11,156 @@ import SendIcon from "@mui/icons-material/Send";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import { sendPrompts } from "../interface/api";
+import { message } from "antd";
+import { useParams } from "react-router-dom";
 
-const Division = styled('div')(({ theme }) => ({
+const Division = styled("div")(({ theme }) => ({
   padding: theme.spacing(1, 2, 2, 2),
   display: "flex",
-  flexDirection: "column"
+  flexDirection: "column",
 }));
 
 const WrapTextarea = styled(Textarea)(({ theme }) => ({
   "& .MuiTextarea-startDecorator": {
-    padding: theme.spacing(0.25, 0.5, 0)
-  }
+    padding: theme.spacing(0.25, 0.5, 0),
+  },
 }));
 
-const Span = styled('div')(({ theme }) => ({
-  flexGrow: 1
+const Span = styled("div")(({ theme }) => ({
+  flexGrow: 1,
 }));
 
 function InputPanel(props) {
-  const {
-    sessionList,
-    setSessionList
-  } = props
-
+  const { sessionList, setSessionList } = props;
+ const chatId =useParams().chatId
   const [prompts, setPrompts] = React.useState("");
-  const [savedPrompts, setSavedPrompts] = React.useState({ prompts: "", file: null });
+  const [savedPrompts, setSavedPrompts] = React.useState({
+    prompts: "",
+    file: null,
+  });
   const [dropFile, setDropFile] = React.useState(null);
   const [promptsDisabled, setPromptsDisabled] = React.useState(false);
   const [sendButtonLoading, setSendButtonLoading] = React.useState(false);
 
-  const handleAddStep = React.useCallback((fingerprint) => {
-    setSessionList((sessionList) => {
-      return [
+  const handleAddStep = React.useCallback(
+    (fingerprint) => {
+      setSessionList((sessionList) => {
+        return [
+          ...sessionList,
+          {
+            type: "Step",
+            fingerprint: fingerprint,
+            config: [],
+          },
+        ];
+      });
+    },
+    [setSessionList]
+  );
+
+  const handleStepNew = React.useCallback(
+    (fingerprint, title) => {
+      setSessionList((sessionList) =>
+        sessionList.map((item) =>
+          item.fingerprint === fingerprint
+            ? {
+                ...item,
+                config: [...item.config, { title: title, result: null }],
+              }
+            : item
+        )
+      );
+    },
+    [setSessionList]
+  );
+
+  const handleStepFin = React.useCallback(
+    (fingerprint, result) => {
+      if (/\s*/.test(result)) {
+        return;
+      }
+      setSessionList((sessionList) =>
+        sessionList.map((item) =>
+          item.fingerprint === fingerprint
+            ? {
+                ...item,
+                config: item.config.slice(0, -1).concat([
+                  {
+                    title: item.config.slice(-1)[0].title,
+                    result: result,
+                  },
+                ]),
+              }
+            : item
+        )
+      );
+    },
+    [setSessionList]
+  );
+
+  const handleAddBubble = React.useCallback(
+    (fromUser, content, attached) => {
+      setSessionList((sessionList) => [
         ...sessionList,
         {
-          type: "Step",
-          fingerprint: fingerprint,
-          config: []
-        }
-      ];
-    });
-  }, [setSessionList]);
+          type: "Bubble",
+          fromUser: fromUser,
+          content: content,
+          attached: attached,
+        },
+      ]);
+    },
+    [setSessionList]
+  );
 
-  const handleStepNew = React.useCallback((fingerprint, title) => {
-    setSessionList((sessionList) => sessionList.map((item) =>
-      item.fingerprint === fingerprint
-        ? { ...item, config: [ ...item.config, { title: title, result: null } ] }
-        : item
-    ));
-  }, [setSessionList]);
+  const handleAddBanner = React.useCallback(
+    (color, content) => {
+      setSessionList((sessionList) => [
+        ...sessionList,
+        {
+          type: "Banner",
+          color: color,
+          content: content,
+        },
+      ]);
+    },
+    [setSessionList]
+  );
 
-  const handleStepFin = React.useCallback((fingerprint, result) => {
-    if (/\s*/.test(result)) {
-      return;
+  // const handleClickSend = React.useCallback(() => {
+  //   setSendButtonLoading(true);
+  //   setPromptsDisabled(true);
+  //   setPrompts((prompts) => {
+  //     setSavedPrompts({
+  //       prompts: prompts,
+  //       file: dropFile?.path
+  //     });
+  //     return "";
+  //   })
+  // }, [dropFile])
+  //changing this above handleClickSend
+
+  const handleClickSend = async () => {
+    const url =  process.env.REACT_APP_API_URL +`/api/v1/chat/sendMessage`;
+    const payload ={
+      role:"user",
+      content:prompts,
+      chatId:chatId
     }
-    setSessionList((sessionList) => sessionList.map((item) =>
-      item.fingerprint === fingerprint
-        ? {
-          ...item,
-          config: item.config.slice(0, -1).concat([{
-            title: item.config.slice(-1)[0].title,
-            result: result
-          }])
-        } : item
-    ));
-  }, [setSessionList]);
-
-  const handleAddBubble = React.useCallback((fromUser, content, attached) => {
-    setSessionList((sessionList) => [
-      ...sessionList,
-      {
-        type: "Bubble",
-        fromUser: fromUser,
-        content: content,
-        attached: attached
-      }
-    ])
-  }, [setSessionList]);
-
-  const handleAddBanner = React.useCallback((color, content) => {
-    setSessionList((sessionList) => [
-      ...sessionList,
-      {
-        type: "Banner",
-        color: color,
-        content: content
-      }
-    ])
-  }, [setSessionList])
-
-  const handleClickSend = React.useCallback(() => {
-    setSendButtonLoading(true);
-    setPromptsDisabled(true);
-
-    setPrompts((prompts) => {
-      setSavedPrompts({
-        prompts: prompts,
-        file: dropFile?.path
-      });
-      return "";
-    })
-  }, [dropFile])
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization:"Bearer "+ localStorage.getItem('token'),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload), // If you want to send an empty body, this is fine
+    });
+    if(response.ok){
+      const data = await response.json();
+      console.log(data);
+      message.success("Loaded Response , fetch from backend now!")
+    }
+  };
 
   React.useEffect(() => {
     if (savedPrompts.prompts.length === 0) {
@@ -121,15 +170,15 @@ function InputPanel(props) {
     setDropFile(null);
     const filename = savedPrompts.file
       ? window.require
-      ? window.require("path").basename(savedPrompts.file)
-      : savedPrompts.file.split("/").slice(-1)[0]
+        ? window.require("path").basename(savedPrompts.file)
+        : savedPrompts.file.split("/").slice(-1)[0]
       : null;
-    handleAddBubble(true, savedPrompts.prompts, filename)
+    handleAddBubble(true, savedPrompts.prompts, filename);
     sendPrompts(savedPrompts.prompts, savedPrompts.file, {
       handleAddBubble: handleAddBubble,
       handleAddStep: handleAddStep,
       handleStepNew: handleStepNew,
-      handleStepFin: handleStepFin
+      handleStepFin: handleStepFin,
     })
       .then((_) => {
         handleAddBanner("success", "Current task execution completed.");
@@ -142,22 +191,25 @@ function InputPanel(props) {
         setPromptsDisabled(false);
         setSendButtonLoading(false);
         setSavedPrompts({ prompts: "", file: null });
-      })
-  // WARNING: savedPrompts ONLY changed in handleClickSend()
-  // eslint-disable-next-line
+      });
+    // WARNING: savedPrompts ONLY changed in handleClickSend()
+    // eslint-disable-next-line
   }, [savedPrompts]);
 
-  const onDrop = React.useCallback((acceptedFiles) => {
-    if (promptsDisabled) {
-      return;
-    }
-    setDropFile(acceptedFiles[0]);
-  }, [promptsDisabled])
+  const onDrop = React.useCallback(
+    (acceptedFiles) => {
+      if (promptsDisabled) {
+        return;
+      }
+      setDropFile(acceptedFiles[0]);
+    },
+    [promptsDisabled]
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     noClick: true,
     noKeyboard: true,
-    onDrop: onDrop
-  })
+    onDrop: onDrop,
+  });
 
   return (
     <Division>
@@ -170,7 +222,7 @@ function InputPanel(props) {
           sx={{
             backgroundColor: isDragActive
               ? "var(--joy-palette-neutral-300)"
-              : "var(--joy-palette-neutral-100)"
+              : "var(--joy-palette-neutral-100)",
           }}
           placeholder={promptsDisabled ? "" : "Send a message"}
           size="md"
@@ -178,51 +230,56 @@ function InputPanel(props) {
           disabled={promptsDisabled}
           value={prompts}
           onChange={(event) => setPrompts(event.target.value)}
-          startDecorator={dropFile &&
-            <Chip
-              color="primary"
-              sx={{
-                "--Chip-radius": "0px",
-                minWidth: "100%",
-                padding: 0.5,
-                "& .MuiChip-label": {
-                  display: "flex",
-                  alignItems: "center"
+          startDecorator={
+            dropFile && (
+              <Chip
+                color="primary"
+                sx={{
+                  "--Chip-radius": "0px",
+                  minWidth: "100%",
+                  padding: 0.5,
+                  "& .MuiChip-label": {
+                    display: "flex",
+                    alignItems: "center",
+                  },
+                }}
+                endDecorator={
+                  <ChipDelete
+                    sx={{ marginRight: 0.5 }}
+                    onDelete={() => setDropFile(null)}
+                  />
                 }
-              }}
-              endDecorator={
-                <ChipDelete
-                  sx={{ marginRight: 0.5 }}
-                  onDelete={() => setDropFile(null)}
-                />
-              }
-            >
-              <UploadFileOutlinedIcon sx={{ marginRight: 0.5 }} />
-              {dropFile.name}
-            </Chip>
+              >
+                <UploadFileOutlinedIcon sx={{ marginRight: 0.5 }} />
+                {dropFile.name}
+              </Chip>
+            )
           }
           endDecorator={
             <Box
               sx={{
-                display: 'flex',
-                gap: 'var(--Textarea-paddingBlock)',
-                pt: 'var(--Textarea-paddingBlock)',
-                borderTop: '1px solid',
-                borderColor: 'divider',
-                flex: 'auto',
+                display: "flex",
+                gap: "var(--Textarea-paddingBlock)",
+                pt: "var(--Textarea-paddingBlock)",
+                borderTop: "1px solid",
+                borderColor: "divider",
+                flex: "auto",
               }}
             >
               <IconButton
                 disabled={sessionList.length === 0}
                 variant="soft"
                 sx={{
-                  backgroundColor: sessionList.length === 0
-                    ? "rgb(240, 244, 248) !important"
-                    : undefined
+                  backgroundColor:
+                    sessionList.length === 0
+                      ? "rgb(240, 244, 248) !important"
+                      : undefined,
                 }}
               >
                 <DeleteOutlineIcon
-                  onClick={() => { setSessionList([]) }}
+                  onClick={() => {
+                    setSessionList([]);
+                  }}
                 />
               </IconButton>
               <Span />

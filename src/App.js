@@ -64,16 +64,14 @@ function App() {
         <GoogleOAuthProvider clientId="613285431561-5m419bf7niu3fen55tus2eio4jugetqp.apps.googleusercontent.com">
           <Root>
             <Routes>
-              <Route path="/agents" element={<AgentContent />} />
               <Route path="/" element={<RootRedirect />} />
               <Route path="/templates" element={<AllTemplates />} />
-              <Route path="/agents/:agentId/*" element={<InitialChatPage />} />
-              <Route path="/agents" element={<AgentContent />} />
+              <Route path="/agents" element={<AgentsDashboard />} />
+              <Route path="/agents/:agentId/*" element={<AgentContent />} />
               <Route path="/integrations" element={<IntegrationList />} />
               <Route path="/knowledge" element={<Knowledge />} />
               <Route path="/tools" element={<ToolsGrid />} />
               <Route path="/create-agent/*" element={<CreateAgent />} />
-              <Route path="/*" element={<AgentContent />} />
               <Route path="/onboarding" element={<RightSignUp />} />
               <Route path="/signup" element={<MultiStepForm />} />
             </Routes>

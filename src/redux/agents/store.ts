@@ -5,9 +5,11 @@ export interface Agent {
     name: string;
     description: string;
     coreInstructions: {
-      promptName?: string;
-      systemPrompt?: string;
-      userPrompt?: string;
+      // promptName?: string;
+      // systemPrompt?: string;
+      // userPrompt?: string;
+      _SYSTEM_CORE_INSTRUCTIONS_PROMPT?: string;
+
     };
     toolsList?: number[];
     subAgents?: number[];
@@ -18,7 +20,13 @@ export interface Agent {
     createdAt?: string;
     updatedAt?: string;
   }
-  
+  export interface ChatList {
+    id?: string;
+    name:string;
+    created:string;
+    updatedAt:string;
+  }
+   
 
 
 export interface StoreType {

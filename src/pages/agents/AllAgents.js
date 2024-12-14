@@ -93,7 +93,7 @@ const AgentsDashboard = () => {
                     <Button
                       type="primary"
                       key="use"
-                      onClick={() => navigate(`./${agent.id}`)}
+                      onClick={() => navigate(`./${agent.id}/new`)}
                     >
                       Use Agent {'>'}
                     </Button>

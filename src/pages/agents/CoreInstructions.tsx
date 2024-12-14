@@ -16,7 +16,7 @@ const CoreInstructions = () => {
         </p>
         <Input.TextArea
           rows={20}
-          value={createAgent.coreInstructions?.userPrompt}
+          value={createAgent.coreInstructions?._SYSTEM_CORE_INSTRUCTIONS_PROMPT}
           placeholder="e.g. You are a helpful, respectful and honest assistant. If you don't know the answer to a question, please don't share false information."
           className="mb-4"
           onChange={(e) => {
@@ -25,7 +25,7 @@ const CoreInstructions = () => {
                 ...createAgent,
                 coreInstructions: {
                   ...createAgent.coreInstructions,
-                  userPrompt: e.target.value,
+                  _SYSTEM_CORE_INSTRUCTIONS_PROMPT: e.target.value,
                 },
                 toolRetries:3
               })
