@@ -27,7 +27,7 @@ function Session(props) {
   const { sessionList } = props;
   const chatId = useParams().chatId;
 //integrate socket
-const url = "ws://localhost:8080/chat?" + "token="+localStorage.getItem('token')+"&chatId="+chatId; 
+const url = "ws://api-p-sirius.aqumenlabs.ai:8080/chat?" + "token="+localStorage.getItem('token')+"&chatId="+chatId; 
 const [refresh,setRefresh]=useState(false)
 useEffect(() => {
   const socket = new WebSocket(url);
