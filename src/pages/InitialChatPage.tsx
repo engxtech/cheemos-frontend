@@ -14,10 +14,10 @@ export default function InitialChatPage() {
         <TasksPanel />
         <div className="w-[52vw]">
           <NewChat />
-          <InputPanel
+          {/* <InputPanel
             sessionList={sessionList}
             setSessionList={setSessionList}
-          />
+          /> */}
         </div>
         <PropertiesPanel />
       </div>

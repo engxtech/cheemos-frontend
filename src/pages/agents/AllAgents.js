@@ -13,61 +13,61 @@ import { CopyAllOutlined, DeleteOutlined } from "@mui/icons-material";
 
 const { Sider, Content } = Layout;
 
-
 //agent type required
 const AgentsDashboard = () => {
   const [agents, setAgents] = useState([]);
-  const [loading,setLoading]=useState(false)
-  const [refresh,setRefresh]=useState(false)
+  const [loading, setLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const getAgents = async () => {
-      const url = process.env.REACT_APP_API_URL +"/api/v1/user/agents"
-      const response = await fetch(url,{
-        method:'GET',
-        headers:{
-          Authorization:"Bearer "+ localStorage.getItem('token')
-        }
+      const url = process.env.REACT_APP_API_URL + "/api/v1/user/agents";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       });
-      const data = await response.json()
+      const data = await response.json();
       setAgents(data.data);
-      setLoading(false)
+      setLoading(false);
     };
     getAgents();
   }, [refresh]);
   const navigate = useNavigate();
-  if(loading){
-    return <div>
-            <AgentHeader />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-50 px-3">
-    {Array.from({ length: 8 }).map((_, index) => (
-      <Card key={index} className="shadow-md border rounded-lg  mt-4 ">
-        <Skeleton avatar paragraph={{ rows: 3 }} active />
-      </Card>
-    ))}
-  </div>
-    </div>
-   
+  if (loading) {
+    return (
+      <div>
+        <AgentHeader />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-50 px-3">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <Card key={index} className="shadow-md border rounded-lg  mt-4 ">
+              <Skeleton avatar paragraph={{ rows: 3 }} active />
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
   }
-  const handleDelete=async(id)=>{
-    const url = process.env.REACT_APP_API_URL +`/api/v1/agent/${id}`
-    const response = await fetch(url,{
-      method:'DELETE',
-      headers:{
-        Authorization:"Bearer " + localStorage.getItem('token')
-      }
-    })
-    if(response.ok){
-      setRefresh(!refresh)
+  const handleDelete = async (id) => {
+    const url = process.env.REACT_APP_API_URL + `/api/v1/agent/${id}`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    if (response.ok) {
+      setRefresh(!refresh);
     }
-  }
+  };
   return (
     <Layout className="h-screen bg-gray-100">
       {/* <Sidebar visible={siderVisible} setVisible={setSiderVisible} /> */}
       <AgentHeader />
       <Content className="p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {agents.map((agent,index) => (
+          {agents.map((agent, index) => (
             <Card
               key={agent.id}
               title={
@@ -80,10 +80,17 @@ const AgentsDashboard = () => {
               actions={[
                 <div className="flex space-x-4 px-4 justify-between">
                   <div className="space-x-2 px-2">
-                    <Button key="delete" onClick={()=>handleDelete(agent.id)}>
+                    <Button key="delete" onClick={() => handleDelete(agent.id)}>
                       <DeleteOutlined />
                     </Button>
-                    <Button key="copy" onClick={()=>message.info("This feature to copy will be enabled soon!")}>
+                    <Button
+                      key="copy"
+                      onClick={() =>
+                        message.info(
+                          "This feature to copy will be enabled soon!"
+                        )
+                      }
+                    >
                       <CopyAllOutlined />
                     </Button>
                   </div>
@@ -95,7 +102,7 @@ const AgentsDashboard = () => {
                       key="use"
                       onClick={() => navigate(`./${agent.id}/new`)}
                     >
-                      Use Agent {'>'}
+                      Use Agent {">"}
                     </Button>
                   </div>
                 </div>,

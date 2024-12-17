@@ -11,7 +11,8 @@ import { Agent, ChatList } from "../../redux/agents/store";
 
 const TasksPanel = () => {
   const [chatList, setChatList] = useState<ChatList[]>([]);
-
+  const skeletonArray = Array(5).fill(null); 
+  const [isLoading,setLoading]=useState(false)
   const items = [
     {
       key: "1",
@@ -24,14 +25,29 @@ const TasksPanel = () => {
       key: "2",
       label: (
         <span className="text-sm font-medium">
-          All Tasks <Badge count={1} />
+          All Chats <Badge count={1} />
         </span>
       ),
+
       children: (
         <div className="mt-2 space-y-2">
           {/* <div className="text-gray-500 text-xs mb-1">Today</div> */}
-          {chatList.map((chat) => (
-            <div className="flex justify-between items-center p-3 bg-gray-100 rounded-lg" onClick={()=>navigate(`../${chat.id}`)}>
+          {isLoading
+        ? skeletonArray.map((_, index) => (
+            <div
+              key={index}
+              className="flex justify-between items-center px-3 py-4 space-x-8 bg-gray-100 rounded-lg animate-pulse"
+            >
+              <div className="h-4 w-20 bg-gray-300 rounded"></div>
+              <div className="h-3 w-14 bg-gray-300 rounded"></div>
+            </div>
+          ))
+        : chatList.map((chat) => (
+            <div
+              key={chat.id}
+              className="flex justify-between hover:bg-gray-200 hover:cursor-pointer items-center px-3 py-2 space-x-8 bg-gray-100 rounded-lg"
+              onClick={() => navigate(`../${chat.id}`)}
+            >
               <span className="text-sm font-medium">
                 {chat.id || "Greeting"}
               </span>
@@ -40,6 +56,16 @@ const TasksPanel = () => {
               </span>
             </div>
           ))}
+          {/* {chatList.map((chat) => (
+            <div className="flex justify-between hover:bg-gray-200 hover:cursor-pointer items-center px-3 py-2 space-x-8 bg-gray-100 rounded-lg" onClick={()=>navigate(`../${chat.id}`)}>
+              <span className="text-sm font-medium">
+                {chat.id || "Greeting"}
+              </span>
+              <span className="text-xs text-gray-500">
+                {chat.updatedAt || "5 hours ago"}
+              </span>
+            </div>
+          ))} */}
         </div>
       ),
     },
@@ -49,6 +75,7 @@ const TasksPanel = () => {
   const params = useParams();
   const agentId = params.agentId;
   useEffect(() => {
+    setLoading(true)
     const fetchAgentDetails = async () => {
       const url = process.env.REACT_APP_API_URL + `/api/v1/agent/${agentId}`;
       const response = await fetch(url, {
@@ -76,6 +103,7 @@ const TasksPanel = () => {
         setChatList(data.data);
         // navigate(`./${data.data[0].id}`); // if you want to navigate to first chat
       }
+      setLoading(false)
     };
     fetchAgentDetails();
     fetchChatDetails();
@@ -88,13 +116,13 @@ const TasksPanel = () => {
           <ArrowLeftOutlined />
         </Button>
         <Space>
-          <Avatar size="small" src="https://via.placeholder.com/32" />
+          <Avatar  src="https://via.placeholder.com/32" />
           <span className="text-sm font-medium">{agent?.name}</span>
         </Space>
-        <Space>
-          <FilterOutlined />
-          <SearchOutlined />
-          <PlusOutlined  onClick={()=>navigate(`./new`)}className="border rounded-md p-1"/>
+        <Space className="space-x-3 text-lg">
+          <FilterOutlined className="border rounded-md p-1" />
+          <SearchOutlined  className="border rounded-md p-1" />
+          <PlusOutlined  onClick={()=>navigate(`/agents/${agentId}/new`)}className="border rounded-md p-1"/>
         </Space>
       </div>
 

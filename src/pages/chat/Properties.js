@@ -8,7 +8,7 @@ const PropertiesPanel = () => {
       {/* Triggered By */}
       <div className="mb-4">
         <h3 className="text-gray-600 text-xs mb-1">Triggered by</h3>
-        <p className="text-black text-xs ">Abhishek Kumar</p>
+        <p className="text-black text-xs ">User</p>
       </div>
 
       {/* Status */}

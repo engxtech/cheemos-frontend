@@ -3,7 +3,6 @@ import Session from "../modules/Session";
 import InputPanel from "../modules/InputPanel";
 import PropertiesPanel from "./chat/Properties";
 import TasksPanel from "./chat/LeftPanel";
-import NewChat from "../modules/NewChat";
 import { Route, Routes, useParams } from "react-router-dom";
 
 export default function InitialChatPage2() {

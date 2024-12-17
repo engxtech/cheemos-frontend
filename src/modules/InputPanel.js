@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/joy/styles";
 import { useDropzone } from "react-dropzone";
 import Textarea from "@mui/joy/Textarea";
@@ -13,6 +13,8 @@ import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import { sendPrompts } from "../interface/api";
 import { message } from "antd";
 import { useParams } from "react-router-dom";
+import { setRefresh } from "../redux/agents/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const Division = styled("div")(({ theme }) => ({
   padding: theme.spacing(1, 2, 2, 2),
@@ -139,8 +141,11 @@ function InputPanel(props) {
   //   })
   // }, [dropFile])
   //changing this above handleClickSend
-
+ const [loading,setLoading]=useState(false)
+ const refresh =useSelector((state)=>state.refresh)
+ const dispatch =useDispatch()
   const handleClickSend = async () => {
+    setLoading(true)
     const url =  process.env.REACT_APP_API_URL +`/api/v1/chat/sendMessage`;
     const payload ={
       role:"user",
@@ -157,9 +162,10 @@ function InputPanel(props) {
     });
     if(response.ok){
       const data = await response.json();
-      console.log(data);
-      message.success("Loaded Response , fetch from backend now!")
+      dispatch(setRefresh(!refresh))
     }
+    setPrompts('')
+    setLoading(false)
   };
 
   React.useEffect(() => {
@@ -284,8 +290,8 @@ function InputPanel(props) {
               </IconButton>
               <Span />
               <Button
-                disabled={prompts.length === 0}
-                loading={sendButtonLoading}
+                disabled={prompts.length === 0 || loading}
+                loading={loading}
                 loadingPosition="end"
                 endDecorator={<SendIcon />}
                 variant="solid"

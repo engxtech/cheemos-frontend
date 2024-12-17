@@ -5,10 +5,13 @@ import image2 from "../../assets/Aatar(1).png";
 import image3 from "../../assets/Aatar(2).png";
 import image4 from "../../assets/Aatar(3).png";
 import { useEffect, useState } from "react";
+import { SubscriptionPopup } from "../subscription/SubscriptionPage";
 
 const AgentTemplates = () => {
   const [templates,setTemplates]=useState([])
   const [loading, setLoading] = useState(false);
+  const [agentId,setAgentId]=useState()
+  const [subscriptionVisible,setSubscriptionVisible]=useState(false)
   useEffect(()=>{
     setLoading(true)
     const fetchTemplates = async()=>{
@@ -41,6 +44,8 @@ const AgentTemplates = () => {
       </div>
     );
   }
+
+
   return (
     <div className="mb-10">
       <span className="text-xl font-medium ml-1">Agent Templates</span>
@@ -51,13 +56,19 @@ const AgentTemplates = () => {
             key={index}
             className="shadow-md "
             hoverable
-            actions={[<span key="clone">Clone</span>]}
+            actions={[<span key="clone" onClick={()=>{
+              setSubscriptionVisible(true);
+              setAgentId(template.id)
+            }}>Clone</span>]}
           >
             <Meta
               avatar={<Avatar icon={<VerifiedUserOutlined />} src={image3} size={48}/>}
               title={template.name}
               description={`${template.creator} - ${template.downloads} downloads`}
             />
+         
+         {subscriptionVisible && <SubscriptionPopup agentId={agentId} visible={subscriptionVisible} setVisible={setSubscriptionVisible}/>}
+
           </Card>
         ))}
       </div>
