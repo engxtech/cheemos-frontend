@@ -26,6 +26,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Provider } from "react-redux";
 import { agentsReducer } from "./redux/agents/store";
 import store from "./redux";
+import PaymentPage from "./pages/payments/VerifyPayment";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100vw", // Corrected from "100wh" to "100vw" for width
@@ -60,7 +61,7 @@ function App() {
 
   return (
     <CssVarsProvider theme={globalTheme}>
-      <Provider store={store} className="App">
+      <Provider store={store} className="App ">
         <GoogleOAuthProvider clientId="613285431561-5m419bf7niu3fen55tus2eio4jugetqp.apps.googleusercontent.com">
           <Root>
             <Routes>
@@ -71,9 +72,10 @@ function App() {
               <Route path="/integrations" element={<IntegrationList />} />
               <Route path="/knowledge" element={<Knowledge />} />
               <Route path="/tools" element={<ToolsGrid />} />
-              <Route path="/create-agent/*" element={<CreateAgent />} />
+              <Route path="/agents/create-agent/*" element={<CreateAgent />} />
               <Route path="/onboarding" element={<RightSignUp />} />
               <Route path="/signup" element={<MultiStepForm />} />
+              <Route path="/payment/:agentId/:cloneType/*" element={<PaymentPage />} />
             </Routes>
           </Root>
         </GoogleOAuthProvider>

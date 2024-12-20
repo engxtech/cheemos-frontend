@@ -7,11 +7,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 export const Sidebar = () => {
   const navigate = useNavigate();
+  const editing = useSelector((state:RootState)=>state.agents.editing)
   const CreateAgent =useSelector((State:RootState)=>State.agents.agent)
   const handleSave=async()=>{
-    const url =process.env.REACT_APP_API_URL +"/api/v1/agent/new"
+    let url =process.env.REACT_APP_API_URL +"/api/v1/agent/new"
+    if(editing)url = process.env.REACT_APP_API_URL +`/api/v1/agent/${CreateAgent.id}`
     const response = await fetch(url,{
-      method:'POST',
+      method:editing?'PATCH':'POST',
       headers:{
         Authorization:"Bearer "+ localStorage.getItem('token'),
         "Content-Type":"application/json"
@@ -63,7 +65,7 @@ export const Sidebar = () => {
         <Button
           type="text"
           className="mt-2 ml-2 text-gray-600"
-          onClick={()=>navigate("/")}
+          onClick={()=>navigate("/agents")}
         >
           Cancel
         </Button>

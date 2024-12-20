@@ -18,6 +18,7 @@ export const SubscriptionPopup = ({
       orderId: agentId,
       currencyType: "INR",
       payment: "100",
+      cloneType:"USER"
     };
     const response = await fetch(url, {
       method: "POST",

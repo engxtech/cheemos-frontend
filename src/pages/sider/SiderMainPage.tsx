@@ -125,7 +125,7 @@ export const Sidebar = ({ visible, setVisible }) => {
           <Menu.Item
             key="notifications"
             icon={<BellOutlined />}
-            onClick={() => navigate("/create-agent")}
+            onClick={() => navigate("/agents/create-agent")}
           >
             Create Agent
           </Menu.Item>
@@ -139,7 +139,7 @@ export const Sidebar = ({ visible, setVisible }) => {
               <Menu.Item
                 key={agent.name}
                 icon={<UserOutlined />}
-                onClick={() => navigate(`/agents/${agent.id}`)}
+                onClick={() => navigate(`/agents/${agent.id}/new`)}
               >
                 {agent.name}
               </Menu.Item>

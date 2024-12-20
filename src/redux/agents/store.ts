@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { setCreateAgent, setRefresh } from "./action";
+import { setCreateAgent, setEditing, setRefresh } from "./action";
 export interface Agent {
     id?: string;
     name: string;
@@ -20,6 +20,13 @@ export interface Agent {
     createdAt?: string;
     updatedAt?: string;
   }
+  export const defaultAgent :Agent={
+      name:'',
+      description:'',
+      coreInstructions:{
+        
+      }
+  } 
   export interface ChatList {
     id?: string;
     name:string;
@@ -31,7 +38,8 @@ export interface Agent {
 
 export interface StoreType {
   agent:Agent,
-  refresh:boolean
+  refresh:boolean,
+  editing:boolean
 }
 const initialState: StoreType = {
   agent:{
@@ -41,7 +49,8 @@ const initialState: StoreType = {
       
     }
   },
-  refresh:false
+  refresh:false,
+  editing:false
 };
 
 export const agentsReducer =createReducer(initialState,(builder)=>{
@@ -52,4 +61,7 @@ export const agentsReducer =createReducer(initialState,(builder)=>{
     .addCase(setRefresh,(state, action) => {
       state.refresh = action.payload;
   })
+  .addCase(setEditing,(state, action) => {
+    state.editing = action.payload;
+})
 })

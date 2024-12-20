@@ -10,6 +10,8 @@ import image3 from "../../assets/Aatar(2).png";
 import image4 from "../../assets/Aatar(3).png";
 import image5 from "../../assets/Aatar(4).png";
 import { CopyAllOutlined, DeleteOutlined } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { setCreateAgent, setEditing } from "../../redux/agents/action";
 
 const { Sider, Content } = Layout;
 
@@ -18,6 +20,9 @@ const AgentsDashboard = () => {
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const dispatch =useDispatch()
+  const createAgent =useSelector((state)=>state.agent)
+
   useEffect(() => {
     setLoading(true);
     const getAgents = async () => {
@@ -61,6 +66,23 @@ const AgentsDashboard = () => {
       setRefresh(!refresh);
     }
   };
+  const editAgent=(agent)=>{
+    dispatch(setEditing(true));
+    dispatch(
+      setCreateAgent({
+        ...createAgent,
+        name:agent.name,
+        id:agent.id,
+        description:agent.description,
+        coreInstructions: {
+          _SYSTEM_CORE_INSTRUCTIONS_PROMPT: agent.coreInstructions._SYSTEM_CORE_INSTRUCTIONS_PROMPT.content,
+        },
+        toolRetries:3
+      })
+    );
+    navigate('/agents/create-agent')
+  }
+
   return (
     <Layout className="h-screen bg-gray-100">
       {/* <Sidebar visible={siderVisible} setVisible={setSiderVisible} /> */}
@@ -96,7 +118,7 @@ const AgentsDashboard = () => {
                   </div>
 
                   <div className="space-x-2 px-2">
-                    <Button key="edit">Edit</Button>
+                    <Button key="edit" onClick={()=>editAgent(agent)}>Edit</Button>
                     <Button
                       type="primary"
                       key="use"

@@ -4,11 +4,15 @@ import { PlusOutlined } from "@ant-design/icons";
 import { FileUpload, SearchOutlined, UploadFileOutlined, UploadRounded, UploadSharp } from "@mui/icons-material";
 import Sidebar from "../pages/sider/SiderMainPage";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCreateAgent, setEditing } from "../redux/agents/action";
+import { defaultAgent } from "../redux/agents/store";
 
 export const AgentHeader = () => {
   const [visible, setVisible] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const navigate =useNavigate()
+  const dispatch =useDispatch()
   return (
     <div className="flex justify-between items-center p-5 border shadow-sm bg-white">
       <div className="flex items-center space-x-4">
@@ -33,7 +37,11 @@ export const AgentHeader = () => {
         <Button
           type="primary"
           icon={<PlusOutlined />}
-          onClick={() => navigate('/create-agent')}
+          onClick={() => {
+            dispatch(setEditing(false))
+            dispatch(setCreateAgent(defaultAgent))
+            navigate('/agents/create-agent')
+          }}
         >
           New Agent
         </Button>

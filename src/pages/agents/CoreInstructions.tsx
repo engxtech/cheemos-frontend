@@ -35,7 +35,7 @@ const CoreInstructions = () => {
         />
         <Divider />
         <div className="flex justify-end">
-          <Button type="primary">Save</Button>
+          {/* <Button type="primary">Save</Button> */}
         </div>
       </div>
     </div>

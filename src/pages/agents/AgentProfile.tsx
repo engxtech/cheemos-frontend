@@ -4,6 +4,7 @@ import { RootState } from "../../redux";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateAgent } from "../../redux/agents/action";
 import { VerifiedUserRounded } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 // Agent Profile Form
 const AgentProfileForm = () => {
   let createAgent = useSelector((state: RootState) => state.agents.agent);
@@ -84,7 +85,7 @@ const Integrations = () => {
 };
 
 export default function AgentProfile() {
-
+const navigate =useNavigate()
   return (
     <Layout>
       <Content className="bg-white border p-4">
@@ -102,9 +103,9 @@ export default function AgentProfile() {
         </div>
 
         <div className="p-6 border-t border-gray-200 ">
-          <Button type="primary" className="bg-blue-500">
+          {/* <Button type="primary" className="bg-blue-500" onClick={()=>navigate('../instructions')}>
             Confirm & continue
-          </Button>
+          </Button> */}
         </div>
       </Content>
     </Layout>

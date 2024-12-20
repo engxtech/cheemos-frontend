@@ -23,7 +23,7 @@ const AllTemplates = () => {
   </div>
 
   {/* Scrollable Content */}
-  <div className="flex-1 overflow-y-auto p-8" style={{ paddingTop: "84px" }}>
+  <div className="flex-1 overflow-y-auto p-8 " style={{ paddingTop: "84px" }}>
     <HeaderCards />
     <CategorySearch />
     <AgentTemplates />
