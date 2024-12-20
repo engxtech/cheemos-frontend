@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
     "noImplicitAny": false
   },
-  "include": ["src", "main.js"]
+  "include": ["src", "main.js", "global.d.ts"]
 }
