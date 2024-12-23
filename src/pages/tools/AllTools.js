@@ -1,4 +1,4 @@
-import { Card, Button, Pagination, Skeleton } from "antd";
+import { Card, Button, Pagination, Skeleton, message } from "antd";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import ToolHeader from "../../header/ToolsHeader";
 import {
@@ -49,16 +49,19 @@ import { useEffect, useState } from "react";
 // ];
 
 
-const ToolCard = ({ title, description, icon }) => (
+const ToolCard = ({id, title, description, icon,handleDelete,navigate }) => (
+
   <Card
     className="w-full md:w-[32%] lg:w-[32%]  border-gray-300 shadow-md rounded-lg"
     actions={[
       <div className="flex space-x-4 px-4 justify-between">
         <div className="space-x-2 px-2">
-          <Button key="edit">
+          <Button key="delete"
+          onClick={() => handleDelete(id)}
+          >
             <DeleteOutlined />
           </Button>
-          <Button key="edit">
+          <Button key="edit" onClick={()=>message.info("This feature to cpopy tool will be enabled soon!")}>
             <CopyAllOutlined />
           </Button>
         </div>
@@ -68,7 +71,7 @@ const ToolCard = ({ title, description, icon }) => (
           <Button
             type="primary"
             key="use"
-            // onClick={() => navigate(`./${agent.id}`)}
+            onClick={() => navigate(`./${id}`)}
           >
             Use Tool {">"}
           </Button>
@@ -125,7 +128,7 @@ const ToolsGrid = () => {
     );
   }
   const handleDelete = async (id) => {
-    const url = process.env.REACT_APP_API_URL + `/api/v1/agent/${id}`;
+    const url = process.env.REACT_APP_API_URL + `/api/v1/tools/${id}`;
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -143,10 +146,13 @@ const ToolsGrid = () => {
         <div className="flex flex-wrap gap-5 ml-4">
           {tools.map((tool, index) => (
             <ToolCard
+              id={tool.id}
               key={index}
               title={tool.name}
               description={tool.description}
               icon={<PanToolOutlined/>}
+              handleDelete={handleDelete}
+              navigate={navigate}
             />
           ))}
         </div>

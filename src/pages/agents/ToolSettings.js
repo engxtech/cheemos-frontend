@@ -59,7 +59,7 @@ const ToolSettingsAgent = () => {
     return (
         <div className="flex bg-gray-50 border w-full rounded-md">
             {/* Sidebar */}
-            <aside className="w-1/4 bg-white border-r p-4">
+            <aside className="w-1/3 bg-white border-r p-4">
                 <h2 className="text-sm text-gray-500 mb-4">Tools Added</h2>
                 <div>
                     {toolsList.map((tool) => (

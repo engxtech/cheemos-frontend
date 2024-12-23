@@ -1,21 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Tag, Tooltip, Button } from "antd";
-import { CalendarOutlined, BookOutlined, FileOutlined } from "@ant-design/icons";
+import {
+  CalendarOutlined,
+  BookOutlined,
+  FileOutlined,
+} from "@ant-design/icons";
+import { useParams } from "react-router-dom";
 
 const PropertiesPanel = () => {
+  const [agent, setAgent] = useState();
+  const agentId = useParams().agentId;
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    const fetchAgentDetails = async () => {
+      const url = process.env.REACT_APP_API_URL + `/api/v1/agent/${agentId}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setAgent(data.data);
+      }
+    };
+    setLoading(false);
+    fetchAgentDetails();
+  }, []);
+
+  if (loading) return <div>loading..</div>;
   return (
     <div className="p-6 rounded-lg shadow-md bg-white w-[22vw] h-screen">
       {/* Triggered By */}
       <div className="mb-4">
         <h3 className="text-gray-600 text-xs mb-1">Triggered by</h3>
-        <p className="text-black text-xs ">User</p>
+        <p className="text-black text-xs ">{agent && agent.name}</p>
       </div>
 
       {/* Status */}
       <div className="mb-4">
         <h3 className="text-gray-600 text-xs mb-1">Status</h3>
         <Tag color="blue" className="text-xs">
-          Inactive
+          Active
         </Tag>
       </div>
 
@@ -31,16 +59,16 @@ const PropertiesPanel = () => {
       {/* Date Created */}
       <div className="mb-4">
         <h3 className="text-gray-600 text-xs mb-1">Date created</h3>
-        <p className="text-black ">Nov 21 2024 @ 3:11 PM</p>
+        <p className="text-black text-sm ">{agent && agent.createdAt}</p>
       </div>
 
       {/* Credits */}
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <h3 className="text-gray-600 text-xs mb-1">Credits</h3>
         <Tooltip title="Credits used by this action">
           <p className="text-black ">8.3</p>
         </Tooltip>
-      </div>
+      </div> */}
 
       {/* Schedule */}
       <div className="mb-4">
@@ -49,24 +77,27 @@ const PropertiesPanel = () => {
       </div>
 
       {/* Connected Tools */}
-      <div>
+      <div className="min-h-[10vh]">
         <h3 className="text-gray-600 text-xs mb-1">Connected tools</h3>
-        <div className="flex items-center gap-2 mb-2">
-          <BookOutlined className="text-xs" />
-          <span className="text-xs">Read PDF</span>
-        </div>
-        <div className="flex items-center gap-2 mb-2">
-          <FileOutlined className="text-xs" />
-          <span className="text-xs">Analyse CSV</span>
-        </div>
-        <div className="flex items-center gap-2 mb-2">
-          <CalendarOutlined className="text-xs text-blue-500" />
-          <span className="text-xs">Get LinkedIn Company breakdown</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <CalendarOutlined className="text-xs text-blue-500" />
-          <span className="text-xs">Get LinkedIn Company breakdown</span>
-        </div>
+        {agent &&
+          agent.toolsList &&
+          agent.toolsList.map((tool, index) => (
+            <div key={index} className="flex items-center gap-2 mb-2">
+              <BookOutlined className="text-xs" />
+              <span className="text-xs">Read PDF</span>
+            </div>
+          ))}
+      </div>
+      <div className="min-h-[20vh]">
+        <h3 className="text-gray-600 text-xs mb-1">Connected Subagents</h3>
+        {agent &&
+          agent.subAgents &&
+          agent.subAgents.map((tool, index) => (
+            <div key={index} className="flex items-center gap-2 mb-2">
+              <BookOutlined className="text-xs" />
+              <span className="text-xs">Read PDF</span>
+            </div>
+          ))}
       </div>
     </div>
   );

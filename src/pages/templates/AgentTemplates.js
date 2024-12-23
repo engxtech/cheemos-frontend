@@ -64,7 +64,7 @@ const AgentTemplates = () => {
             <Meta
               avatar={<Avatar icon={<VerifiedUserOutlined />} src={image3} size={48}/>}
               title={template.name}
-              description={`${template.creator} - ${template.downloads} downloads`}
+              description={`version:${template.version} - $ ${template.price} price`}
             />
          
          {subscriptionVisible && <SubscriptionPopup agentId={agentId} visible={subscriptionVisible} setVisible={setSubscriptionVisible}/>}

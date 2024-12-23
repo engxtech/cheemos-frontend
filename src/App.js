@@ -27,7 +27,9 @@ import { Provider } from "react-redux";
 import { agentsReducer } from "./redux/agents/store";
 import store from "./redux";
 import PaymentPage from "./pages/payments/VerifyPayment";
-import { PythonSandbox } from "./pages/pythoncompiler/pythonSandbox";
+import { PythonSandbox } from "./pages/pythoncompiler/pages/PythonSandbox";
+import { OneTool } from "./pages/tools/OneTool";
+import { Background } from "reactflow";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100vw", // Corrected from "100wh" to "100vw" for width
@@ -73,6 +75,7 @@ function App() {
               <Route path="/integrations" element={<IntegrationList />} />
               <Route path="/knowledge" element={<Knowledge />} />
               <Route path="/tools" element={<ToolsGrid />} />
+              <Route path="/tools/:toolId" element={<OneTool />} />
               <Route path="/tools/create-tool" element={<PythonSandbox />} />
               <Route path="/agents/create-agent/*" element={<CreateAgent />} />
               <Route path="/onboarding" element={<RightSignUp />} />
