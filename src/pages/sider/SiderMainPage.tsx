@@ -178,13 +178,7 @@ export const Sidebar = ({ visible, setVisible }) => {
           >
             Settings
           </Menu.Item>
-          <Menu.Item
-            key="activity"
-            icon={<LineChartOutlined />}
-            onClick={() => navigate("/agents")}
-          >
-            Activity Center
-          </Menu.Item>
+       
           <Menu.Item key="analytics" icon={<LineChartOutlined />}>
             Analytics
           </Menu.Item>

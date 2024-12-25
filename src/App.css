@@ -18,3 +18,7 @@
   .dark-mode .border {
     border-color: #090909;
   }
+  .dark-mode .text-gray-800 {
+    color: white;
+  }
+  

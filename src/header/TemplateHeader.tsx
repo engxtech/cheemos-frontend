@@ -207,7 +207,7 @@ export const TemplateHeader = () => {
           icon={<div className="text-3xl ">≡</div>}
           onClick={() => setVisible(true)} // Hamburger Icon (or any other)
         /> */}
-        <MenuOutlined className="text-xl" onClick={() => setVisible(true)} />
+        <MenuOutlined className="text-xl text-gray-800" onClick={() => setVisible(true)} />
         <h2 className="text-2xl font-semibold">Market Place</h2>
       </div>
       <Sidebar visible={visible} setVisible={setVisible} />
@@ -228,13 +228,12 @@ export const TemplateHeader = () => {
         </Button>
         <Button type="text">
           <div
-            className="text-2xl px-1 py-1"
+            className="text-2xl px-1 py-1 text-gray-800"
             onClick={() => setDrawerVisibleN(true)}
           >
             {" "}
             <BellPlusIcon />
           </div>{" "}
-          {/* Settings Icon */}
         </Button>
         <Drawer
           title="Publish Your Agent"
@@ -278,11 +277,15 @@ export const TemplateHeader = () => {
           ))}
         </Drawer>
         <Drawer
-          title="What's new on Cheemos!"
+          title={<span className="text-gray-800">What's new on Cheemos!</span>}
           placement="right"
           width={400}
           onClose={() => setDrawerVisibleN(false)}
           visible={drawerVisibleN}
+          style={{
+            background: "#001529", // Ant Design dark menu background
+            borderRight: "1px solid #002140", // Slightly lighter border to match the theme
+          }}
         >
           <List
             dataSource={updates}
