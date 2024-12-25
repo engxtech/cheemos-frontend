@@ -30,6 +30,7 @@ import PaymentPage from "./pages/payments/VerifyPayment";
 import { PythonSandbox } from "./pages/pythoncompiler/pages/PythonSandbox";
 import { OneTool } from "./pages/tools/OneTool";
 import { Background } from "reactflow";
+import { DarkMode } from "./pages/darkMode/dark";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100vw", // Corrected from "100wh" to "100vw" for width
@@ -43,6 +44,17 @@ function App() {
   const [redirectPath, setRedirectPath] = useState(null); // Set to null initially
   const navigate = useNavigate();
   const location = useLocation().pathname;
+  useEffect(() => {
+    // Check dark mode setting in localStorage
+    const isDarkMode = localStorage.getItem("darkmode") === "true";
+    const body = document.body;
+
+    if (isDarkMode) {
+      body.classList.add("dark-mode");
+    } else {
+      body.classList.remove("dark-mode");
+    }
+  }, []); 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token == null) {
@@ -80,6 +92,7 @@ function App() {
               <Route path="/agents/create-agent/*" element={<CreateAgent />} />
               <Route path="/onboarding" element={<RightSignUp />} />
               <Route path="/signup" element={<MultiStepForm />} />
+              <Route path="/dark" element={<DarkMode />} />
               <Route path="/payment/:agentId/:cloneType/*" element={<PaymentPage />} />
             </Routes>
           </Root>

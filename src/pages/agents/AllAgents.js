@@ -44,7 +44,7 @@ const AgentsDashboard = () => {
     return (
       <div>
         <AgentHeader />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-50 px-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  px-3">
           {Array.from({ length: 8 }).map((_, index) => (
             <Card key={index} className="shadow-md border rounded-lg  mt-4 ">
               <Skeleton avatar paragraph={{ rows: 3 }} active />
@@ -84,7 +84,7 @@ const AgentsDashboard = () => {
   }
 
   return (
-    <Layout className="h-screen bg-gray-100">
+    <Layout className="h-screen bg-gray-200">
       {/* <Sidebar visible={siderVisible} setVisible={setSiderVisible} /> */}
       <AgentHeader />
       <Content className="p-4">

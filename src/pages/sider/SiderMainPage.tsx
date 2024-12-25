@@ -72,9 +72,13 @@ export const Sidebar = ({ visible, setVisible }) => {
         onClose={onClose}
         visible={visible}
         width={250}
+        // style={{
+        //   background: "#fff",
+        //   borderRight: "1px solid #f0f0f0",
+        // }}
         style={{
-          background: "#fff",
-          borderRight: "1px solid #f0f0f0",
+          background: "#001529", // Ant Design dark menu background
+          borderRight: "1px solid #002140", // Slightly lighter border to match the theme
         }}
       >
         <div
@@ -95,7 +99,7 @@ export const Sidebar = ({ visible, setVisible }) => {
           </Avatar>
 
           <div style={{ marginLeft: "10px" }}>
-            <h1 style={{ margin: 0 }} className="text-lg">
+            <h1 style={{ margin: 0 }} className="text-lg text-white">
               {userData?.name} {userData?.surname}
             </h1>
             <span style={{ color: "#aaa" }}>Your Agent Desc.</span>
@@ -104,6 +108,7 @@ export const Sidebar = ({ visible, setVisible }) => {
 
         <Menu
           mode="inline"
+          theme="dark"
           defaultSelectedKeys={["notifications"]}
           style={{ border: "none" }}
           

@@ -1,24 +1,20 @@
-body {
+.dark-mode {
+    background: linear-gradient(to bottom, #9ca3af 20%, #1f2937 60%, #000 110%);
+    color: white;
+  }
+  
+  .dark-mode .bg-gray-50,
+  .dark-mode .bg-gray-100,
+  .dark-mode .bg-white {
+    background: radial-gradient(circle, #333 20%, #000 80%);
+  }
+  
+  .dark-mode .bg-gray-200 {
     background: linear-gradient(to bottom, #9ca3af 20%, #1f2937 60%, #000 100%);
-
-
-        color: white; /* Optional: Ensure text is readable */
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+    color: white;
   }
+  
 
-  .bg-gray-50 {
-    background: radial-gradient(circle, #333 20%, #000 80%);
+  .dark-mode .border {
+    border-color: #090909;
   }
-  .bg-gray-100 {
-    background: radial-gradient(circle, #333 20%, #000 80%);
-  }
-
-  .bg-white {
-    background: radial-gradient(circle, #333 20%, #000 80%);
-  }
-
-  .border {
-    border-color: #090909; /* tailwind equivalent for border-gray-100 */
-}

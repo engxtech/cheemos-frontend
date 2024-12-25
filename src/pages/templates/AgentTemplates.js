@@ -36,7 +36,7 @@ const AgentTemplates = () => {
         <span className="text-xl font-medium ml-1">Agent Templates</span>
         <div className="grid grid-cols-3 gap-4 mt-2">
           {Array.from({ length: 6 }).map((_, index) => (
-            <Card key={index} className="shadow-md">
+            <Card key={index} className="shadow-md ">
               <Skeleton avatar paragraph={{ rows: 2 }} active />
             </Card>
           ))}
@@ -47,10 +47,10 @@ const AgentTemplates = () => {
 
 
   return (
-    <div className="mb-10">
+    <div className="mb-10 ">
       <span className="text-xl font-medium ml-1">Agent Templates</span>
 
-      <div className="grid grid-cols-3 gap-4 mt-2 ">
+      <div className="grid grid-cols-3 gap-4 mt-2  ">
         {templates.map((template, index) => (
           <Card
             key={index}

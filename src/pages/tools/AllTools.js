@@ -117,7 +117,7 @@ const ToolsGrid = () => {
     return (
       <div>
         <ToolHeader />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-50 px-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 px-3">
           {Array.from({ length: 8 }).map((_, index) => (
             <Card key={index} className="shadow-md border rounded-lg  mt-4 ">
               <Skeleton avatar paragraph={{ rows: 3 }} active />
@@ -140,7 +140,7 @@ const ToolsGrid = () => {
     }
   };
   return (
-    <div className="bg-gray-100 h-screen">
+    <div className="bg-gray-200 h-screen">
       <ToolHeader />
       <div className="p-2 py-5">
         <div className="flex flex-wrap gap-5 ml-4">

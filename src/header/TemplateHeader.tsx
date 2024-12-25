@@ -9,7 +9,9 @@ import {
   Menu,
   message,
   notification,
+  Switch,
   Tag,
+  Tooltip,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import {
@@ -19,6 +21,7 @@ import {
   FileUpload,
   MenuOutlined,
   NotificationAddRounded,
+  ToggleOnOutlined,
   UploadFileOutlined,
   UploadRounded,
   UploadSharp,
@@ -174,9 +177,28 @@ export const TemplateHeader = () => {
     });
     if (response.ok) {
       message.success("Template created successfully");
-      setDrawerVisible(false)
+      setDrawerVisible(false);
     }
   };
+
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const darkMode = localStorage.getItem("darkmode") === "true";
+    setIsDarkMode(darkMode);
+    updateBodyClass(darkMode);
+  }, []);
+
+  const updateBodyClass = (darkMode) => {
+    document.body.classList.toggle("dark-mode", darkMode);
+  };
+
+  const handleToggle = (checked) => {
+    setIsDarkMode(checked);
+    localStorage.setItem("darkmode", checked.toString());
+    updateBodyClass(checked);
+  };
+
   return (
     <div className="flex justify-between items-center p-5 ">
       <div className="flex items-center space-x-4">
@@ -185,11 +207,18 @@ export const TemplateHeader = () => {
           icon={<div className="text-3xl ">≡</div>}
           onClick={() => setVisible(true)} // Hamburger Icon (or any other)
         /> */}
-        <MenuOutlined className="text-xl" onClick={()=>setVisible(true)}/>
+        <MenuOutlined className="text-xl" onClick={() => setVisible(true)} />
         <h2 className="text-2xl font-semibold">Market Place</h2>
       </div>
       <Sidebar visible={visible} setVisible={setVisible} />
       <div className="flex space-x-4 ">
+        <Tooltip title="Dark Mode" placement="top">
+          <Switch
+            checked={isDarkMode}
+            onChange={handleToggle}
+            className="mt-1"
+          />
+        </Tooltip>{" "}
         <Button
           type="primary"
           icon={<PlusOutlined />}
@@ -230,21 +259,24 @@ export const TemplateHeader = () => {
               className="shadow-md border bg-gray-50 rounded-lg mt-2"
               actions={[
                 <Dropdown overlay={menu} trigger={["click"]}>
-                <Button >
-                  {releaseType ? `Selected: ${releaseType}` : "Release Type"}
-                </Button>
-              </Dropdown>,
-                <Button key="add" type="primary" onClick={()=>publishAgent(agent.id)}>
-                   <AddOutlined className="text-white border bg-white rounded-full" />
-                   Publish Agent
-                 </Button>,
+                  <Button>
+                    {releaseType ? `Selected: ${releaseType}` : "Release Type"}
+                  </Button>
+                </Dropdown>,
+                <Button
+                  key="add"
+                  type="primary"
+                  onClick={() => publishAgent(agent.id)}
+                >
+                  <AddOutlined className="text-white border bg-white rounded-full" />
+                  Publish Agent
+                </Button>,
               ]}
             >
               <p>{agent.description}</p>
             </Card>
           ))}
         </Drawer>
-
         <Drawer
           title="What's new on Cheemos!"
           placement="right"
