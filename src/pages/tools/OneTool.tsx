@@ -89,8 +89,8 @@ export function OneTool() {
           <div className="flex justify-between items-center  mb-6">
             <div className="flex items-center gap-2">
               <TerminalIcon className="w-8 h-8 text-blue-600" />
-              <h1 className="text-xl  text-gray-900">
-                Python Compiler Tool Writer
+              <h1 className="text-xl  text-gray-800">
+                Tool Writer
               </h1>
               <h1 className="text-sm italic  text-gray-600">
                 Write and test your tool here!

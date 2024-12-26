@@ -5,6 +5,7 @@ import {
   Card,
   Drawer,
   Dropdown,
+  Input,
   List,
   Menu,
   message,
@@ -166,6 +167,7 @@ export const TemplateHeader = () => {
     const payload = {
       agentId: id,
       releaseType: releaseType,
+      price:price
     };
     const response = await fetch(url, {
       method: "POST",
@@ -198,7 +200,11 @@ export const TemplateHeader = () => {
     localStorage.setItem("darkmode", checked.toString());
     updateBodyClass(checked);
   };
+  const [price, setPrice] = useState<number>(0);
 
+  const handleChange = (e) => {
+    setPrice(e.target.value);
+  };
   return (
     <div className="flex justify-between items-center p-5 ">
       <div className="flex items-center space-x-4">
@@ -207,7 +213,10 @@ export const TemplateHeader = () => {
           icon={<div className="text-3xl ">≡</div>}
           onClick={() => setVisible(true)} // Hamburger Icon (or any other)
         /> */}
-        <MenuOutlined className="text-xl text-gray-800" onClick={() => setVisible(true)} />
+        <MenuOutlined
+          className="text-xl text-gray-800"
+          onClick={() => setVisible(true)}
+        />
         <h2 className="text-2xl font-semibold">Market Place</h2>
       </div>
       <Sidebar visible={visible} setVisible={setVisible} />
@@ -255,13 +264,8 @@ export const TemplateHeader = () => {
                   <p>{agent.name}</p>
                 </p>
               }
-              className="shadow-md border bg-gray-50 rounded-lg mt-2"
+              className="shadow-md border bg-gray-50 rounded-lg  mb-4"
               actions={[
-                <Dropdown overlay={menu} trigger={["click"]}>
-                  <Button>
-                    {releaseType ? `Selected: ${releaseType}` : "Release Type"}
-                  </Button>
-                </Dropdown>,
                 <Button
                   key="add"
                   type="primary"
@@ -272,7 +276,22 @@ export const TemplateHeader = () => {
                 </Button>,
               ]}
             >
-              <p>{agent.description}</p>
+              <p className="mb-4">{agent.description}</p>
+
+              <div className="flex space-x-2 justify-between">
+                <Input
+                  value={price}
+                  onChange={handleChange}
+                  placeholder="Enter price"
+                  type="number"
+                />
+
+                <Dropdown overlay={menu} trigger={["click"]}>
+                  <Button>
+                    {releaseType  ? `Selected: ${releaseType}` : "Select Release Type "}
+                  </Button>
+                </Dropdown>
+              </div>
             </Card>
           ))}
         </Drawer>

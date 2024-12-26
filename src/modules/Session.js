@@ -84,7 +84,7 @@ function Session(props) {
     });
     if (response.ok) {
       const data = await response.json();
-      setChats(data.data.content.reverse());
+      setChats(data.data.content.reverse().slice(1));
     }
   };
   const refresh1 =useSelector((state)=>state.refresh)

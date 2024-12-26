@@ -18,10 +18,10 @@ export const AgentHeader = () => {
       <div className="flex items-center space-x-4">
         <Button
           type="text"
-          icon={<div className="text-3xl">≡</div>}
+          icon={<div className="text-3xl text-gray-800">≡</div>}
           onClick={() => setVisible(true)} // Hamburger Icon (or any other)
         />
-        <h2 className="text-2xl font-semibold">Your Agents</h2>
+        <h2 className="text-2xl  font-semibold">Your Agents</h2>
       </div>
       <Sidebar visible={visible} setVisible ={setVisible}/>
 
