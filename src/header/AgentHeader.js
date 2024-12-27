@@ -14,7 +14,7 @@ export const AgentHeader = () => {
   const navigate =useNavigate()
   const dispatch =useDispatch()
   return (
-    <div className="flex justify-between items-center p-5 border shadow-sm bg-white">
+    <div className="flex justify-between items-center p-5  shadow-sm bg-white">
       <div className="flex items-center space-x-4">
         <Button
           type="text"

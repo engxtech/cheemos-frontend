@@ -42,12 +42,22 @@ const AgentsDashboard = () => {
   const navigate = useNavigate();
   if (loading) {
     return (
-      <div>
-        <AgentHeader />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  px-3">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <Card key={index} className="shadow-md border rounded-lg  mt-4 ">
-              <Skeleton avatar paragraph={{ rows: 3 }} active />
+      <div className="mb-10">
+        <AgentHeader/>
+        <div className="grid sm:grid-cols-4 grid-cols-1 gap-4 px-6 py-4 mt-2">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Card
+              key={index}
+              className="sm:w-[23vw] w-[100vw] h-50 bg-gray-900"
+              hoverable
+            >
+              <Skeleton
+                avatar
+                paragraph={{ rows: 5 }}
+                active
+                title={false}
+                className="h-full"
+              />
             </Card>
           ))}
         </div>
@@ -100,7 +110,12 @@ const AgentsDashboard = () => {
               }
               className="shadow-md border rounded-lg"
               actions={[
-                <div className="flex space-x-4 px-4 justify-between">
+              ]}
+            >
+              <p>{agent.description}</p>
+              <hr>
+              </hr>
+              <div className="flex space-x-4 mt-4 px-4 justify-between">
                   <div className="space-x-2 px-2">
                     <Button key="delete" onClick={() => handleDelete(agent.id)}>
                       <DeleteOutlined />
@@ -127,10 +142,7 @@ const AgentsDashboard = () => {
                       Use Agent {">"}
                     </Button>
                   </div>
-                </div>,
-              ]}
-            >
-              <p>{agent.description}</p>
+                </div>
             </Card>
           ))}
         </div>
