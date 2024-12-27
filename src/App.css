@@ -1,8 +1,11 @@
 .dark-mode {
-    background: linear-gradient(to bottom, #9ca3af 20%, #1f2937 60%, #000 110%);
+    background: linear-gradient(to bottom, #100f0f 30%, #000000 80%);
     color: white;
   }
-  
+  .bg-gray-900{
+    background: radial-gradient(circle, #333 20%, #1b1a1a 80%);
+    /* color: white; */
+  }
   .dark-mode .bg-gray-50,
   .dark-mode .bg-gray-100,
   .dark-mode .bg-white {
@@ -16,9 +19,30 @@
   
 
   .dark-mode .border {
-    border-color: #090909;
+    border-color: #7f7b7b;
   }
   .dark-mode .text-gray-800 {
     color: white;
+  }
+  
+
+
+
+
+
+
+
+
+
+  .dark-modal .ant-modal-content {
+    @apply bg-gray-50 text-gray-300;
+  }
+  
+  .dark-modal .ant-modal-header {
+    @apply bg-gray-50 text-gray-100;
+  }
+  
+  .dark-modal .ant-modal-footer {
+    @apply bg-gray-50 text-gray-300;
   }
   

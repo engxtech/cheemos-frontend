@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Avatar, Button, Divider, Input, message, Typography } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { Google, UnsubscribeOutlined, VerifiedUser } from "@mui/icons-material";
+import { Google, Message, UnsubscribeOutlined, VerifiedUser } from "@mui/icons-material";
 import image1 from "../../assets/icon.jpeg";
 import { GoogleLogin } from "@react-oauth/google";
+import { Text } from "lucide-react";
 
 const RightSignUp = () => {
   const [email, setEmail] = useState("");
@@ -49,14 +50,14 @@ const RightSignUp = () => {
   function handleGSignInOnError() {}
   return (
     <div className="flex  justify-center items-center bg-gray-100 h-[100vh]">
-      <div className="flex  shadow-sm  justify-center w-[35vw] rounded-3xl bg-white flex-col items-center h-[80vh] gap-4 border ">
+      <div className="flex  shadow-sm  justify-center sm:w-[35vw] p-2 rounded-3xl bg-white flex-col items-center h-[80vh] gap-4 border ">
         <Avatar src={image1} size={60} />
         <div className="text-center text-4xl font-serif">
-          Welcome to Cheemos
+          Welcome to ViktonAI
         </div>
-        <Typography.Text className="text-sm">
+        <span className="text-sm  flex text-center text-gray-800">
           Sign in here to continue.
-        </Typography.Text>
+        </span>
         <div className="flex flex-col w-64 gap-3">
           <Input
             placeholder="Email Address"
@@ -77,11 +78,12 @@ const RightSignUp = () => {
             type="primary"
             size="large"
             loading={btEmailLoading}
-            onClick={handleSignUp}
+            // onClick={handleSignUp}
+            onClick={()=>message.info("Login with email will be enabled soon! Please use google to login!")}
           >
             Continue with email
           </Button>
-          <Divider>or</Divider>
+          <Divider className="text-gray-800">or</Divider>
           <Button
             className="w-full"
             icon={<Google />}
@@ -100,7 +102,7 @@ const RightSignUp = () => {
             className="w-full text-sm"
             type="link"
             size="large"
-            onClick={() => navigate("/signup")}
+            // onClick={() => navigate("/signup")}
           >
             Not Signed Up? Click here!
           </Button>

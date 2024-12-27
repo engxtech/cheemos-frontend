@@ -1,43 +1,64 @@
-import { VerifiedUserOutlined } from "@mui/icons-material";
-import { Avatar, Card, Skeleton } from "antd";
+import { CopyAllOutlined, VerifiedUserOutlined } from "@mui/icons-material";
+import { Avatar, Button, Card, Skeleton } from "antd";
 import Meta from "antd/es/card/Meta";
-import image2 from "../../assets/Aatar(1).png";
+import image1 from "../../assets/Aatar(1).png";
+import image2 from "../../assets/Aatar.png";
+import image5 from "../../assets/Aatar(4).png";
 import image3 from "../../assets/Aatar(2).png";
 import image4 from "../../assets/Aatar(3).png";
 import { useEffect, useState } from "react";
 import { SubscriptionPopup } from "../subscription/SubscriptionPage";
 
 const AgentTemplates = () => {
-  const [templates,setTemplates]=useState([])
+  const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [agentId,setAgentId]=useState()
-  const [subscriptionVisible,setSubscriptionVisible]=useState(false)
-  useEffect(()=>{
-    setLoading(true)
-    const fetchTemplates = async()=>{
-      const url =process.env.REACT_APP_API_URL +"/api/v1/template/all"
-      const response = await fetch(url,{
-        method:'GET',
-        headers:{
-          Authorization:"Bearer "+ localStorage.getItem('token')
-        }
-      })
-      if(response.ok){
-        const data = await response.json()
-        setTemplates(data.data)
+  const [agentId, setAgentId] = useState();
+  const [subscriptionVisible, setSubscriptionVisible] = useState(false);
+  const [price, setPrice] = useState(0);
+  const images = [image1, image2, image3, image4, image5];
+
+  function getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+  }
+
+  // Example usage:
+  useEffect(() => {
+    setLoading(true);
+    const fetchTemplates = async () => {
+      const url = process.env.REACT_APP_API_URL + "/api/v1/template/all";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setTemplates(data.data);
       }
-      setLoading(false)
-    }
-    fetchTemplates()
-  },[])
+      setLoading(false);
+    };
+    fetchTemplates();
+  }, []);
   if (loading) {
     return (
       <div className="mb-10">
         <span className="text-xl font-medium ml-1">Agent Templates</span>
-        <div className="grid grid-cols-3 gap-4 mt-2">
+        <div className="grid sm:grid-cols-4 grid-cols-1 gap-4 mt-2">
           {Array.from({ length: 6 }).map((_, index) => (
-            <Card key={index} className="shadow-md ">
-              <Skeleton avatar paragraph={{ rows: 2 }} active />
+            <Card
+              key={index}
+              className="sm:w-[23vw] w-[100vw] h-50 bg-gray-900"
+              hoverable
+            >
+              <Skeleton
+                avatar
+                paragraph={{ rows: 5 }}
+                active
+                title={false}
+                className="h-full"
+              />
             </Card>
           ))}
         </div>
@@ -45,30 +66,61 @@ const AgentTemplates = () => {
     );
   }
 
-
   return (
     <div className="mb-10 ">
       <span className="text-xl font-medium ml-1">Agent Templates</span>
-
-      <div className="grid grid-cols-3 gap-4 mt-2  ">
-        {templates.map((template, index) => (
+      <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2  ">
+        {templates.map((card, index) => (
           <Card
             key={index}
-            className="shadow-md "
+            className={` sm:w-[21vw]w-[100vw] h-50 bg-gray-900 `}
             hoverable
-            actions={[<span key="clone" onClick={()=>{
-              setSubscriptionVisible(true);
-              setAgentId(template.id)
-            }}>Clone</span>]}
+            actions={[]}
           >
             <Meta
-              avatar={<Avatar icon={<VerifiedUserOutlined />} src={image3} size={48}/>}
-              title={template.name}
-              description={`version:${template.version} - $ ${template.price} price`}
+              avatar={<Avatar src={getRandomImage()} size={75} />}
+              title={<span className="text-gray-300">{card.name}</span>}
+              description={
+                <div className="h-[10vh] text-gray-300">
+                  {card.description.length > 50
+                    ? `${card.description.substring(0, 40)}...`
+                    : card.description}
+                  <div className="flex justify-end mb-2">
+                    <div className="flex ">
+                      Version:{" "}
+                      <p className="text-blue-500 ml-1"> {card.version}</p>
+                    </div>
+                  </div>
+                </div>
+              }
             />
-         
-         {subscriptionVisible && <SubscriptionPopup agentId={agentId} visible={subscriptionVisible} setVisible={setSubscriptionVisible}/>}
-
+            <hr></hr>
+            <div className="  rounded-lg p-2 flex justify-between items-center px-4">
+              {" "}
+              <p className="ml-2 mr-2 text-gray-50">
+                {card.price == 0 ? "FREE" : ` $${card.price} price `}
+              </p>
+              <p className="text-blue-500">{"+ 4 tools"}</p>
+              <Button
+                icon={<CopyAllOutlined />}
+                className="text-gray-500 ml-3 text-[0.9rem]"
+                onClick={() => {
+                  setSubscriptionVisible(true);
+                  setAgentId(card.id);
+                  setPrice(Number(card.price));
+                }}
+              >
+                Hire
+              </Button>{" "}
+            </div>
+            {subscriptionVisible && (
+              <SubscriptionPopup
+                price={price}
+                agentId={agentId}
+                visible={subscriptionVisible}
+                setVisible={setSubscriptionVisible}
+              />
+            )}
           </Card>
         ))}
       </div>

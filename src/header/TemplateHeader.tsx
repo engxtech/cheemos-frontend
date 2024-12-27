@@ -17,6 +17,7 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import {
   AddOutlined,
+  CloseOutlined,
   CopyAllOutlined,
   DeleteOutlined,
   FileUpload,
@@ -206,21 +207,19 @@ export const TemplateHeader = () => {
     setPrice(e.target.value);
   };
   return (
-    <div className="flex justify-between items-center p-5 ">
+    <div className="flex justify-between items-center p-5 bg-gray-900 ">
       <div className="flex items-center space-x-4">
-        {/* <Button
-          type="text"
-          icon={<div className="text-3xl ">≡</div>}
-          onClick={() => setVisible(true)} // Hamburger Icon (or any other)
-        /> */}
+      
         <MenuOutlined
           className="text-xl text-gray-800"
           onClick={() => setVisible(true)}
         />
-        <h2 className="text-2xl font-semibold">Market Place</h2>
+        <h2 className="sm:text-2xl font-semibold">Market Place</h2>
       </div>
+
       <Sidebar visible={visible} setVisible={setVisible} />
-      <div className="flex space-x-4 ">
+
+      <div className="flex sm:space-x-4  space-x-2 ml-6 ">
         <Tooltip title="Dark Mode" placement="top">
           <Switch
             checked={isDarkMode}
@@ -245,11 +244,16 @@ export const TemplateHeader = () => {
           </div>{" "}
         </Button>
         <Drawer
-          title="Publish Your Agent"
+          title={<span className="text-gray-200">Publish Your Agent</span>}
           placement="right"
           width={400}
           onClose={() => setDrawerVisible(false)}
           visible={drawerVisible}
+          style={{
+            background: "radial-gradient(circle, #333 20%, #000 80%)", // Ant Design dark menu background
+            borderRight: "1px solid #002140", // Slightly lighter border to match the theme
+          }}
+          closeIcon={<CloseOutlined style={{ color: "white" }} />}
         >
           {agents.map((agent, index) => (
             <Card
@@ -260,25 +264,16 @@ export const TemplateHeader = () => {
                     icon={<VerifiedUserOutlined />}
                     className="p-1"
                     alt="avatar"
-                  />{" "}
-                  <p>{agent.name}</p>
+                  />
+                  <p className="text-gray-300">{agent.name}</p>
                 </p>
               }
-              className="shadow-md border bg-gray-50 rounded-lg  mb-4"
-              actions={[
-                <Button
-                  key="add"
-                  type="primary"
-                  onClick={() => publishAgent(agent.id)}
-                >
-                  <AddOutlined className="text-white border bg-white rounded-full" />
-                  Publish Agent
-                </Button>,
-              ]}
+              className="shadow-md border bg-gray-900 rounded-lg  mb-4"
+             
             >
-              <p className="mb-4">{agent.description}</p>
+              <p className="mb-4 text-gray-300">{agent.description}</p>
 
-              <div className="flex space-x-2 justify-between">
+              <div className="flex space-x-2 mb-2 justify-between">
                 <Input
                   value={price}
                   onChange={handleChange}
@@ -292,6 +287,16 @@ export const TemplateHeader = () => {
                   </Button>
                 </Dropdown>
               </div>
+              <hr className="mb-2"></hr>
+
+              <Button
+                  key="add"
+                  type="primary"
+                  onClick={() => publishAgent(agent.id)}
+                >
+                  <AddOutlined className="text-white border bg-gray-300 rounded-full" />
+                  Publish Agent
+                </Button>
             </Card>
           ))}
         </Drawer>
@@ -302,17 +307,18 @@ export const TemplateHeader = () => {
           onClose={() => setDrawerVisibleN(false)}
           visible={drawerVisibleN}
           style={{
-            background: "#001529", // Ant Design dark menu background
+            background: "radial-gradient(circle, #333 20%, #1b1a1a 80%)", // Ant Design dark menu background
             borderRight: "1px solid #002140", // Slightly lighter border to match the theme
           }}
-        >
+          closeIcon={<CloseOutlined style={{ color: "white" }} />}
+          >
           <List
             dataSource={updates}
             renderItem={(item) => (
               <Card
                 style={{ marginBottom: 16 }}
                 bordered={false}
-                className="border shadow-md"
+                className="border bg-gray-900 shadow-md"
               >
                 <Tag color="blue">NEW</Tag>
                 <span style={{ marginLeft: 8, color: "#8c8c8c" }}>
@@ -323,7 +329,7 @@ export const TemplateHeader = () => {
                   {item.details.map((detail, index) => (
                     <li key={index}>
                       {
-                        <span className="text-[0.9rem]  font-serif text-gray-600 bold">
+                        <span className="text-[0.9rem]  font-serif text-gray-50 bold">
                           {detail}
                         </span>
                       }

@@ -77,7 +77,8 @@ export const Sidebar = ({ visible, setVisible }) => {
         //   borderRight: "1px solid #f0f0f0",
         // }}
         style={{
-          background: "#001529", // Ant Design dark menu background
+          // background: "radial-gradient(circle, #333 20%, #000 80%)" ,
+         background: "#1f1f1f", // Ant Design dark menu background
           borderRight: "1px solid #002140", // Slightly lighter border to match the theme
         }}
       >
@@ -86,13 +87,13 @@ export const Sidebar = ({ visible, setVisible }) => {
             display: "flex",
             alignItems: "center",
             padding: "10px",
-            paddingTop: "20px",
+            paddingTop: "30px",
             borderBottom: "2px solid #f0f0f0",
           }}
         >
           <Avatar
             size="large"
-            style={{ backgroundColor: "#87d068" }}
+            style={{ backgroundColor: "#333" }}
             src={userData?.profilePic}
           >
             A
@@ -110,8 +111,8 @@ export const Sidebar = ({ visible, setVisible }) => {
           mode="inline"
           theme="dark"
           defaultSelectedKeys={["notifications"]}
-          style={{ border: "none" }}
-          
+          style={{ border: "none", backgroundColor: "#1f1f1f" }}
+          className="mt-4"
         >
           <Menu.Item
             key="templates"
@@ -202,7 +203,7 @@ export const Sidebar = ({ visible, setVisible }) => {
               localStorage.removeItem("token");
               navigate("/onboarding");
             }}
-            className="text-red-500"
+            className="text-gray-200"
           >
             Logout
           </Button>
