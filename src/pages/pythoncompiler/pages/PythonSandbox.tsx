@@ -101,7 +101,7 @@ export function PythonSandbox() {
       inputValue: substitutedContent,
     };
     // update this url
-    const url = "http://localhost:3001/api/test_llm";
+    const url = "http://api-p-sirius.aqumenlabs.ai:3001/api/test_llm";
     const response = await fetch(url, {
       method: "POST",
       headers: {
