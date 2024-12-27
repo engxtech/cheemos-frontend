@@ -31,7 +31,7 @@ export function InputCollection({ onInputsCollected }: InputCollectionProps) {
 
   return (
     <div className="space-y-4 text-sm">
-      <h2 className=" font-semibold text-gray-900">Prepare Inputs</h2>
+      <h2 className=" text-sm text-gray-900">Prepare Inputs</h2>
       <p className="text-sm text-gray-600">Add all the inputs your code will need in order:</p>
       
       {inputs.map((input, index) => (

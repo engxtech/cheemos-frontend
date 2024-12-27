@@ -21,7 +21,7 @@ export const Sidebar = () => {
       body:JSON.stringify(CreateAgent)
     })
     if(response.ok){
-      navigate("/")
+      navigate("/agents")
     }
   }
   return (
