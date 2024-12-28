@@ -12,8 +12,9 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Agent } from "../../redux/agents/store";
+import BiMap from "../../utils/BiMap";
 
 const { Sider } = Layout;
 
@@ -24,15 +25,21 @@ interface UserType {
   surname: string;
   profilePic: string;
 }
+
 export const Sidebar = ({ visible, setVisible }) => {
-  const onClose = () => {
-    setVisible(false);
-  };
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserType>();
+  const [agents, setAgents] = useState<Agent[]>([]);
+
+  // fetch templates from above string in pattern , something needs to be corrected here!
+
+  const location = useLocation();
+  const match = location.pathname.match(/\/([^/]+)/);
+  const section = match?.[1] || "templates";
+
   useEffect(() => {
     const fetchUserDetails = async () => {
-      const url = process.env.REACT_APP_API_URL +"/api/v1/user";
+      const url = process.env.REACT_APP_API_URL + "/api/v1/user";
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -48,11 +55,9 @@ export const Sidebar = ({ visible, setVisible }) => {
     fetchUserDetails();
   }, []);
 
-  const [agents, setAgents] = useState<Agent[]>([]);
-
   useEffect(() => {
     const getAgents = async () => {
-      const url = process.env.REACT_APP_API_URL +"/api/v1/user/agents";
+      const url = process.env.REACT_APP_API_URL + "/api/v1/user/agents";
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -64,6 +69,11 @@ export const Sidebar = ({ visible, setVisible }) => {
     };
     getAgents();
   }, []);
+
+  const onClose = () => {
+    setVisible(false);
+  };
+
   return (
     <div>
       <Drawer
@@ -72,13 +82,8 @@ export const Sidebar = ({ visible, setVisible }) => {
         onClose={onClose}
         visible={visible}
         width={250}
-        // style={{
-        //   background: "#fff",
-        //   borderRight: "1px solid #f0f0f0",
-        // }}
         style={{
-          // background: "radial-gradient(circle, #333 20%, #000 80%)" ,
-         background: "#1f1f1f", // Ant Design dark menu background
+          background: "#1f1f1f", // Ant Design dark menu background
           borderRight: "1px solid #002140", // Slightly lighter border to match the theme
         }}
       >
@@ -110,7 +115,8 @@ export const Sidebar = ({ visible, setVisible }) => {
         <Menu
           mode="inline"
           theme="dark"
-          defaultSelectedKeys={["notifications"]}
+          // defaultSelectedKeys={["notifications"]}
+          selectedKeys={[section]}
           style={{ border: "none", backgroundColor: "#1f1f1f" }}
           className="mt-4"
         >
@@ -179,7 +185,7 @@ export const Sidebar = ({ visible, setVisible }) => {
           >
             Settings
           </Menu.Item>
-       
+
           <Menu.Item key="analytics" icon={<LineChartOutlined />}>
             Analytics
           </Menu.Item>
