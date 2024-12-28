@@ -1,9 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AgentsDashboard from "../pages/agents/AllAgents";
-import { CreateAgent } from "../pages/agents/CreateAgent";
-import InitialChatPage from "../pages/InitialChatPage";
-import InitialChatPage2 from "../pages/InitialChatPage2";
+import { CreateAgent } from "../pages/agents/createAgent/CreateAgent";
+import InitialChatPage2 from "../pages/chat/ChatPageMain";
 import ToolSettings from "../pages/agents/AddToolAgent";
+import InitialChatPage from "../pages/chat/NewChat";
 
 export default function AgentContent() {
    return(

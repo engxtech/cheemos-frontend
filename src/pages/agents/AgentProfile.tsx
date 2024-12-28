@@ -5,6 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCreateAgent } from "../../redux/agents/action";
 import { VerifiedUserRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import image1 from "../../assets/Aatar.png";
+import image2 from "../../assets/Aatar(1).png";
+import image3 from "../../assets/Aatar(2).png";
+import image4 from "../../assets/Aatar(3).png";
+import image5 from "../../assets/Aatar(4).png";
+
 // Agent Profile Form
 const AgentProfileForm = () => {
   let createAgent = useSelector((state: RootState) => state.agents.agent);
@@ -12,7 +18,7 @@ const AgentProfileForm = () => {
   return (
     <div className="p-6">
       <div className="flex items-center space-x-4 mb-6">
-        <Avatar size={64} src={"https://icons.veryicon.com/png/o/miscellaneous/cookd-pc/useroutlined.png"} icon={<VerifiedUserRounded/>} />
+        <Avatar size={64} src={image1} icon={<VerifiedUserRounded/>} />
         <div>
           <h2 className="text-xl font-semibold">Agent profile</h2>
           <p className="text-gray-500">Describe what this agent does</p>

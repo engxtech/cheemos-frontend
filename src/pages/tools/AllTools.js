@@ -1,10 +1,19 @@
-import { Card, Button, Pagination, Skeleton, message } from "antd";
+import {
+  Card,
+  Button,
+  Pagination,
+  Skeleton,
+  message,
+  Avatar,
+  Tooltip,
+} from "antd";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import ToolHeader from "../../header/ToolsHeader";
 import {
   CopyAllOutlined,
   DeleteOutlined,
   EmailOutlined,
+  InfoOutlined,
   LinkedIn,
   PanToolOutlined,
   PictureAsPdfOutlined,
@@ -12,81 +21,80 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Meta from "antd/es/card/Meta";
+import { FaTools } from "react-icons/fa";
 
-// const tools = [
-//   {
-//     title: "Read PDF",
-//     description: "For Rosh Singh's Sales Research & Qualifier Agent.",
-//     icon: <PictureAsPdfOutlined />,
-//   },
-
-//   {
-//     title: "Get LinkedIn Company breakdown",
-//     description:
-//       "Use this to get a breakdown of total number of jobs and employ...",
-//     icon: <LinkedIn />,
-//   },
-//   {
-//     title: "Long SEO Optimized Blog Writer",
-//     description: "For Scott's SEO & Growth Marketing agent.",
-//     icon: <PictureAsPdfOutlined />,
-//   },
-//   {
-//     title: "Google search",
-//     description: "For Rosh Singh's Sales Research & Qualifier Agent.",
-//     icon: <SearchOutlined />,
-//   },
-//   {
-//     title: "Get LinkedIn company posts",
-//     description: "For Rosh Singh's Sales Research & Qualifier Agent.",
-//     icon: <LinkedIn />,
-//   },
-//   {
-//     title: "Create email sequence",
-//     description: "For Rosh Singh's Sales Research & Qualifier Agent.",
-//     icon: <EmailOutlined />,
-//   },
-// ];
-
-
-const ToolCard = ({id, title, description, icon,handleDelete,navigate }) => (
-
+const ToolCard = ({
+  id,
+  tool,
+  title,
+  description,
+  icon,
+  handleDelete,
+  navigate,
+}) => (
   <Card
-    className="w-full md:w-[32%] lg:w-[32%]  border-gray-300 shadow-md rounded-lg"
-    actions={[
-      <div className="flex space-x-4 px-4 justify-between">
-        <div className="space-x-2 px-2">
-          <Button key="delete"
-          onClick={() => handleDelete(id)}
-          >
-            <DeleteOutlined />
-          </Button>
-          <Button key="edit" onClick={()=>message.info("This feature to cpopy tool will be enabled soon!")}>
-            <CopyAllOutlined />
-          </Button>
-        </div>
-
-        <div className="space-x-2 px-2">
-          <Button key="edit">Edit</Button>
-          <Button
-            type="primary"
-            key="use"
-            onClick={() => navigate(`./${id}`)}
-          >
-            Use Tool {">"}
-          </Button>
-        </div>
-      </div>,
-    ]}
+    className="sm:w-[21vw]w-[100vw] h-50 bg-gray-900 "
   >
-    <div className="flex space-x-2 items-baseline ">
-      {" "}
-      <p className="text-gray-500 text-sm mt-2 border shadow-md p-1 rounded-md">
-        {icon}
-      </p>
-      <h3 className="font-semibold text-lg">{title}</h3>
+    <Meta
+      avatar={<Avatar icon={<FaTools />} size={60} />}
+      title={
+        <span className="text-gray-300 flex justify-between">
+          {tool.name}
+          <Tooltip
+            // title={detailedInfo(tool)}
+            overlayClassName="custom-tooltip"
+          >
+            <InfoOutlined className="ml-2 cursor-pointer text-gray-400 hover:text-gray-200" />
+          </Tooltip>
+        </span>
+      }
+      description={
+        <div className="h-[10vh] text-gray-300">
+          {tool.description.length > 50
+            ? `${tool.description.substring(0, 50)}...`
+            : tool.description}
+        </div>
+      }
+    />
+    <hr></hr>
+    <div className="rounded-lg p-2 flex justify-between items-center">
+      <div className="space-x-1">
+        <Button
+          key="delete"
+          className="px-1 py-1"
+          // onClick={() => handleDelete(agent.id)}
+        >
+          <DeleteOutlined />
+        </Button>
+        <Button
+          key="copy"
+          onClick={() =>
+            message.info("This feature to copy will be enabled soon!")
+          }
+          className="px-1 py-1"
+        >
+          <CopyAllOutlined />
+        </Button>
+      </div>
+
+      <div className="space-x-1 flex items-center">
+        <Button
+          key="edit"
+          onClick={() =>
+            message.info("This feature to edit tool will be enabled soon!")
+          }
+          icon={<EditOutlined />}
+        ></Button>
+        <Button
+          type="primary"
+          key="use"
+          onClick={() => navigate(`./${id}`)}
+        >
+          Use {">"}
+        </Button>
+      </div>
     </div>
-    <p className="text-gray-500 text-sm mt-2 h-[7vh]">{description}</p>
   </Card>
 );
 
@@ -94,6 +102,7 @@ const ToolsGrid = () => {
   const [tools, setTools] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -112,21 +121,6 @@ const ToolsGrid = () => {
     getAgents();
   }, [refresh]);
 
-  const navigate = useNavigate();
-  if (loading) {
-    return (
-      <div>
-        <ToolHeader />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-200 px-3">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <Card key={index} className="shadow-md border rounded-lg  mt-4 ">
-              <Skeleton avatar paragraph={{ rows: 3 }} active />
-            </Card>
-          ))}
-        </div>
-      </div>
-    );
-  }
   const handleDelete = async (id) => {
     const url = process.env.REACT_APP_API_URL + `/api/v1/tools/${id}`;
     const response = await fetch(url, {
@@ -139,26 +133,51 @@ const ToolsGrid = () => {
       setRefresh(!refresh);
     }
   };
+  if (loading) {
+    return (
+      <div className="mb-10 fixed top-0 left-0 right-0 z-10">
+        <ToolHeader />
+        <div className="grid sm:grid-cols-4 grid-cols-1 gap-4 px-4 py-4 mt-2 bg-black">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Card
+              key={index}
+              className="sm:w-[23vw] w-[100vw] h-50 bg-gray-900"
+              hoverable
+            >
+              <Skeleton
+                avatar
+                paragraph={{ rows: 5 }}
+                active
+                title={false}
+                className="h-full"
+              />
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
   return (
-    <div className="bg-gray-200 h-screen">
+    <div className="bg-black h-screen fixed top-0 left-0 right-0 z-10">
       <ToolHeader />
-      <div className="p-2 py-5">
-        <div className="flex flex-wrap gap-5 ml-4">
+      <div className="bg-black flex-1 overflow-y-auto p-4">
+        <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2 overflow-auto scroll ">
           {tools.map((tool, index) => (
             <ToolCard
               id={tool.id}
+              tool={tool}
               key={index}
               title={tool.name}
               description={tool.description}
-              icon={<PanToolOutlined/>}
+              icon={<PanToolOutlined />}
               handleDelete={handleDelete}
               navigate={navigate}
             />
           ))}
         </div>
-        <div className="flex justify-end mt-6">
+        {/* <div className="flex justify-end mt-6">
           <Pagination defaultCurrent={1} total={20} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-import { CopyAllOutlined, VerifiedUserOutlined } from "@mui/icons-material";
-import { Avatar, Button, Card, Skeleton } from "antd";
+import { CopyAllOutlined, InfoOutlined, VerifiedUserOutlined } from "@mui/icons-material";
+import { Avatar, Button, Card, Skeleton, Tooltip } from "antd";
 import Meta from "antd/es/card/Meta";
 import image1 from "../../assets/Aatar(1).png";
 import image2 from "../../assets/Aatar.png";
@@ -66,6 +66,15 @@ const AgentTemplates = () => {
     );
   }
 
+  const detailedInfo = (card) => (
+    <div className="bg-gray-900 text-gray-200 p-1 rounded-md text-xs shadow-lg">
+      <p>tools:+ 4</p>
+      <p className="space-x-2">Version: {card.version}</p>
+      <p>Last Updated: 29 May</p>
+      {/* Add more details as needed */}
+    </div>
+  );
+
   return (
     <div className="mb-10 ">
       <span className="text-xl font-medium ml-1">Agent Templates</span>
@@ -79,28 +88,31 @@ const AgentTemplates = () => {
           >
             <Meta
               avatar={<Avatar src={getRandomImage()} size={75} />}
-              title={<span className="text-gray-300">{card.name}</span>}
+              title={
+                <span className="text-gray-300 flex justify-between">
+                  {card.name}
+                  <Tooltip
+                    title={detailedInfo(card)}
+                    overlayClassName="custom-tooltip"
+                  >
+                    <InfoOutlined className="ml-2 cursor-pointer text-gray-400 hover:text-gray-200" />
+                  </Tooltip>
+                </span>
+              }
               description={
                 <div className="h-[10vh] text-gray-300">
                   {card.description.length > 50
-                    ? `${card.description.substring(0, 40)}...`
+                    ? `${card.description.substring(0, 50)}...`
                     : card.description}
-                  <div className="flex justify-end mb-2">
-                    <div className="flex ">
-                      Version:{" "}
-                      <p className="text-blue-500 ml-1"> {card.version}</p>
-                    </div>
-                  </div>
                 </div>
               }
             />
             <hr></hr>
-            <div className="  rounded-lg p-2 flex justify-between items-center px-4">
+            <div className=" rounded-lg p-2 flex justify-between items-center px-4">
               {" "}
-              <p className="ml-2 mr-2 text-gray-50">
+              <p className="ml-2 mr-2 text-blue-500">
                 {card.price == 0 ? "FREE" : ` $${card.price} price `}
               </p>
-              <p className="text-blue-500">{"+ 4 tools"}</p>
               <Button
                 icon={<CopyAllOutlined />}
                 className="text-gray-500 ml-3 text-[0.9rem]"

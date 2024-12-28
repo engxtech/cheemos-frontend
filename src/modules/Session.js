@@ -52,15 +52,15 @@ function Session(props) {
     };
 
     socket.onerror = (error) => {
-      message.error("WebSocket Error: " + error.message);
+      // message.error("WebSocket Error: " + error.message);
     };
 
     socket.onclose = (event) => {
-      if (event.wasClean) {
-        message.info("Connection closed cleanly");
-      } else {
-        message.error("Connection closed unexpectedly");
-      }
+      // if (event.wasClean) {
+      //   message.info("Connection closed cleanly");
+      // } else {
+      //   message.error("Connection closed unexpectedly");
+      // }
     };
 
     return () => {
@@ -87,13 +87,19 @@ function Session(props) {
       setChats(data.data.content.reverse().slice(1));
     }
   };
-  const refresh1 =useSelector((state)=>state.refresh)
+  const refresh1 = useSelector((state) => state.refresh);
   useEffect(() => {
     loadChat();
-  }, [chatId, refresh,refresh1]);
-
+  }, [chatId, refresh, refresh1]);
+  const darkMode = localStorage.getItem("darkmode") === "true";
   return (
-    <div className="h-[78vh] p-3 overflow-y-auto rounded-md space-y-2">
+    <div
+      className={`sm:h-[78vh] h-[75vh] p-3 overflow-y-auto rounded-md space-y-2 ${
+        darkMode
+          ? "text-gray-200 bg-white"
+          : "text-gray-600  bg-white"
+      }`}
+    >
       <Division>
         {/* {sessionList.map((item, index) =>
         item.type === "Bubble"
@@ -129,9 +135,10 @@ function Session(props) {
               key={chat.id}
               className={`px-3 max-w-[80%] rounded-lg mb-2 ${
                 chat.role === "system"
-                  ? "bg-blue-50 text-blue-900 self-start p-3"
-                  : "bg-gray-100 text-green-900 self-end"
-              }`}
+                  ? darkMode?"bg-gray-800 text-gray-300 self-start p-3" :" bg-blue-50 text-blue-900 self-start p-3"
+                  : darkMode?"bg-blue-600 text-gray-200 self-end":"bg-gray-100 text-green-900 self-end"
+              }
+              `}
             >
               {formattedContent.map((block, index) =>
                 block.trim().startsWith("java") ? (
@@ -150,7 +157,7 @@ function Session(props) {
                   </p>
                 )
               )}
-              <span className="text-xs text-gray-500">
+              <span className={`text-xs ${darkMode?"text-gray-400":"text-gray-500 "}` }>
                 {new Date(chat.createdAt).toLocaleTimeString()}
               </span>
             </div>

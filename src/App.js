@@ -1,36 +1,28 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CssVarsProvider, styled } from "@mui/joy/styles";
 import globalTheme from "./theme";
 import {
-  BrowserRouter,
   Routes,
   Route,
   useNavigate,
-  Navigate,
   useLocation,
 } from "react-router-dom";
-import InitialChatPage from "./pages/InitialChatPage";
 import AgentsDashboard from "./pages/agents/AllAgents";
 import "./App.css";
-import { CreateAgent } from "./pages/agents/CreateAgent";
+import { CreateAgent } from "./pages/agents/createAgent/CreateAgent";
 import AgentContent from "./content/AgentContent";
 import ToolsGrid from "./pages/tools/AllTools";
 import Knowledge from "./pages/knowledge/KnowledgeBase";
 import IntegrationList from "./pages/integrations/AllIntegrations";
 import AllTemplates from "./pages/templates/AllComponents";
-import NoResultFoundContent from "./content/NoResultFoundContent";
-import AuthForm from "./pages/login/LoginForm";
 import RightSignUp from "./pages/login/LoginForm";
 import MultiStepForm from "./pages/login/MultiStepSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Provider } from "react-redux";
-import { agentsReducer } from "./redux/agents/store";
 import store from "./redux";
 import PaymentPage from "./pages/payments/VerifyPayment";
 import { PythonSandbox } from "./pages/pythoncompiler/pages/PythonSandbox";
 import { OneTool } from "./pages/tools/OneTool";
-import { Background } from "reactflow";
-import { DarkMode } from "./pages/darkMode/dark";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100vw", // Corrected from "100wh" to "100vw" for width

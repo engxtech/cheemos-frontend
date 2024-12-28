@@ -9,29 +9,28 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import Sidebar from "../pages/sider/SiderMainPage";
-import DropdownMenu from "../pages/knowledge/DropDown";
 
 const KnowledgeHeader = () => {
   const [visible, setVisible] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const menu = (
     <Menu
-      className="bg-white shadow-lg rounded-md p-2"
+      className="bg-gray-900 shadow-lg rounded-md"
       items={[
         {
           label: (
-            <div className="px-2 py-1 hover:bg-gray-100 cursor-pointer rounded-md">
-              <strong className=" text-gray-700  text-sm">Blank</strong>
-              <p className="text-gray-500 text-xs">Start with an empty table</p>
+            <div className="px-3 py-2 hover:bg-gray-800 cursor-pointer rounded-md">
+              <strong className=" text-gray-200  text-sm">Blank</strong>
+              <p className="text-gray-400 text-xs">Start with an empty table</p>
             </div>
           ),
           key: "1",
         },
         {
           label: (
-            <div className="px-2 py-1 hover:bg-gray-100 cursor-pointer rounded-md">
-              <strong className=" text-gray-700  text-sm">Upload file</strong>
-              <p className="text-gray-500 text-xs">
+            <div className="px-3 py-2 hover:bg-gray-800 cursor-pointer rounded-md">
+              <strong className=" text-gray-200  text-sm">Upload file</strong>
+              <p className="text-gray-400 text-xs">
                 CSV, Excel, JSON, PDF or Audio
               </p>
             </div>
@@ -40,9 +39,9 @@ const KnowledgeHeader = () => {
         },
         {
           label: (
-            <div className="px-2 py-1 hover:bg-gray-100 cursor-pointer rounded-md">
-              <strong className=" text-gray-700  text-sm">Import from website</strong>
-              <p className="text-gray-500 text-xs">
+            <div className="px-3 py-2 hover:bg-gray-800 cursor-pointer rounded-md">
+              <strong className=" text-gray-200  text-sm">Import from website</strong>
+              <p className="text-gray-400 text-xs">
                 Extract content from a website
               </p>
             </div>
@@ -51,9 +50,9 @@ const KnowledgeHeader = () => {
         },
         {
           label: (
-            <div className="px-2 py-1 hover:bg-gray-100 cursor-pointer rounded-md">
-              <strong className="text-gray-700 text-sm">Integrations</strong>
-              <p className="text-gray-500 text-xs">
+            <div className="px-3 py-2 hover:bg-gray-800 cursor-pointer rounded-md">
+              <strong className="text-gray-200 text-sm">Integrations</strong>
+              <p className="text-gray-400 text-xs">
                 Import data from a third party
               </p>
             </div>
@@ -65,7 +64,7 @@ const KnowledgeHeader = () => {
   );
 
   return (
-    <div className="flex items-center justify-between  p-5 border bg-white shadow-sm">
+    <div className="flex items-center justify-between  p-5  bg-gray-900 shadow-sm">
       {/* Left Section */}
       <div className="flex items-center space-x-3">
         <MenuOutlined className="text-lg" onClick={() => setVisible(true)} />
@@ -76,7 +75,7 @@ const KnowledgeHeader = () => {
       <Sidebar visible={visible} setVisible={setVisible} />
       {/* Right Section */}
       <div className="flex items-center space-x-4">
-        <div className="">
+        <div className="hidden md:block">
           <Input
             placeholder="Search..."
             prefix={<SearchOutlined />}
@@ -96,8 +95,6 @@ const KnowledgeHeader = () => {
           onClose={() => setDrawerVisible(false)}
           visible={drawerVisible}
         >
-          {/* Form for adding new agent (can be implemented as needed) */}
-          <DropdownMenu />
         </Drawer>
       </div>
     </div>

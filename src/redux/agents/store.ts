@@ -11,6 +11,7 @@ export interface Agent {
       _SYSTEM_CORE_INSTRUCTIONS_PROMPT?: string;
 
     };
+    iconName?:string;
     toolsList?: number[];
     subAgents?: number[];
     customProperties?: Record<string, any>;

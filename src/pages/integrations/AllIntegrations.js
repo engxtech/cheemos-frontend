@@ -20,17 +20,17 @@ const integrations = [
 const IntegrationList = () => {
   return (
     <div className="flex flex-col h-screen">
-       <div className="fixed top-0 left-0 right-0 z-10 bg-white shadow">
+       <div className="fixed top-0 left-0 right-0 z-10 bg-black shadow">
        <IntegrationHeader />
        </div>
 
-      <div  className="flex-1 overflow-y-auto p-8 bg-gray-50" style={{ paddingTop: "84px" }}>
+      <div  className="flex-1 overflow-y-auto p-8 bg-black" style={{ paddingTop: "84px" }}>
         <h2 className="text-xl font-semibold mb-4">Connect your integrations</h2>
         <div className="bg-white shadow-sm rounded-lg">
           {integrations.map((item, index) => (
             <div
               key={index}
-              className="flex items-center justify-between px-2 py-2 border-b last:border-none hover:bg-gray-100 cursor-pointer"
+              className="flex items-center justify-between px-2 py-2 border-b last:border-none hover:bg-gray-800 cursor-pointer"
             >
               <div className="p-1 ml-1 flex space-x-1 items-center">
                <h3 className=" text-sm">{item.icon}</h3>

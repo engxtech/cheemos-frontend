@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Card, Button, Drawer, Skeleton, message } from "antd";
+import {
+  Layout,
+  Card,
+  Button,
+  Drawer,
+  Skeleton,
+  message,
+  Avatar,
+  Tooltip,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import Sidebar from "../sider/SiderMainPage";
 import { AgentHeader } from "../../header/AgentHeader";
@@ -9,9 +18,15 @@ import image2 from "../../assets/Aatar(1).png";
 import image3 from "../../assets/Aatar(2).png";
 import image4 from "../../assets/Aatar(3).png";
 import image5 from "../../assets/Aatar(4).png";
-import { CopyAllOutlined, DeleteOutlined } from "@mui/icons-material";
+import {
+  CopyAllOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  InfoOutlined,
+} from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateAgent, setEditing } from "../../redux/agents/action";
+import Meta from "antd/es/card/Meta";
 
 const { Sider, Content } = Layout;
 
@@ -20,8 +35,9 @@ const AgentsDashboard = () => {
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const dispatch =useDispatch()
-  const createAgent =useSelector((state)=>state.agent)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const createAgent = useSelector((state) => state.agent);
 
   useEffect(() => {
     setLoading(true);
@@ -39,11 +55,47 @@ const AgentsDashboard = () => {
     };
     getAgents();
   }, [refresh]);
-  const navigate = useNavigate();
+
+  const handleDelete = async (id) => {
+    const url = process.env.REACT_APP_API_URL + `/api/v1/agent/${id}`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    if (response.ok) {
+      setRefresh(!refresh);
+    }
+  };
+  const editAgent = (agent) => {
+    dispatch(setEditing(true));
+    dispatch(
+      setCreateAgent({
+        ...createAgent,
+        name: agent.name,
+        id: agent.id,
+        description: agent.description,
+        coreInstructions: {
+          _SYSTEM_CORE_INSTRUCTIONS_PROMPT:
+            agent.coreInstructions._SYSTEM_CORE_INSTRUCTIONS_PROMPT.content,
+        },
+        toolRetries: 3,
+      })
+    );
+    navigate("/agents/create-agent");
+  };
+  const images = [image1, image2, image3, image4, image5];
+
+  function getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+  }
+
   if (loading) {
     return (
-      <div className="mb-10">
-        <AgentHeader/>
+      <div className="mb-10 fixed top-0 left-0 right-0 z-10">
+        <AgentHeader />
         <div className="grid sm:grid-cols-4 grid-cols-1 gap-4 px-6 py-4 mt-2">
           {Array.from({ length: 6 }).map((_, index) => (
             <Card
@@ -64,85 +116,82 @@ const AgentsDashboard = () => {
       </div>
     );
   }
-  const handleDelete = async (id) => {
-    const url = process.env.REACT_APP_API_URL + `/api/v1/agent/${id}`;
-    const response = await fetch(url, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
-    if (response.ok) {
-      setRefresh(!refresh);
-    }
-  };
-  const editAgent=(agent)=>{
-    dispatch(setEditing(true));
-    dispatch(
-      setCreateAgent({
-        ...createAgent,
-        name:agent.name,
-        id:agent.id,
-        description:agent.description,
-        coreInstructions: {
-          _SYSTEM_CORE_INSTRUCTIONS_PROMPT: agent.coreInstructions._SYSTEM_CORE_INSTRUCTIONS_PROMPT.content,
-        },
-        toolRetries:3
-      })
-    );
-    navigate('/agents/create-agent')
-  }
+  const detailedInfo = (card) => (
+    <div className="bg-gray-900 text-gray-200 p-1 rounded-md text-xs shadow-lg">
+      <p>tools:+ 4</p>
+      <p className="space-x-2">Version: {card.version}</p>
+      <p>Last Updated: 29 May</p>
+      {/* Add more details as needed */}
+    </div>
+  );
 
   return (
-    <Layout className="h-screen bg-gray-200">
-      {/* <Sidebar visible={siderVisible} setVisible={setSiderVisible} /> */}
+    <Layout className="h-screen fixed top-0 left-0 right-0 z-10">
       <AgentHeader />
-      <Content className="p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <Content className="bg-black flex-1 overflow-y-auto p-4">
+        <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2 overflow-auto scroll ">
           {agents.map((agent, index) => (
             <Card
               key={agent.id}
-              title={
-                <p className="flex items-center space-x-2">
-                  <img src={image1} alt="avatar" className="p-1"></img>
-                  <p>{agent.name}</p>
-                </p>
-              }
-              className="shadow-md border rounded-lg"
-              actions={[
-              ]}
+              hoverable
+              className={` sm:w-[21vw]w-[100vw] h-50 bg-gray-900 `}
+              actions={[]}
             >
-              <p>{agent.description}</p>
-              <hr>
-              </hr>
-              <div className="flex space-x-4 mt-4 px-4 justify-between">
-                  <div className="space-x-2 px-2">
-                    <Button key="delete" onClick={() => handleDelete(agent.id)}>
-                      <DeleteOutlined />
-                    </Button>
-                    <Button
-                      key="copy"
-                      onClick={() =>
-                        message.info(
-                          "This feature to copy will be enabled soon!"
-                        )
-                      }
+              <Meta
+                avatar={<Avatar src={getRandomImage()} size={75} />}
+                title={
+                  <span className="text-gray-300 flex justify-between">
+                    {agent.name}
+                    <Tooltip
+                      title={detailedInfo(agent)}
+                      overlayClassName="custom-tooltip"
                     >
-                      <CopyAllOutlined />
-                    </Button>
+                      <InfoOutlined className="ml-2 cursor-pointer text-gray-400 hover:text-gray-200" />
+                    </Tooltip>
+                  </span>
+                }
+                description={
+                  <div className="h-[10vh] text-gray-300">
+                    {agent.description.length > 50
+                      ? `${agent.description.substring(0, 50)}...`
+                      : agent.description}
                   </div>
-
-                  <div className="space-x-2 px-2">
-                    <Button key="edit" onClick={()=>editAgent(agent)}>Edit</Button>
-                    <Button
-                      type="primary"
-                      key="use"
-                      onClick={() => navigate(`./${agent.id}/new`)}
-                    >
-                      Use Agent {">"}
-                    </Button>
-                  </div>
+                }
+              />
+              <hr></hr>
+              <div className="rounded-lg p-2 flex justify-between items-center">
+                <div className="space-x-1">
+                  <Button
+                    key="delete"
+                    className="px-1 py-1"
+                    onClick={() => handleDelete(agent.id)}
+                  >
+                    <DeleteOutlined />
+                  </Button>
+                  <Button
+                    key="copy"
+                    onClick={() =>
+                      message.info("This feature to copy will be enabled soon!")
+                    }
+                    className="px-1 py-1"
+                  >
+                    <CopyAllOutlined />
+                  </Button>
                 </div>
+
+                <div className="space-x-1 flex items-center">
+                  <Button key="edit" onClick={() => editAgent(agent)} icon={<EditOutlined/>}>
+                    
+                  </Button>
+                  <Button
+                    type="primary"
+                    key="use"
+                    onClick={() => navigate(`./${agent.id}/new`)}
+                  >
+                    Use {">"}
+                  </Button>
+                </div>
+              </div>
             </Card>
           ))}
         </div>

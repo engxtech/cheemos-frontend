@@ -2,37 +2,25 @@
     background: linear-gradient(to bottom, #100f0f 30%, #000000 80%);
     color: white;
   }
+
   .bg-gray-900{
     background: radial-gradient(circle, #333 20%, #1b1a1a 80%);
     /* color: white; */
   }
+
   .dark-mode .bg-gray-50,
   .dark-mode .bg-gray-100,
   .dark-mode .bg-white {
-    background: radial-gradient(circle, #333 20%, #000 80%);
+    background: radial-gradient(circle, #181717 20%, #000 80%);
   }
   
-  .dark-mode .bg-gray-200 {
-    background: linear-gradient(to bottom, #9ca3af 20%, #1f2937 60%, #000 100%);
-    color: white;
-  }
   
-
   .dark-mode .border {
     border-color: #7f7b7b;
   }
   .dark-mode .text-gray-800 {
     color: white;
   }
-  
-
-
-
-
-
-
-
-
 
   .dark-modal .ant-modal-content {
     @apply bg-gray-50 text-gray-300;
@@ -45,4 +33,18 @@
   .dark-modal .ant-modal-footer {
     @apply bg-gray-50 text-gray-300;
   }
+  
+  .custom-dark-table .ant-table-thead > tr > th {
+    background-color: #111; /* Dark header background */
+    color: #fff; /* White text */
+  }
+  
+  .custom-dark-table .ant-table-tbody > tr > td {
+    background-color: #000; /* Black background for rows */
+    color: #fff; /* White text */
+    border-bottom: 1px solid #7b7a7a; /* Row border */
+  }
+  
+
+  
   

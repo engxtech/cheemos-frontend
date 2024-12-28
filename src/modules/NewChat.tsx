@@ -61,7 +61,7 @@ const NewChat: React.FC = () => {
     }
   };
   return (
-    <div className="h-[100vh] bg-gray-50 px-16 border overflow-y-auto rounded-md flex flex-col justify-center items-center">
+    <div className="h-[100vh] bg-gray-50 px-16  overflow-y-auto rounded-md flex flex-col justify-center items-center">
       <div className="w-full space-y-6">
         <h1 className="text-xl md:text-2xl font-bold text-center">
           What can I help with?

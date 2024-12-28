@@ -227,8 +227,8 @@ function InputPanel(props) {
           maxRows={4}
           sx={{
             backgroundColor: isDragActive
-              ? "var(--joy-palette-neutral-300)"
-              : "var(--joy-palette-neutral-100)",
+              ? "var(--joy-palette-neutral-400)"
+              : "var(--joy-palette-neutral-300)",
           }}
           placeholder={promptsDisabled ? "" : "Send a message"}
           size="md"
@@ -281,6 +281,7 @@ function InputPanel(props) {
                       ? "rgb(240, 244, 248) !important"
                       : undefined,
                 }}
+                className="bg-gray-50"
               >
                 <DeleteOutlineIcon
                   onClick={() => {
@@ -297,6 +298,7 @@ function InputPanel(props) {
                 variant="solid"
                 children="SEND"
                 onClick={handleClickSend}
+                className="bg-gray-50"
               />
             </Box>
           }

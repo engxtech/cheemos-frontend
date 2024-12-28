@@ -181,7 +181,7 @@ export const Sidebar = ({ visible, setVisible }) => {
           <Menu.Item
             key="settings"
             icon={<SettingOutlined />}
-            onClick={() => navigate("/agents")}
+            // onClick={() => navigate("/agents")}
           >
             Settings
           </Menu.Item>

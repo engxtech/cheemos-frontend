@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NoResultFoundContent = () => {
-  console.log("not found");
   return (
     <>
     <section className="h-screen bg-slate-100">
