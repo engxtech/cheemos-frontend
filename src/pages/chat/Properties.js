@@ -37,7 +37,7 @@ const PropertiesPanel = () => {
   //   setIsDarkMode(darkMode);
   // }, []);
   return (
-    <div className={`p-6   sm:w-[24vw] w-[95vw] sm:h-screen h-[90vh] ${darkMode?"text-gray-200 bg-gray-900":"text-gray-600 sm:border bg-white"}`}>
+    <div className={`p-6   sm:w-[23vw] w-[95vw] sm:h-screen h-[90vh] ${darkMode?"text-gray-200 bg-gray-900":"text-gray-600 sm:border bg-white"}`}>
       {/* Triggered By */}
       <div className="mb-4">
         <h3 className=" text-xs mb-1">Triggered by</h3>

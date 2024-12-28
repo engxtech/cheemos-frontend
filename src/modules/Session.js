@@ -6,10 +6,11 @@ import Sequence from "../interface/Step";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { useParams } from "react-router-dom";
 import io from "socket.io-client";
-import { message } from "antd";
+import { message, Spin } from "antd";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useSelector } from "react-redux";
+import { Loader, LucideLoaderCircle } from "lucide-react";
 
 const Division = styled(ScrollToBottom)(({ theme }) => ({
   overflow: "auto",
@@ -71,8 +72,9 @@ function Session(props) {
   console.log({ props });
 
   const [chats, setChats] = useState([]);
-
+  const [loading,setLoading] =useState(true)
   const loadChat = async () => {
+    setLoading(true)
     const url =
       process.env.REACT_APP_API_URL + `/api/v1/chat/${chatId}/messages`;
 
@@ -86,12 +88,24 @@ function Session(props) {
       const data = await response.json();
       setChats(data.data.content.reverse().slice(1));
     }
+    setLoading(false)
   };
   const refresh1 = useSelector((state) => state.refresh);
   useEffect(() => {
     loadChat();
   }, [chatId, refresh, refresh1]);
   const darkMode = localStorage.getItem("darkmode") === "true";
+  if(loading){
+    return   <div
+    className={`sm:h-[78vh] h-[75vh] p-3  flex items-center justify-center overflow-y-auto rounded-md space-y-2 ${
+      darkMode
+        ? "text-gray-200 bg-white"
+        : "text-gray-600  bg-white"
+    }`}
+  ><Spin className="mr-2"/>
+    
+    Loading...</div>
+  }
   return (
     <div
       className={`sm:h-[78vh] h-[75vh] p-3 overflow-y-auto rounded-md space-y-2 ${
