@@ -27,6 +27,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateAgent, setEditing } from "../../redux/agents/action";
 import Meta from "antd/es/card/Meta";
+import EmptyContent from "../../components/zeroContent";
 
 const { Sider, Content } = Layout;
 
@@ -69,12 +70,16 @@ const AgentsDashboard = () => {
     }
   };
   const editAgent = (agent) => {
+    const ids = agent.toolsList.map(tool => tool.id);
     dispatch(setEditing(true));
     dispatch(
       setCreateAgent({
         ...createAgent,
         name: agent.name,
         id: agent.id,
+        iconName: agent.iconName,
+        customProperties: agent.customProperties,
+        toolsList: ids,
         description: agent.description,
         coreInstructions: {
           _SYSTEM_CORE_INSTRUCTIONS_PROMPT:
@@ -100,7 +105,7 @@ const AgentsDashboard = () => {
           {Array.from({ length: 6 }).map((_, index) => (
             <Card
               key={index}
-              className="sm:w-[23vw] w-[100vw] h-50 bg-gray-900"
+              className="sm:w-[23vw] w-[90vw] h-50 bg-gray-900"
               hoverable
             >
               <Skeleton
@@ -124,6 +129,21 @@ const AgentsDashboard = () => {
       {/* Add more details as needed */}
     </div>
   );
+
+  if (agents.length === 0) {
+    return (
+      <div className="bg-black h-screen fixed top-0 left-0 right-0 z-10">
+        <AgentHeader />
+        <EmptyContent message="No Agent Found" />
+        {/* <div className="bg-black flex-1 overflow-y-auto p-4">
+          <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2 overflow-auto scroll ">
+            <div className="text-gray-300 text-center">No Tools Found</div>
+          </div>
+        </div> */}
+      </div>
+    );
+  }
+
 
   return (
     <Layout className="h-screen fixed top-0 left-0 right-0 z-10">

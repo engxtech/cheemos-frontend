@@ -7,11 +7,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux";
 import BiMap from "../../../../utils/BiMap";
 
-export const Sidebar = () => {
+export const Sidebar = ({setSidebarVisible}) => {
   const navigate = useNavigate();
   const editing = useSelector((state: RootState) => state.agents.editing);
   const CreateAgent = useSelector((State: RootState) => State.agents.agent);
   const handleSave = async () => {
+    console.log(CreateAgent);
+    // return
     let url = process.env.REACT_APP_API_URL + "/api/v1/agent/new";
     if (editing)
       url = process.env.REACT_APP_API_URL + `/api/v1/agent/${CreateAgent.id}`;
@@ -46,6 +48,7 @@ export const Sidebar = () => {
       // className="border-r border-gray-300"
       breakpoint="lg"
       collapsedWidth="0"
+      onCollapse={(collapsed) => setSidebarVisible(!collapsed)}
     >
       <Menu
         mode="inline"

@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { setCreateAgent, setEditing, setRefresh } from "./action";
+import image1 from "../../assets/Aatar.png";
 export interface Agent {
     id?: string;
     name: string;
@@ -11,7 +12,7 @@ export interface Agent {
       _SYSTEM_CORE_INSTRUCTIONS_PROMPT?: string;
 
     };
-    iconName?:string;
+    iconName:string;
     toolsList?: number[];
     subAgents?: number[];
     customProperties?: Record<string, any>;
@@ -26,7 +27,8 @@ export interface Agent {
       description:'',
       coreInstructions:{
         
-      }
+      },
+      iconName:'image1'
   } 
   export interface ChatList {
     id?: string;
@@ -48,7 +50,8 @@ const initialState: StoreType = {
     description:"",
     coreInstructions:{
       
-    }
+    },
+    iconName:image1
   },
   refresh:false,
   editing:false

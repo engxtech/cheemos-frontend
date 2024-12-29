@@ -214,7 +214,7 @@ export const TemplateHeader = () => {
           className="text-xl text-gray-800"
           onClick={() => setVisible(true)}
         />
-        <h2 className="sm:text-2xl font-semibold">Market Place</h2>
+        <h2 className="sm:text-2xl font-semibold">MarketPlace</h2>
       </div>
 
       <Sidebar visible={visible} setVisible={setVisible} />
@@ -232,7 +232,7 @@ export const TemplateHeader = () => {
           icon={<PlusOutlined />}
           onClick={() => setDrawerVisible(true)}
         >
-          Publish Agent
+          Publish
         </Button>
         <Button type="text">
           <div

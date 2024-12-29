@@ -94,7 +94,7 @@ export const PipelineUI = () => {
 
     return (
         <>
-        <div ref={reactFlowWrapper} style={{width: '82vw', height: '74vh'}} className='border ml-1 rounded-md mb-1'>
+        <div ref={reactFlowWrapper} style={{width: '82vw', height: '74vh'}} className=' ml-1 rounded-md mb-1'>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}

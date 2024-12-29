@@ -5,7 +5,7 @@ const { Title, Paragraph } = Typography;
 
 const AgentToolUsage: React.FC = () => {
   return (
-    <div className="p-6 h-full bg-gray-100">
+    <div className="p-6 h-full text-gray-200 bg-gray-100">
       <Title level={5} className="mb-4">
         How does an agent use a tool?
       </Title>
@@ -14,7 +14,7 @@ const AgentToolUsage: React.FC = () => {
         <Title level={5} className="mb-2 text-sm">
           The agent decides whether to use the tool
         </Title>
-        <Paragraph className="text-sm">
+        <Paragraph className="" style={{ fontSize: '14px', fontWeight: '250' }}>
           When your agent is deciding whether to use this tool, it considers
           the tool's name and prompt for how to use. Make sure that these are
           clear, as it can affect performance a lot.
@@ -25,7 +25,7 @@ const AgentToolUsage: React.FC = () => {
         <Title level={5} className="mb-2 text-sm">
           The agent fills in the Inputs
         </Title>
-        <Paragraph className="text-sm">
+        <Paragraph className="text-sm" style={{ fontSize: '14px', fontWeight: '250' }}>
           The agent will fill in all of the tool's inputs. It considers the
           input's name and description when deciding how to fill each input.
           These are also very important!
@@ -36,7 +36,7 @@ const AgentToolUsage: React.FC = () => {
         <Title level={5} className="mb-2">
           The tool runs and returns the output
         </Title>
-        <Paragraph className="text-sm">
+        <Paragraph className="text-sm" style={{ fontSize: '14px', fontWeight: '250' }}>
           The agent receives the tool's final output. If you want to preserve
           context in the agent, consider setting a manual output with only
           exactly what the agent needs.

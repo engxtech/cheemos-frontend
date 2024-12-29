@@ -39,9 +39,9 @@ export const AgentHeader = () => {
         />
       </div>
       <div className="flex space-x-4">
-        <Button icon={<UploadRounded />} className="">
+        {/* <Button icon={<UploadRounded />} className="">
           Import
-        </Button>
+        </Button> */}
         <Button
           type="primary"
           icon={<PlusOutlined />}

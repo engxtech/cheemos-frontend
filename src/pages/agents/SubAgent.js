@@ -56,20 +56,20 @@ const SubAgentUI = () => {
   return (
     <div className="flex bg-gray-50 border w-full">
       {/* Sidebar */}
-      <aside className="w-1/3 bg-white border-r p-4">
-        <h2 className="text-sm text-gray-500 mb-4">Added Sub-Agents</h2>
+      <aside className="w-1/3 bg-white  p-4 hidden sm:block">
+        <h2 className="text-sm text-gray-200 mb-4">Added Sub-Agents</h2>
         {/* <button className="w-full py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
                     + Add sub-agent
                 </button> */}
-        <div>
+        <div className="">
           {agentsList.map((agent) => (
             <div
               key={agent.id}
-              className="flex items-center justify-between p-2 border rounded mb-2"
+              className="flex items-center justify-between p-2 border  text-white rounded mb-2"
             >
               <div>
-                <h4 className="font-medium text-gray-700">{agent.name}</h4>
-                <p className="text-sm text-gray-500">{agent.description}</p>
+                <h4 className="font-medium text-gray-200">{agent.name}</h4>
+                <p className="text-sm text-gray-400">{agent.description}</p>
               </div>
               {/* <button
                                 onClick={() => handleRemoveTool(tool.id)}
@@ -88,7 +88,7 @@ const SubAgentUI = () => {
           <h2 className="text-xl font-medium">Add new sub-agent</h2>
           <input
             type="text"
-            placeholder="Search for agent..."
+            placeholder="Search agent..."
             className="border border-gray-300 p-2 rounded w-1/3"
           />
         </div>
@@ -105,7 +105,7 @@ const SubAgentUI = () => {
                     className="flex justify-between items-center p-4 bg-white rounded shadow border animate-pulse"
                   >
                     <div className="w-1/2 bg-gray-300 h-4 rounded mb-2"></div>
-                    <div className="w-1/4 bg-gray-300 h-4 rounded mb-2"></div>
+                    {/* <div className="w-1/4 bg-gray-300 h-4 rounded mb-2"></div> */}
                     <div className="w-20 bg-gray-300 h-6 rounded"></div>
                   </li>
                 ))
@@ -113,7 +113,7 @@ const SubAgentUI = () => {
               agents.map((agent, index) => (
                 <li
                   key={index}
-                  className="flex justify-between items-center p-4 bg-white rounded shadow border"
+                  className="flex justify-between items-center p-4 py-2 bg-white rounded shadow border"
                 >
                   <div>
                     <h3 className="font-medium">{agent.name}</h3>
@@ -124,14 +124,14 @@ const SubAgentUI = () => {
                       onClick={() => handleRemoveAgent(agent.id)}
                       className="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600"
                     >
-                      Remove
+                      -
                     </button>
                   ) : (
                     <button
                       onClick={() => handleAddAgent(agent)}
                       className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600"
                     >
-                      + Add
+                      + 
                     </button>
                   )}
                 </li>

@@ -49,7 +49,7 @@ const AgentTemplates = () => {
           {Array.from({ length: 6 }).map((_, index) => (
             <Card
               key={index}
-              className="sm:w-[23vw] w-[100vw] h-50 bg-gray-900"
+              className="sm:w-[23vw] w-[85vw] h-50 bg-gray-900"
               hoverable
             >
               <Skeleton

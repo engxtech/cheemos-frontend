@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import AgentToolUsage from "../../tools/components/ToolUsage";
 import { InputList } from "../../tools/components/components/InputList";
 import { EditablePrompt } from "../../tools/components/components/EditablePrompt";
+import { BackupOutlined, ExitToAppOutlined, FullscreenExit, SkipPreviousOutlined, SkipPreviousRounded } from "@mui/icons-material";
 
 const DEFAULT_CODE =
   '# Example: Multiple inputs\nname = input("What is your name? ")\nage = input("What is your age? ")\nprint("Hello {name}, you are {age} years old!")\n';
@@ -27,6 +28,7 @@ export function PythonSandbox() {
   const [showInputCollection, setShowInputCollection] = useState(true);
   const [toolName, setToolName] = useState<string>("");
   const [toolDescription, setToolDescription] = useState<string>("");
+
   const navigate = useNavigate();
   const handleRunCode = () => {
     // if (preparedInputs.length === 0) {
@@ -140,16 +142,15 @@ export function PythonSandbox() {
     const newPrompt = `${before}{{${inputId}}}${after}`;
     setCode(newPrompt);
   };
-
   return (
     <div className=" flex p-2 px-6 justify-between  ">
-      <div className=" overflow-x-auto  scroll h-[98vh] w-[70%] bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 text-sm border rounded-sm shadow-sm">
+      <div className=" overflow-x-auto  scroll h-[98vh] sm:w-[70%] bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 text-sm border rounded-sm shadow-sm">
         <div className="max-w-4xl mx-auto space-y-2">
           <div className="flex justify-between items-center  mb-6">
             <div className="flex items-center gap-2">
-              <TerminalIcon className="w-8 h-8 text-blue-600" />
+              <span className="w-8 h-8 text-blue-600 text-2xl cursor-pointer" onClick={()=>navigate('/tools')}> {"<"} </span>
               <h1 className="text-xl  text-gray-800">Tool Writer</h1>
-              <h1 className="text-sm italic  text-gray-600">
+              <h1 className="text-sm italic hidden sm:block text-gray-600">
                 Write and test your tool here!
               </h1>
             </div>
@@ -213,7 +214,7 @@ export function PythonSandbox() {
                 onRemoveInput={removeInput}
               />
               {""}
-              <span className="text-sm text-blue-500 mt-2 mb-2 p-1">{"Write your prompt here... Use {{...}} to insert input variables"}</span>
+              <span className="text-sm text-blue-500 mt-2 p-1  block">{"Write your prompt here... Use {{...}} to insert input variables"}</span>
               <EditablePrompt
                 value={code}
                 onChange={handlePromptChange}
@@ -288,7 +289,7 @@ export function PythonSandbox() {
           )}
         </div>
       </div>
-      <div className="w-[30%]">
+      <div className="w-[30%] hidden sm:block">
         <AgentToolUsage />
       </div>
     </div>

@@ -56,7 +56,7 @@ export const HeaderCards = () => {
           {Array.from({ length: 6 }).map((_, index) => (
             <Card
               key={index}
-              className="sm:w-[23vw] w-[100vw] h-50 bg-gray-900"
+              className="sm:w-[23vw] w-[85vw] h-50 bg-gray-900"
               hoverable
             >
               <Skeleton
@@ -95,7 +95,10 @@ export const HeaderCards = () => {
               avatar={<Avatar src={getRandomImage()} size={75} />}
               title={
                 <span className="text-gray-300 flex justify-between">
-                  {card.name}{" "}
+           
+                  {card.name.length > 15
+                    ? `${card.name.substring(0, 15)}.`
+                    : card.name}
                   <Tooltip
                     title={detailedInfo(card)}
                     overlayClassName="custom-tooltip"

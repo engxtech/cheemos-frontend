@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Meta from "antd/es/card/Meta";
 import { FaTools } from "react-icons/fa";
+import EmptyContent from "../../components/zeroContent";
 
 const ToolCard = ({
   id,
@@ -33,9 +34,7 @@ const ToolCard = ({
   handleDelete,
   navigate,
 }) => (
-  <Card
-    className="sm:w-[21vw]w-[100vw] h-50 bg-gray-900 "
-  >
+  <Card className="sm:w-[21vw]w-[100vw] h-50 bg-gray-900 ">
     <Meta
       avatar={<Avatar icon={<FaTools />} size={60} />}
       title={
@@ -86,11 +85,7 @@ const ToolCard = ({
           }
           icon={<EditOutlined />}
         ></Button>
-        <Button
-          type="primary"
-          key="use"
-          onClick={() => navigate(`./${id}`)}
-        >
+        <Button type="primary" key="use" onClick={() => navigate(`./${id}`)}>
           Use {">"}
         </Button>
       </div>
@@ -107,7 +102,8 @@ const ToolsGrid = () => {
   useEffect(() => {
     setLoading(true);
     const getAgents = async () => {
-      const url = process.env.REACT_APP_API_URL + "/api/v1/tools/all";
+      try{
+        const url = process.env.REACT_APP_API_URL + "/api/v1/tools/user";
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -115,8 +111,12 @@ const ToolsGrid = () => {
         },
       });
       const data = await response.json();
-      setTools(data);
+      if(data)setTools(data);
       setLoading(false);
+    }
+    catch(e){
+      console.log(e);
+    }
     };
     getAgents();
   }, [refresh]);
@@ -141,7 +141,7 @@ const ToolsGrid = () => {
           {Array.from({ length: 6 }).map((_, index) => (
             <Card
               key={index}
-              className="sm:w-[23vw] w-[100vw] h-50 bg-gray-900"
+              className="sm:w-[23vw] w-[90vw] h-50 bg-gray-900"
               hoverable
             >
               <Skeleton
@@ -157,6 +157,20 @@ const ToolsGrid = () => {
       </div>
     );
   }
+  if (tools.length === 0) {
+    return (
+      <div className="bg-black h-screen fixed top-0 left-0 right-0 z-10">
+        <ToolHeader />
+        <EmptyContent message="No Tools Found" />
+        {/* <div className="bg-black flex-1 overflow-y-auto p-4">
+          <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2 overflow-auto scroll ">
+            <div className="text-gray-300 text-center">No Tools Found</div>
+          </div>
+        </div> */}
+      </div>
+    );
+  }
+
   return (
     <div className="bg-black h-screen fixed top-0 left-0 right-0 z-10">
       <ToolHeader />

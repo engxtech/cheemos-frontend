@@ -1,35 +1,63 @@
 import { Layout, Button, Avatar, Input } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { RootState } from "../../redux";
+import { RootState } from "../../../../redux";
 import { useDispatch, useSelector } from "react-redux";
-import { setCreateAgent } from "../../redux/agents/action";
+import { setCreateAgent } from "../../../../redux/agents/action";
 import { VerifiedUserRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import image1 from "../../assets/Aatar.png";
-import image2 from "../../assets/Aatar(1).png";
-import image3 from "../../assets/Aatar(2).png";
-import image4 from "../../assets/Aatar(3).png";
-import image5 from "../../assets/Aatar(4).png";
+import image1 from "../../../../assets/Aatar.png";
+import image2 from "../../../../assets/Aatar(1).png";
+import image3 from "../../../../assets/Aatar(2).png";
+import image4 from "../../../../assets/Aatar(3).png";
+import image5 from "../../../../assets/Aatar(4).png";
+import { useState } from "react";
 
 // Agent Profile Form
 const AgentProfileForm = () => {
   let createAgent = useSelector((state: RootState) => state.agents.agent);
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
+  const images = [image1, image2, image3, image4, image5];
+
+  const handleImageSelect = (image: string) => {
+     dispatch(setCreateAgent({
+      ...createAgent,
+      iconName: image,
+     }))
+  };
   return (
-    <div className="p-6">
-      <div className="flex items-center space-x-4 mb-6">
-        <Avatar size={64} src={image1} icon={<VerifiedUserRounded/>} />
-        <div>
-          <h2 className="text-xl font-semibold">Agent profile</h2>
-          <p className="text-gray-500">Describe what this agent does</p>
+    <div className="sm:p-6 text-white">
+      <div className="sm:flex flex-wrap items-center space-x-4 mb-6 p-4 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all">
+      
+        <div className="flex justify-between">
+        <Avatar
+          size={64}
+          src={createAgent.iconName}
+          icon={<VerifiedUserRounded />}
+          className="transition-all ease-in-out duration-300"
+        />
+        <div className="ml-4" >
+        <h2 className="text-xl font-semibold">Agent profile</h2>
+        <p className="text-gray-500 mt-2">Describe what this agent does.</p>
+        </div>
+      
+        </div>
+        <div className="flex space-x-4  p-2 rounded-md">
+          {images.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`avatar-option-${index}`}
+              className="w-12 h-12 rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all"
+              onClick={() => handleImageSelect(image)}
+            />
+          ))}
         </div>
       </div>
-
       <div className="space-y-4">
         <Input
           placeholder="Enter agent name..."
           value={createAgent.name}
-          className="w-full border-gray-300 rounded-md"
+          className="w-full border-gray-300  rounded-md"
           onChange={(e) => {
             dispatch(
               setCreateAgent({
@@ -70,7 +98,7 @@ const Integrations = () => {
   ];
 
   return (
-    <div className="p-6">
+    <div className="p-6 text-white">
       <h3 className="text-lg font-semibold">Integrations</h3>
       <p className="text-gray-500 mb-4">
         Allow tasks to be created for your agent from other places.
@@ -91,16 +119,16 @@ const Integrations = () => {
 };
 
 export default function AgentProfile() {
-const navigate =useNavigate()
+  const navigate = useNavigate();
   return (
     <Layout>
       <Content className="bg-white border p-4">
-        <div className="border-b border-gray-200 p-6 mt-2">
+        <div className="border-b border-gray-500 p-6 mt-2">
           <h1 className="text-2xl font-bold">Agent profile</h1>
         </div>
 
         <div className="flex flex-col md:flex-row p-2">
-          <div className="w-full md:w-2/3 border-r border-gray-200">
+          <div className="w-full md:w-2/3 sm:border-r border-gray-500">
             <AgentProfileForm />
           </div>
           <div className="w-full md:w-1/3">
@@ -108,7 +136,7 @@ const navigate =useNavigate()
           </div>
         </div>
 
-        <div className="p-6 border-t border-gray-200 ">
+        <div className="p-6 border-t border-gray-500 ">
           {/* <Button type="primary" className="bg-blue-500" onClick={()=>navigate('../instructions')}>
             Confirm & continue
           </Button> */}

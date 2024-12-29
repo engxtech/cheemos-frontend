@@ -65,7 +65,7 @@ export const SubmitButton = () => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} className='mb-1'>
             <button
                 type="primary"
-                className="border p-2 rounded bg-blue-500 text-white hover:bg-blue-400 transition"
+                className="p-2 rounded bg-blue-500 text-white hover:bg-blue-400 transition"
                 onClick={handleSubmit}
             >
                 Submit

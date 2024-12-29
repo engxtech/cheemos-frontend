@@ -87,7 +87,7 @@ const AdvancedSettings = () => {
                 </div>
 
                 {/* Upgrade Option */}
-                <div className="flex justify-between items-center bg-gray-100 rounded-md p-4">
+                {/* <div className="flex justify-between items-center bg-gray-100 rounded-md p-4">
                     <div>
                         <h3 className="font-medium text-gray-800">Unlock AI workforce feature</h3>
                         <p className="text-sm text-gray-500">Upgrade to business or book onboarding</p>
@@ -95,7 +95,7 @@ const AdvancedSettings = () => {
                     <button className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm">
                         Upgrade
                     </button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

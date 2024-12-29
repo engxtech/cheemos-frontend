@@ -22,6 +22,8 @@
     color: white;
   }
 
+ 
+
   .dark-modal .ant-modal-content {
     @apply bg-gray-50 text-gray-300;
   }
@@ -48,3 +50,6 @@
 
   
   
+  .dark-mode .ant-typography {
+    color: rgb(206, 199, 199);
+  }
