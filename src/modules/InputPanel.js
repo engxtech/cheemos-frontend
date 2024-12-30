@@ -15,6 +15,7 @@ import { message } from "antd";
 import { useParams } from "react-router-dom";
 import { setRefresh } from "../redux/agents/action";
 import { useDispatch, useSelector } from "react-redux";
+import { MusicNoteOutlined, RunCircle, StopCircleRounded } from "@mui/icons-material";
 
 const Division = styled("div")(({ theme }) => ({
   padding: theme.spacing(1, 2, 2, 2),
@@ -33,7 +34,7 @@ const Span = styled("div")(({ theme }) => ({
 }));
 
 function InputPanel(props) {
-  const { sessionList, setSessionList } = props;
+  const { sessionList, setSessionList,refresh,setRefresh } = props;
  const chatId =useParams().chatId
   const [prompts, setPrompts] = React.useState("");
   const [savedPrompts, setSavedPrompts] = React.useState({
@@ -142,9 +143,8 @@ function InputPanel(props) {
   // }, [dropFile])
   //changing this above handleClickSend
  const [loading,setLoading]=useState(false)
- const refresh =useSelector((state)=>state.refresh)
- const dispatch =useDispatch()
   const handleClickSend = async () => {
+    console.log("dropfile",dropFile,dropFile?.path)
     setLoading(true)
     const url =  process.env.REACT_APP_API_URL +`/api/v1/chat/sendMessage`;
     const payload ={
@@ -162,7 +162,8 @@ function InputPanel(props) {
     });
     if(response.ok){
       const data = await response.json();
-      dispatch(setRefresh(!refresh))
+      message.success("Successfully sent message");
+      setRefresh(true)
     }
     setPrompts('')
     setLoading(false)
@@ -291,10 +292,10 @@ function InputPanel(props) {
               </IconButton>
               <Span />
               <Button
-                disabled={prompts.length === 0 || loading}
+                disabled={prompts.length === 0 || loading || refresh}
                 loading={loading}
                 loadingPosition="end"
-                endDecorator={<SendIcon />}
+                endDecorator={!refresh?<SendIcon />:<StopCircleRounded/>}
                 variant="solid"
                 children="SEND"
                 onClick={handleClickSend}

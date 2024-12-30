@@ -92,7 +92,7 @@ export const Sidebar = ({ visible, setVisible }) => {
             display: "flex",
             alignItems: "center",
             padding: "10px",
-            paddingTop: "30px",
+            paddingTop: "10px",
             borderBottom: "2px solid #f0f0f0",
           }}
         >
@@ -181,7 +181,7 @@ export const Sidebar = ({ visible, setVisible }) => {
           <Menu.Item
             key="settings"
             icon={<SettingOutlined />}
-            // onClick={() => navigate("/agents")}
+            onClick={() => navigate("/settings")}
           >
             Settings
           </Menu.Item>

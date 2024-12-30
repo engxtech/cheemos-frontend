@@ -6,7 +6,7 @@ import AdvancedSettings from "../AdvancedSettings";
 import SubAgentUI from "../SubAgent";
 import ToolSettingsAgent from "../ToolSettings";
 import ConfigureTemplateSettings from "../ConfigureTemplateSettings";
-import CoreInstructions from "../CoreInstructions";
+import CoreInstructions from "./components/coreInstructions/CoreInstructions";
 import ReactFlow from "../../../reactFlow/reactFlow";
 import { useState } from "react";
 

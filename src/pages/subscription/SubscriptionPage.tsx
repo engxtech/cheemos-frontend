@@ -86,12 +86,13 @@ export const SubscriptionPopup = ({
         {/* Add your UI components for the plans here */}
         <div className="sm:flex  justify-between items-center space-y-2">
           {/* Example UI for plans */}
-          <div className="sm:w-[46%]  p-4  border sm:h-[45vh] space-y-4 bg-gray-200 rounded-md">
+          <div className="sm:w-[46%]  p-4  border sm:h-[45vh] space-y-4 bg-gray-100 rounded-md">
             <h1 className="text-xl font-semibold">Hire to Use</h1>
             <img
               src={
                 "https://media.licdn.com/dms/image/v2/D5612AQHx_R0xA3X2oQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1729480091696?e=2147483647&v=beta&t=2MSeyu4F4aLJPnAC4Ii8lT3P6w410ywoUB1ikrk-yhg"
               }
+               className=" h-[21vh]"
             />
             <p className="flex justify-end">
               {price == 0 ? "FREE" : `$ ${price} per month`}{" "}
@@ -105,12 +106,13 @@ export const SubscriptionPopup = ({
               {!loading?"Select Plan":<span className={`${loading?"text-white":"text-white"}`}>Loading...</span>}
             </Button>
           </div>
-          <div className="sm:w-[46%] border p-4  sm:h-[45vh] space-y-4 bg-gray-200 rounded-md">
+          <div className="sm:w-[46%] border p-4  sm:h-[45vh] space-y-4 bg-gray-100 rounded-md">
             <h3 className="text-xl font-semibold">Hire to build</h3>
             <img
               src={
                 "https://media.licdn.com/dms/image/v2/D5612AQHx_R0xA3X2oQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1729480091696?e=2147483647&v=beta&t=2MSeyu4F4aLJPnAC4Ii8lT3P6w410ywoUB1ikrk-yhg"
               }
+              className=" h-[21vh]"
             />
             <p className="flex justify-end">Custom</p>
             <Button

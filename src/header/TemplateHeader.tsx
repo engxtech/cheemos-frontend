@@ -201,7 +201,7 @@ export const TemplateHeader = () => {
     localStorage.setItem("darkmode", checked.toString());
     updateBodyClass(checked);
   };
-  const [price, setPrice] = useState<number>(0);
+  const [price, setPrice] = useState<number>();
 
   const handleChange = (e) => {
     setPrice(e.target.value);

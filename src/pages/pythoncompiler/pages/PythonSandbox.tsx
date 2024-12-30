@@ -1,22 +1,29 @@
 import { useState } from "react";
 import { Terminal as TerminalIcon } from "lucide-react";
-import { Button } from "../components/Button";
+// import { Button } from "../components/Button";
 import { TextArea } from "../components/TextArea";
 import { Terminal } from "../components/Terminal";
 import { InputCollection } from "../components/InputCollection";
 import { usePythonExecution } from "../hooks/usePythonExecution";
-import { Input, message, Tabs } from "antd";
+import { Button, Input, message, Tabs } from "antd";
 import { useNavigate } from "react-router-dom";
 import AgentToolUsage from "../../tools/components/ToolUsage";
 import { InputList } from "../../tools/components/components/InputList";
 import { EditablePrompt } from "../../tools/components/components/EditablePrompt";
-import { BackupOutlined, ExitToAppOutlined, FullscreenExit, SkipPreviousOutlined, SkipPreviousRounded } from "@mui/icons-material";
+import {
+  BackupOutlined,
+  ExitToAppOutlined,
+  FullscreenExit,
+  PlayArrowOutlined,
+  SkipPreviousOutlined,
+  SkipPreviousRounded,
+} from "@mui/icons-material";
 
 const DEFAULT_CODE =
   '# Example: Multiple inputs\nname = input("What is your name? ")\nage = input("What is your age? ")\nprint("Hello {name}, you are {age} years old!")\n';
 
 export function PythonSandbox() {
-  const [code, setCode] = useState<string>('');
+  const [code, setCode] = useState<string>("");
   const {
     output,
     setOutput,
@@ -43,9 +50,7 @@ export function PythonSandbox() {
     value: string;
   }
 
-  const [inputs, setInputs] = useState<Input[]>([
-    { id: "input1", value: "" },
-  ]);
+  const [inputs, setInputs] = useState<Input[]>([{ id: "input1", value: "" }]);
 
   const handleInputChange = (id: string, value: string) => {
     setInputs(
@@ -96,17 +101,21 @@ export function PythonSandbox() {
       return;
     }
     const substitutedContent = inputs.reduce((text, input) => {
-      return text.replace(new RegExp(`\\{\\{${input.id}\\}\\}`, 'g'), input.value || `[${input.id}]`);
+      return text.replace(
+        new RegExp(`\\{\\{${input.id}\\}\\}`, "g"),
+        input.value || `[${input.id}]`
+      );
     }, code);
 
     const payload = {
       inputValue: substitutedContent,
     };
     // update this url
-    const url = "http://api-p-sirius.aqumenlabs.ai:3001/api/test_llm";
+    const url = "http://api-p-sirius.aqumenlabs.ai:8080/api/v1/tools/run_tool_llm";
     const response = await fetch(url, {
       method: "POST",
       headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
@@ -148,37 +157,29 @@ export function PythonSandbox() {
         <div className="max-w-4xl mx-auto space-y-2">
           <div className="flex justify-between items-center  mb-6">
             <div className="flex items-center gap-2">
-              <span className="w-8 h-8 text-blue-600 text-2xl cursor-pointer" onClick={()=>navigate('/tools')}> {"<"} </span>
+              <span
+                className="w-8 h-8 text-blue-600 text-2xl cursor-pointer"
+                onClick={() => navigate("/tools")}
+              >
+                {" "}
+                {"<"}{" "}
+              </span>
               <h1 className="text-xl  text-gray-800">Tool Writer</h1>
               <h1 className="text-sm italic hidden sm:block text-gray-600">
                 Write and test your tool here!
               </h1>
             </div>
 
-            <Button className="text-xs" onClick={() => saveTool()}>
+            <Button type="primary" className="text-xs" onClick={() => saveTool()}>
               Save Tool
             </Button>
           </div>
-
-          <Button
-            className={` ${type == "Python" ? "bg-blue-500" : "bg-blue-300"}`}
-            onClick={() => setType("Python")}
-          >
-            Python Code
-          </Button>
-          <Button
-            className={`ml-2 ${
-              type == "Python" ? "bg-blue-300" : "bg-blue-500"
-            }`}
-            onClick={() => setType("LLM")}
-          >
-            LLM Code
-          </Button>
 
           <Input
             placeholder="Enter Tool Name"
             value={toolName}
             onChange={(e) => setToolName(e.target.value)}
+            className="bg-gray-200"
           />
 
           {/* Input Box for Tool Description */}
@@ -186,7 +187,25 @@ export function PythonSandbox() {
             placeholder="Enter Tool Description"
             value={toolDescription}
             onChange={(e) => setToolDescription(e.target.value)}
+             className="bg-gray-200"
           />
+
+          <Button
+            className={`text-white  hover:bg-blue-400 ${
+              type == "Python" ? "bg-blue-700" : "bg-blue-400"
+            }`}
+            onClick={() => setType("Python")}
+          >
+            Python Tool
+          </Button>
+          <Button
+            className={`ml-2 text-white hover:bg-blue-400 ${
+              type == "Python" ? "bg-blue-400" : "bg-blue-700"
+            }`}
+            onClick={() => setType("LLM")}
+          >
+            LLM Tool
+          </Button>
           {/* {type=="LLM" && (
             <BoltNewTool/>
           )} */}
@@ -198,6 +217,7 @@ export function PythonSandbox() {
               }}
             />
           )}
+
           {type == "LLM" && (
             <div>
               {/* <TextArea
@@ -214,20 +234,24 @@ export function PythonSandbox() {
                 onRemoveInput={removeInput}
               />
               {""}
-              <span className="text-sm text-blue-500 mt-2 p-1  block">{"Write your prompt here... Use {{...}} to insert input variables"}</span>
+              <span className="text-sm text-blue-500 mt-2 p-1  block">
+                {
+                  "Write your prompt here... Use {{...}} to insert input variables"
+                }
+              </span>
               <EditablePrompt
                 value={code}
                 onChange={handlePromptChange}
                 onCursorChange={handleCursorChange}
                 placeholder="Write your prompt here... Use {{ to insert input variables"
               />
-              <Button className="mt-1" onClick={() => testLLM()}>
+              <Button  type='primary' className="mt-1" onClick={() => testLLM()}>
                 Test LLM{" "}
               </Button>
               <TextArea
                 value={llmResponse}
                 rows={8}
-                className="font-mono text-sm mt-2 text-gray-500"
+                className="font-mono text-sm mt-2 text-gray-200"
                 placeholder="Your prompt response will be shown here..."
               />
             </div>
@@ -239,7 +263,7 @@ export function PythonSandbox() {
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 rows={10}
-                className="font-mono text-sm"
+                className="font-mono text-sm bg-gray-300"
                 placeholder="Write your Python code here..."
               />
 
@@ -248,22 +272,23 @@ export function PythonSandbox() {
                   <Button
                     onClick={handleRunCode}
                     disabled={isRunning}
-                    variant="primary"
+                    // variant="primary"
+                    className=""
                   >
-                    {isRunning ? "Running..." : "Run Code"}
+                    <PlayArrowOutlined/> {isRunning ? "Running..." : "Run Code"}
                   </Button>
 
-                  <Button
+                  {/* <Button
                     onClick={() => {
                       setShowInputCollection(true);
                     }}
-                    variant="secondary"
+                    // variant="secondary"
                   >
                     Clear & Reset
-                  </Button>
+                  </Button> */}
                 </div>
 
-                <div className="bg-white shadow rounded-lg p-4">
+                <div className="bg-white shadow rounded-lg">
                   {/* <div className="mb-4">
                   <h2 className="font-semibold text-gray-900 mb-2">
                     Prepared Inputs
@@ -277,7 +302,7 @@ export function PythonSandbox() {
                   </div>
                 </div> */}
 
-                  <h2 className=" font-semibold text-gray-900 mb-4">Output</h2>
+                  <h2 className=" font-semibold text-gray-200 mb-4 mt-2">Output</h2>
                   <Terminal
                     output={output}
                     onInput={() => {}}

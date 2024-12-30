@@ -32,7 +32,7 @@ export function Terminal({ output, onInput, isWaitingForInput }: TerminalProps) 
   return (
     <div 
       ref={containerRef}
-      className="bg-gray-900 text-green-400 p-4 rounded-md font-mono text-sm whitespace-pre-wrap min-h-[200px] max-h-[400px] overflow-auto"
+      className="bg-gray-900 text-blue-400 p-4 rounded-md font-mono text-sm whitespace-pre-wrap min-h-[200px] max-h-[400px] overflow-auto"
     >
       <div>{output}</div>
       {isWaitingForInput && (

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from './Button';
 import { TextArea } from './TextArea';
+import { DeleteOutlineOutlined } from '@mui/icons-material';
+import { Delete } from 'lucide-react';
 
 interface InputCollectionProps {
   onInputsCollected: (inputs: string[]) => void;
@@ -31,8 +33,8 @@ export function InputCollection({ onInputsCollected }: InputCollectionProps) {
 
   return (
     <div className="space-y-4 text-sm">
-      <h2 className=" text-sm text-gray-900">Prepare Inputs</h2>
-      <p className="text-sm text-gray-600">Add all the inputs your code will need in order:</p>
+      {/* <h2 className=" text-sm text-gray-900">Prepare Inputs</h2> */}
+      <p className="text-sm text-gray-300">Add all the inputs your code will need in order:</p>
       
       {inputs.map((input, index) => (
         <div key={index} className="flex gap-2 items-start">
@@ -45,17 +47,17 @@ export function InputCollection({ onInputsCollected }: InputCollectionProps) {
             />
           </div>
           <Button
-            variant="secondary"
+            variant="primary"
             onClick={() => removeInput(index)}
-            className="mt-1"
+            className="mt-1 text-white"
           >
-            Remove
+            <Delete/>
           </Button>
         </div>
       ))}
       
       <div className="flex gap-4">
-        <Button variant="secondary" onClick={addInput}>
+        <Button variant="primary" onClick={addInput}>
           Add Input
         </Button>
         <Button variant="primary" onClick={handleSubmit}>

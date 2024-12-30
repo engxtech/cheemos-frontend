@@ -35,6 +35,8 @@ export default function InitialChatPage2() {
   const togglePanel = (panel: string) => {
     setActivePanel(panel);
   };
+  const [refresh, setRefresh] = useState(false);
+
 const navigate =useNavigate();
   return (
     <div className="h-full w-full text-sm">
@@ -77,12 +79,14 @@ const navigate =useNavigate();
         {/* Main content area */}
         <div className="w-full sm:w-[52vw]">
           {activePanel === 'chats' && (
-            <Session sessionList={sessionList} setSessionList={setSessionList} />
+            <Session sessionList={sessionList} setSessionList={setSessionList} refresh={refresh} setRefresh={setRefresh} />
           )}
           {activePanel === 'chats' && (
             <InputPanel
               sessionList={sessionList}
               setSessionList={setSessionList}
+              setRefresh={setRefresh}
+              refresh={refresh}
             />
           )}
         </div>

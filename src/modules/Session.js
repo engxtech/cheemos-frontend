@@ -29,6 +29,8 @@ const Division = styled(ScrollToBottom)(({ theme }) => ({
 
 function Session(props) {
   const { sessionList } = props;
+  const { refresh,setRefresh } = props;
+
   const chatId = useParams().chatId;
   //integrate socket
   const url =
@@ -37,19 +39,19 @@ function Session(props) {
     localStorage.getItem("token") +
     "&chatId=" +
     chatId;
-  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
     const socket = new WebSocket(url);
 
     socket.onmessage = (event) => {
       const data = event.data;
-      message.success("Connected and received data: " + data);
-      loadChat();
-      setRefresh(!refresh);
+      console.log("Connected and received data: " + data);
+      setRefresh(false);
+      refreshChat();
     };
 
     socket.onopen = () => {
-      message.success("Connected to the server");
+      console.log("Connected to the server");
     };
 
     socket.onerror = (error) => {
@@ -69,12 +71,10 @@ function Session(props) {
     };
   }, []);
 
-  console.log({ props });
-
   const [chats, setChats] = useState([]);
-  const [loading,setLoading] =useState(true)
+  const [loading, setLoading] = useState(true);
   const loadChat = async () => {
-    setLoading(true)
+    setLoading(true);
     const url =
       process.env.REACT_APP_API_URL + `/api/v1/chat/${chatId}/messages`;
 
@@ -86,32 +86,52 @@ function Session(props) {
     });
     if (response.ok) {
       const data = await response.json();
-      setChats(data.data.content.reverse().slice(1));
+      setChats(data.data.content.reverse());
     }
-    setLoading(false)
+    setLoading(false);
   };
-  const refresh1 = useSelector((state) => state.refresh);
+
+  const refreshChat = async () => {
+    const url =
+      process.env.REACT_APP_API_URL + `/api/v1/chat/${chatId}/messages`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setChats(data.data.content.reverse());
+    }
+  };
+
+  useEffect(() => {
+    refreshChat();
+  }, [refresh]);
+
   useEffect(() => {
     loadChat();
-  }, [chatId, refresh, refresh1]);
+  }, [chatId]);
+
   const darkMode = localStorage.getItem("darkmode") === "true";
-  if(loading){
-    return   <div
-    className={`sm:h-[78vh] h-[75vh] p-3  flex items-center justify-center overflow-y-auto rounded-md space-y-2 ${
-      darkMode
-        ? "text-gray-200 bg-white"
-        : "text-gray-600  bg-white"
-    }`}
-  ><Spin className="mr-2"/>
-    
-    Loading...</div>
+  if (loading) {
+    return (
+      <div
+        className={`sm:h-[78vh] h-[75vh] p-3  flex items-center justify-center overflow-y-auto rounded-md space-y-2 ${
+          darkMode ? "text-gray-200 bg-white" : "text-gray-600  bg-white"
+        }`}
+      >
+        <Spin className="mr-2" />
+        Loading...
+      </div>
+    );
   }
   return (
     <div
       className={`sm:h-[78vh] h-[75vh] p-3 overflow-y-auto rounded-md space-y-2 ${
-        darkMode
-          ? "text-gray-200 bg-white"
-          : "text-gray-600  bg-white"
+        darkMode ? "text-gray-200 bg-white" : "text-gray-600  bg-white"
       }`}
     >
       <Division>
@@ -149,8 +169,12 @@ function Session(props) {
               key={chat.id}
               className={`px-3 max-w-[80%] rounded-lg mb-2 ${
                 chat.role === "system"
-                  ? darkMode?"bg-gray-800 text-gray-300 self-start p-3" :" bg-blue-50 text-blue-900 self-start p-3"
-                  : darkMode?"bg-blue-600 text-gray-200 self-end":"bg-gray-100 text-green-900 self-end"
+                  ? darkMode
+                    ? "bg-gray-800 text-gray-300 self-start p-3"
+                    : " bg-blue-50 text-blue-900 self-start p-3"
+                  : darkMode
+                  ? "bg-blue-600 text-gray-200 self-end"
+                  : "bg-gray-100 text-green-900 self-end"
               }
               `}
             >
@@ -171,7 +195,11 @@ function Session(props) {
                   </p>
                 )
               )}
-              <span className={`text-xs ${darkMode?"text-gray-400":"text-gray-500 "}` }>
+              <span
+                className={`text-xs ${
+                  darkMode ? "text-gray-400" : "text-gray-500 "
+                }`}
+              >
                 {new Date(chat.createdAt).toLocaleTimeString()}
               </span>
             </div>

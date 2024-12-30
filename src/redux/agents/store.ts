@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { setCreateAgent, setEditing, setRefresh } from "./action";
 import image1 from "../../assets/Aatar.png";
+import { ToolDto } from "../tools/store";
 export interface Agent {
     id?: string;
     name: string;
@@ -14,6 +15,7 @@ export interface Agent {
     };
     iconName:string;
     toolsList?: number[];
+    toolsListCore?:ToolDto[]; // for setting core instructions only!
     subAgents?: number[];
     customProperties?: Record<string, any>;
     toolRetries?: number;

@@ -77,9 +77,9 @@ const NewChat: React.FC = () => {
             className="ml-0 md:ml-2 border hover:bg-gray-600"
             onClick={() => handleFirstSend()}
             loading={loading}
-            disabled={loading}
+            disabled={loading || prompts === ""}
             icon={
-              <span className="material-icons border rounded-md p-1 ml-1">
+              <span className="material-icons border text-white bg-gray-200 rounded-md p-1 ml-1">
                 <SendOutlined />
               </span>
             }

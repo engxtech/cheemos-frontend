@@ -23,6 +23,7 @@ import store from "./redux";
 import PaymentPage from "./pages/payments/VerifyPayment";
 import { PythonSandbox } from "./pages/pythoncompiler/pages/PythonSandbox";
 import { OneTool } from "./pages/tools/OneTool";
+import SettingsPage from "./pages/settings/SettingsPage";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100vw", // Corrected from "100wh" to "100vw" for width
@@ -84,6 +85,7 @@ function App() {
               <Route path="/agents/create-agent/*" element={<CreateAgent />} />
               <Route path="/onboarding" element={<RightSignUp />} />
               <Route path="/signup" element={<MultiStepForm />} />
+              <Route path="/settings" element={<SettingsPage />} />
               <Route path="/payment/:agentId/:cloneType/*" element={<PaymentPage />} />
             </Routes>
           </Root>
