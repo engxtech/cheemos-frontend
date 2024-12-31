@@ -70,7 +70,9 @@ const AgentsDashboard = () => {
     }
   };
   const editAgent = (agent) => {
+  
     const ids = agent.toolsList.map(tool => tool.id);
+    // call that api and set the value then!
     dispatch(setEditing(true));
     dispatch(
       setCreateAgent({
