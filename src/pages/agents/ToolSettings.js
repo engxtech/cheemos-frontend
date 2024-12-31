@@ -1,8 +1,9 @@
-import { Card, Skeleton } from "antd";
+import { Button, Card, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateAgent } from "../../redux/agents/action";
 import { AddOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const ToolSettingsAgent = () => {
   const [tools, setTools] = useState([]);
@@ -11,7 +12,7 @@ const ToolSettingsAgent = () => {
   const [refresh, setRefresh] = useState(false);
   const dispatch = useDispatch();
   const createAgent = useSelector((state) => state.agents.agent);
-
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   // Filter tools to match the IDs in toolsListIds and set the toolsList
@@ -55,6 +56,7 @@ const ToolSettingsAgent = () => {
         setCreateAgent({
           ...createAgent,
           toolsList: updatedToolsListIds,
+          toolsListCore:updatedToolsList //adding for frontend purpose in core instructions
         })
       );
     }
@@ -68,6 +70,7 @@ const ToolSettingsAgent = () => {
       setCreateAgent({
         ...createAgent,
         toolsList: updatedToolsListIds,
+        toolsListCore:updatedToolsList
       })
     );
   };
@@ -170,6 +173,22 @@ const ToolSettingsAgent = () => {
                   )}
                 </div>
               ))}
+        </div>
+        <div className="p-6 flex  justify-center space-x-2 border-t border-gray-500 ">
+          <Button
+            type="primary"
+            className="bg-blue-500"
+            onClick={() => navigate("../instructions")}
+          >
+            Prev
+          </Button>
+          <Button
+            type="primary"
+            className="bg-blue-500"
+            onClick={() => navigate("../configure-templates")}
+          >
+            Next
+          </Button>
         </div>
       </main>
     </div>

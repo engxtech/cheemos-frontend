@@ -14,17 +14,13 @@ const { Sider, Content } = Layout;
 
 // Main Page Layout
 export const CreateAgent = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(false); // To manage sidebar state in mobile view
+  const [ sidebarVisible, setSidebarVisible ] = useState(false);// To manage sidebar state in mobile view
 
-  // Toggle sidebar visibility
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
   return (
     <Layout className="h-screen p-4  bg-gray-50 rounded-md">
-      <Sidebar setSidebarVisible={setSidebarVisible}/>
+      <Sidebar sidebarVisible={sidebarVisible} setSidebarVisible={setSidebarVisible}/>
       <Routes>
-        <Route path="/" element={sidebarVisible ? null : <AgentProfile />} />
+        <Route path="/" element={sidebarVisible ? null : <AgentProfile/>} />
         <Route
           path="/profile"
           element={sidebarVisible ? null : <AgentProfile />}

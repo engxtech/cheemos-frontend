@@ -80,6 +80,7 @@ const AgentsDashboard = () => {
         iconName: agent.iconName,
         customProperties: agent.customProperties,
         toolsList: ids,
+        toolsListCore:agent.toolsList,
         description: agent.description,
         coreInstructions: {
           _SYSTEM_CORE_INSTRUCTIONS_PROMPT:

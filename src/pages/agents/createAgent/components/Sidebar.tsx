@@ -6,8 +6,10 @@ import Sider from "antd/es/layout/Sider";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux";
 import BiMap from "../../../../utils/BiMap";
+import { MenuOpenOutlined, MenuOutlined } from "@mui/icons-material";
+import { useMediaQuery } from "react-responsive";
 
-export const Sidebar = ({setSidebarVisible}) => {
+export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
   const navigate = useNavigate();
   const editing = useSelector((state: RootState) => state.agents.editing);
   const CreateAgent = useSelector((State: RootState) => State.agents.agent);
@@ -38,29 +40,39 @@ export const Sidebar = ({setSidebarVisible}) => {
   prmMpKey.addMapping(6, "configure-templates");
   prmMpKey.addMapping(7, "subagents");
   const location = useLocation();
-  const match = location.pathname.match(/\/agents\/create-agent\/([^/]+)(?=\/|$)/);
+  const match = location.pathname.match(
+    /\/agents\/create-agent\/([^/]+)(?=\/|$)/
+  );
   const section = match ? match[1] : null;
-
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
   let defMenuKey = prmMpKey.getNumber(section) || 1;
+  // add a condition to check if this mobile view or not
   return (
     <Sider
       width={245}
       // className="border-r border-gray-300"
       breakpoint="lg"
       collapsedWidth="0"
+      collapsed={!sidebarVisible && !isDesktop} // check if desktop view then it should not collapse
       onCollapse={(collapsed) => setSidebarVisible(!collapsed)}
+      trigger={
+          <MenuOutlined style={{ fontSize: "36px" }} /> // Default icon when expanded
+      }
     >
       <Menu
         mode="inline"
         theme="dark"
         selectedKeys={[defMenuKey.toString()]}
-        style={{backgroundColor: "#1f1f1f" }}
+        style={{ backgroundColor: "#1f1f1f" }}
         className="h-[96vh]  shadow-md  border py-10 text-[0.9rem] "
       >
         <Menu.Item
           key="1"
           icon={<InboxOutlined />}
-          onClick={() => navigate("./profile")}
+          onClick={() => {
+            navigate("./profile");
+            setSidebarVisible(false);
+          }}
         >
           Agent profile
         </Menu.Item>
@@ -70,14 +82,20 @@ export const Sidebar = ({setSidebarVisible}) => {
         <Menu.Item
           key="2"
           icon={<SettingOutlined />}
-          onClick={() => navigate("./instructions")}
+          onClick={() => {
+            navigate("./instructions");
+            setSidebarVisible(false);
+          }}
         >
           Instructions
         </Menu.Item>
         <Menu.Item
           key="3"
           icon={<SettingOutlined />}
-          onClick={() => navigate("./flow")}
+          onClick={() => {
+            navigate("./flow");
+            setSidebarVisible(false);
+          }}
         >
           Flow builder
         </Menu.Item>
@@ -88,21 +106,30 @@ export const Sidebar = ({setSidebarVisible}) => {
           key="4"
           icon={<SettingOutlined />}
           className=""
-          onClick={() => navigate("./settings")}
+          onClick={() => {
+            navigate("./settings");
+            setSidebarVisible(false);
+          }}
         >
           Advanced settings
         </Menu.Item>
         <Menu.Item
           key="5"
           icon={<SettingOutlined />}
-          onClick={() => navigate("./tools")}
+          onClick={() => {
+            navigate("./tools");
+            setSidebarVisible(false);
+          }}
         >
           Tools
         </Menu.Item>
         <Menu.Item
           key="7"
           icon={<SettingOutlined />}
-          onClick={() => navigate("./subagents")}
+          onClick={() => {
+            navigate("./subagents");
+            setSidebarVisible(false);
+          }}
         >
           SubAgents
         </Menu.Item>
@@ -110,7 +137,10 @@ export const Sidebar = ({setSidebarVisible}) => {
         <Menu.Item
           key="6"
           icon={<SettingOutlined />}
-          onClick={() => navigate("./configure-templates")}
+          onClick={() => {
+            navigate("./configure-templates");
+            setSidebarVisible(false);
+          }}
         >
           Abilities
         </Menu.Item>

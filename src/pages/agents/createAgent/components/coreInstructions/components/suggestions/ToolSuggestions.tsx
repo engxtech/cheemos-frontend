@@ -11,14 +11,15 @@ interface ToolSuggestionsProps {
 export function ToolSuggestions({ agent, onSelect }: ToolSuggestionsProps) {
   return (
     <div className="absolute left-0 right-0 mt-1 bg-gray-800 border border-gray-700 rounded-md shadow-lg max-h-60 overflow-auto z-50">
-      {agent.toolsList?.map((tool) => (
+      {agent.toolsListCore?.map((tool) => (
         <button
-          key={tool}
+          key={tool.id}
           onClick={() => {
             const key1: Tool = {
-              name: tool.toString(), // Assign the key as key
-              id: "", // You can set this dynamically based on your needs
-              description: "", // You can set this dynamically based on your needs
+              name: tool.name ,
+              toolType:tool.toolType, // Assign the key as key
+              id: tool.id || "", // You can set this dynamically based on your needs
+              description:tool.description, // You can set this dynamically based on your needs
             };
             onSelect(key1); // Passing the key1 object to the onSelect function
           }}
@@ -27,7 +28,7 @@ export function ToolSuggestions({ agent, onSelect }: ToolSuggestionsProps) {
           <Command className="w-4 h-4 text-gray-400" />
           <div>
             {/* <div className="text-sm font-medium text-gray-100">{tool.name}</div> */}
-            <div className="text-xs text-gray-400">{tool}</div>
+            <div className="text-xs text-gray-400">{tool.name}</div>
           </div>
         </button>
       ))}

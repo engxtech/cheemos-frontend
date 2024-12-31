@@ -4,11 +4,11 @@ import InitialChatPage2 from "../pages/chat/ChatPageMain";
 import InitialChatPage from "../pages/chat/NewChat";
 
 export default function AgentContent() {
-   return(
-          <Routes>
-            {/* <Route path="/tools/*" element={<ToolSettings />} /> */}
-            <Route path="/new" element={<InitialChatPage />} />
-            <Route path="/:chatId" element={<InitialChatPage2 />} />
-          </Routes>
-   )
+  return (
+      <Routes>
+        {/* <Route path="/tools/*" element={<ToolSettings />} /> */}
+        <Route path="/new" element={<InitialChatPage />} />
+        <Route path="/:chatId" element={<InitialChatPage2 />} />
+      </Routes>
+  );
 }

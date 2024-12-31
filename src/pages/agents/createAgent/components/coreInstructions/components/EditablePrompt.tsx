@@ -1,8 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCreateAgent } from '../../../../../../redux/agents/action';
-import { RootState } from '../../../../../../redux';
-import TextArea from 'antd/es/input/TextArea';
 
 interface EditablePromptProps {
   value: string | undefined;
@@ -21,7 +17,6 @@ export function EditablePrompt({
 }: EditablePromptProps) {
   const editorRef = useRef<HTMLDivElement>(null);
 
-  // Update the contentEditable element with formatted HTML
   useEffect(() => {
     if (!editorRef.current) return;
 
@@ -46,7 +41,6 @@ export function EditablePrompt({
       let targetNode: Node | null = null;
       let targetOffset = 0;
 
-      // Find target node and set the cursor position
       const findTargetNode = (node: Node) => {
         if (currentLength >= cursorPosition) {
           return;
@@ -79,10 +73,6 @@ export function EditablePrompt({
     }
   }, [value, cursorPosition]);
 
-  const dispatch = useDispatch();
-  const createAgent = useSelector((state: RootState) => state.agents.agent);
-
-  // Handle input changes and update state
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
     const text = Array.from(e.currentTarget.childNodes)
       .map((node) => {
@@ -117,22 +107,36 @@ export function EditablePrompt({
     }
   };
 
-  // Handle Enter key press for adding new line
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
-      event.preventDefault(); // Prevent default behavior (inserting new line)
+      event.preventDefault();
 
       const selection = window.getSelection();
-      if (selection && value) {
-        const position = selection.focusOffset;
+      if (selection && value !== undefined) {
+        // Calculate the current cursor position
+        let position = 0;
+        let currentNode = editorRef.current?.firstChild;
+
+        while (currentNode && currentNode !== selection.focusNode) {
+          if (currentNode.nodeType === Node.TEXT_NODE) {
+            position += currentNode.textContent?.length || 0;
+          } else if (currentNode instanceof HTMLElement) {
+            position += currentNode.textContent?.length || 0;
+          }
+          currentNode = currentNode.nextSibling;
+        }
+
+        position += selection.focusOffset;
+
+        // Insert new line at the current cursor position
         const before = value.slice(0, position);
         const after = value.slice(position);
-        const newText = `${before}\n${after}`; // Insert new line
-
-        onChange(newText); // Update the text with a new line
-
-        // Update cursor position after the new line
-        onCursorChange(position + 1); // Move cursor to the next line
+        const newText = `${before}\n${after}`;
+        
+        onChange(newText);
+        
+        // Update cursor position to after the new line
+        onCursorChange(position + 1);
       }
     }
   };

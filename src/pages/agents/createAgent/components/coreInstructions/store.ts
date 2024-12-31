@@ -7,6 +7,7 @@ export interface Input {
   export interface Tool {
     id: string;
     name: string;
+    toolType: string;
     description: string;
   }
   

@@ -19,27 +19,27 @@ const AgentProfileForm = () => {
   const images = [image1, image2, image3, image4, image5];
 
   const handleImageSelect = (image: string) => {
-     dispatch(setCreateAgent({
-      ...createAgent,
-      iconName: image,
-     }))
+    dispatch(
+      setCreateAgent({
+        ...createAgent,
+        iconName: image,
+      })
+    );
   };
   return (
     <div className="sm:p-6 text-white">
       <div className="sm:flex flex-wrap items-center space-x-4 mb-6 p-4 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all">
-      
         <div className="flex justify-between">
-        <Avatar
-          size={64}
-          src={createAgent.iconName}
-          icon={<VerifiedUserRounded />}
-          className="transition-all ease-in-out duration-300"
-        />
-        <div className="ml-4" >
-        <h2 className="text-xl font-semibold">Agent profile</h2>
-        <p className="text-gray-500 mt-2">Describe what this agent does.</p>
-        </div>
-      
+          <Avatar
+            size={64}
+            src={createAgent.iconName}
+            icon={<VerifiedUserRounded />}
+            className="transition-all ease-in-out duration-300"
+          />
+          <div className="ml-4">
+            <h2 className="text-xl font-semibold">Agent profile</h2>
+            <p className="text-gray-500 mt-2">Describe what this agent does.</p>
+          </div>
         </div>
         <div className="flex space-x-4  p-2 rounded-md">
           {images.map((image, index) => (
@@ -136,10 +136,14 @@ export default function AgentProfile() {
           </div>
         </div>
 
-        <div className="p-6 border-t border-gray-500 ">
-          {/* <Button type="primary" className="bg-blue-500" onClick={()=>navigate('../instructions')}>
-            Confirm & continue
-          </Button> */}
+        <div className="p-6 flex  justify-center space-x-2 border-t border-gray-500 ">
+          <Button
+            type="primary"
+            className="bg-blue-500"
+            onClick={() => navigate("../instructions")}
+          >
+            Next
+          </Button>
         </div>
       </Content>
     </Layout>

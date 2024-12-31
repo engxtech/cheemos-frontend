@@ -9,6 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { setCreateAgent } from "../../redux/agents/action";
+import { useNavigate } from "react-router-dom";
 
 const ConfigureTemplateSettings = () => {
   // const [customProperties, setCustomProperties] = useState<Record<string, any>>({});
@@ -16,6 +17,7 @@ const ConfigureTemplateSettings = () => {
   const customProperties: Record<string, any> = useSelector(
     (state: RootState) => state.agents.agent?.customProperties || {}
   );
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedKey, setSelectedKey] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
@@ -91,10 +93,10 @@ const ConfigureTemplateSettings = () => {
     // "OAuth account",
     // "Tool approval",
   ];
-
+  
   return (
     <div
-      className={`border p-6 flex justify-center items-start h-[96vh] w-full ${
+      className={`border p-6 flex justify-center items-start sm:h-[96vh] w-full ${
         isDarkMode ? "bg-gray-100 text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
@@ -157,6 +159,22 @@ const ConfigureTemplateSettings = () => {
               </div>
             ))}
           </div>
+        </div>
+        <div className="p-6 flex  justify-center space-x-2 border-t border-gray-500 ">
+          <Button
+            type="primary"
+            className="bg-blue-500"
+            onClick={() => navigate("../instructions")}
+          >
+            Prev
+          </Button>
+          <Button
+            type="primary"
+            className="bg-blue-500"
+            onClick={() => navigate("../configure-templates")}
+          >
+            Next
+          </Button>
         </div>
       </div>
 

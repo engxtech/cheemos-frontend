@@ -19,7 +19,6 @@ export function PromptInput({ agent }: PromptInputProps) {
   const [cursorPosition, setCursorPosition] = useState(createAgent.coreInstructions?._SYSTEM_CORE_INSTRUCTIONS_PROMPT?.length || 0);
   const dispatch = useDispatch();
   const handlePromptChange = (value: string) => {
-    setCursorPosition(createAgent.coreInstructions?._SYSTEM_CORE_INSTRUCTIONS_PROMPT?.length || 0);
     dispatch(
       setCreateAgent({
         ...createAgent,
@@ -30,14 +29,22 @@ export function PromptInput({ agent }: PromptInputProps) {
         toolRetries: 3,
       })
     );
-
-    if (value.endsWith("/")) {
+    setCursorPosition(value.length || 0); //can be removed too
+    
+    // #change this condition to show when the value at cursor postion is / or {{
+    if (value.charAt(cursorPosition) === '/') {
       setShowTools(true);
       setShowVariables(false);
       return;
     }
 
-    if (value.endsWith("{{")) {
+    if (value.charAt(cursorPosition) === '/') {
+      setShowTools(true);
+      setShowVariables(false);
+      return;
+    }
+
+    if (value.charAt(cursorPosition) === '@') {
       setShowVariables(true);
       setShowTools(false);
       return;
@@ -55,7 +62,7 @@ export function PromptInput({ agent }: PromptInputProps) {
     const before =
       createAgent.coreInstructions?._SYSTEM_CORE_INSTRUCTIONS_PROMPT?.slice(
         0,
-        cursorPosition - 2
+        cursorPosition - 1
       ) || "";
     const after =
       createAgent.coreInstructions?._SYSTEM_CORE_INSTRUCTIONS_PROMPT?.slice(
@@ -87,7 +94,7 @@ export function PromptInput({ agent }: PromptInputProps) {
       createAgent.coreInstructions?._SYSTEM_CORE_INSTRUCTIONS_PROMPT?.slice(
         cursorPosition
       ) || "";
-    const toolText = `[${tool.name}]`;
+    const toolText = `[${tool.name} tool(Node Type:${tool.toolType})]`;
     const newPrompt = `${before}${toolText}${after}`;
     dispatch(
       setCreateAgent({
