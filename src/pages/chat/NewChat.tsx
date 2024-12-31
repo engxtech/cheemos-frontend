@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import TasksPanel from "./LeftPanel";
-import NewChat from "../../modules/NewChat";
+import NewChat from "./modules/NewChat";
 import PropertiesPanel from "./Properties";
 import { Button } from "antd";
 import { CloseOutlined } from "@mui/icons-material";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Session from "../../modules/Session";
-import InputPanel from "../../modules/InputPanel";
+import Session from "./modules/Session";
+import InputPanel from "./modules/InputPanel";
 import PropertiesPanel from "./Properties";
 import TasksPanel from "./LeftPanel";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";

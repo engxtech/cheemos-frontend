@@ -10,10 +10,10 @@ import IconButton from "@mui/joy/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
-import { sendPrompts } from "../interface/api";
+import { sendPrompts } from "../../../interface/api";
 import { message } from "antd";
 import { useParams } from "react-router-dom";
-import { setRefresh } from "../redux/agents/action";
+import { setRefresh } from "../../../redux/agents/action";
 import { useDispatch, useSelector } from "react-redux";
 import { MusicNoteOutlined, RunCircle, StopCircleRounded } from "@mui/icons-material";
 
@@ -162,7 +162,7 @@ function InputPanel(props) {
     });
     if(response.ok){
       const data = await response.json();
-      message.success("Successfully sent message");
+      // message.success("Successfully sent message");
       setRefresh(true)
     }
     setPrompts('')
@@ -224,8 +224,8 @@ function InputPanel(props) {
         <input {...getInputProps()} />
         <WrapTextarea
           color="neutral"
-          minRows={4}
-          maxRows={4}
+          minRows={3}
+          maxRows={3}
           sx={{
             backgroundColor: isDragActive
               ? "var(--joy-palette-neutral-400)"

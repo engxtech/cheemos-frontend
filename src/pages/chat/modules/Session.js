@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/joy/styles";
-import Bubble from "../interface/Bubble";
-import Banner from "../interface/Banner";
-import Sequence from "../interface/Step";
+import Bubble from "../../../interface/Bubble";
+import Banner from "../../../interface/Banner";
+import Sequence from "../../../interface/Step";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { useParams } from "react-router-dom";
 import io from "socket.io-client";
-import { message, Spin } from "antd";
+import { Button, message, Spin } from "antd";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useSelector } from "react-redux";
@@ -29,7 +29,7 @@ const Division = styled(ScrollToBottom)(({ theme }) => ({
 
 function Session(props) {
   const { sessionList } = props;
-  const { refresh,setRefresh } = props;
+  const { refresh, setRefresh } = props;
 
   const chatId = useParams().chatId;
   //integrate socket
@@ -72,9 +72,13 @@ function Session(props) {
   }, []);
 
   const [chats, setChats] = useState([]);
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [maxPage, setMaxPage] = useState(0);
   const loadChat = async () => {
     setLoading(true);
+    setPage(0);
     const url =
       process.env.REACT_APP_API_URL + `/api/v1/chat/${chatId}/messages`;
 
@@ -103,9 +107,30 @@ function Session(props) {
     });
     if (response.ok) {
       const data = await response.json();
+      setPage(0);
+      setMaxPage(data.data.page.totalPages);
       setChats(data.data.content.reverse());
     }
   };
+  const loadMoreChat = async () => {
+    setLoadingMore(true);
+    const url =
+      process.env.REACT_APP_API_URL +
+      `/api/v1/chat/${chatId}/messages?page=${page+1}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setChats([...data.data.content.reverse(),...chats]);
+      setPage(page + 1);
+    }
+    setLoadingMore(false);
+  }
 
   useEffect(() => {
     refreshChat();
@@ -134,6 +159,8 @@ function Session(props) {
         darkMode ? "text-gray-200 bg-white" : "text-gray-600  bg-white"
       }`}
     >
+      
+      {maxPage>page+1 && <Button type="primary" onClick={loadMoreChat}>{loadingMore ? "Loading... ": "Load More"}</Button>}
       <Division>
         {/* {sessionList.map((item, index) =>
         item.type === "Bubble"
@@ -200,7 +227,7 @@ function Session(props) {
                   darkMode ? "text-gray-400" : "text-gray-500 "
                 }`}
               >
-                {new Date(chat.createdAt).toLocaleTimeString()}
+               {new Date(new Date(chat.createdAt).getTime() + 5.5 * 60 * 60 * 1000).toLocaleTimeString('en-IN')}
               </span>
             </div>
           );
