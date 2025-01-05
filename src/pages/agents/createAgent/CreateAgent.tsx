@@ -17,7 +17,7 @@ export const CreateAgent = () => {
   const [ sidebarVisible, setSidebarVisible ] = useState(false);// To manage sidebar state in mobile view
 
   return (
-    <Layout className="h-screen p-4  bg-gray-50 rounded-md">
+    <Layout className="h-screen sm:p-3 p-1 bg-gray-50 rounded-md">
       <Sidebar sidebarVisible={sidebarVisible} setSidebarVisible={setSidebarVisible}/>
       <Routes>
         <Route path="/" element={sidebarVisible ? null : <AgentProfile/>} />

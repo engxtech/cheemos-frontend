@@ -16,7 +16,6 @@ import { defaultAgent } from "../redux/agents/store";
 
 export const AgentHeader = () => {
   const [visible, setVisible] = useState(false);
-  const [drawerVisible, setDrawerVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (

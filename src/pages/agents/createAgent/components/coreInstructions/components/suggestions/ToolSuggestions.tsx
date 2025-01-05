@@ -10,7 +10,7 @@ interface ToolSuggestionsProps {
 
 export function ToolSuggestions({ agent, onSelect }: ToolSuggestionsProps) {
   return (
-    <div className="absolute left-0 right-0 mt-1 bg-gray-800 border border-gray-700 rounded-md shadow-lg max-h-60 overflow-auto z-50">
+    <div className="absolute left-0 right-0 mt-1 bg-gray-800 border border-gray-700 sm:max-w-[20vw] rounded-md shadow-lg max-h-60 overflow-auto z-50">
       {agent.toolsListCore?.map((tool) => (
         <button
           key={tool.id}

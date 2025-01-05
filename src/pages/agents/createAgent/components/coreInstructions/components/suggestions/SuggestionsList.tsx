@@ -14,7 +14,7 @@ export function SuggestionsList({ agent, onSelect }: SuggestionsListProps) {
     console.log(coreInstructionKeys)
     console.log(agent.coreInstructions)
   return (
-    <div className="absolute left-0 right-0 mt-1 bg-gray-800 border border-gray-700 rounded-md shadow-lg overflow-hidden">
+    <div className="absolute left-0 right-0 mt-1 bg-gray-800 border sm:max-w-[20vw] border-gray-700 rounded-md shadow-lg overflow-hidden">
       {coreInstructionKeys.map((key) => (
         <button
           key={key} // Using the key as the key for each list item

@@ -13,10 +13,10 @@ const CoreInstructions = () => {
   let createAgent:Agent = useSelector((state: RootState) => state.agents.agent);
   const navigate = useNavigate();
   return (
-    <div className="border bg-gray-300 flex w-full justify-center ">
+    <div className="sm:border border-gray-500 h-[97vh] bg-gray-300 flex w-full justify-center ">
       <div className="bg-white  shadow-sm p-5 w-full ">
         <h2 className="text-2xl font-semibold text-gray-400 mb-2">Core Instructions</h2>
-        <p className="text-sm text-gray-500 mb-2">
+        <p className="text-sm hidden sm:block text-gray-500 mb-2">
           Describe how your agent should work. It's recommended to provide examples of tasks it might receive and what to do.
         </p>
         <p className="text-sm text-gray-400 mb-4 italic">

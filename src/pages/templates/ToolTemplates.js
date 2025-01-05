@@ -22,7 +22,7 @@ const ToolTemplates = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setTemplates(data);
+        setTemplates(data.data.content);
       }
       setLoading(false);
     };

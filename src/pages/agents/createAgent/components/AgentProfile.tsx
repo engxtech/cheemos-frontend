@@ -28,7 +28,7 @@ const AgentProfileForm = () => {
   };
   return (
     <div className="sm:p-6 text-white">
-      <div className="sm:flex flex-wrap items-center space-x-4 mb-6 p-4 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all">
+      <div className="sm:flex flex-wrap items-center space-x-4 mb-6 p-2 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all">
         <div className="flex justify-between">
           <Avatar
             size={64}
@@ -122,7 +122,7 @@ export default function AgentProfile() {
   const navigate = useNavigate();
   return (
     <Layout>
-      <Content className="bg-white border p-4">
+      <Content className="bg-white sm:border border-gray-500 p-4">
         <div className="border-b border-gray-500 p-6 mt-2">
           <h1 className="text-2xl font-bold">Agent profile</h1>
         </div>
@@ -136,7 +136,7 @@ export default function AgentProfile() {
           </div>
         </div>
 
-        <div className="p-6 flex  justify-center space-x-2 border-t border-gray-500 ">
+        <div className="p-2 flex  justify-center space-x-2 border-t border-gray-500 ">
           <Button
             type="primary"
             className="bg-blue-500"

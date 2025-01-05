@@ -7,7 +7,7 @@ export default function ReactFlow() {
   return (
     <div>
       <ReactFlowProvider>
-        <div className="w-full border py-3">
+        <div className="w-full h-[97vh] sm:border border-gray-500 py-3">
           <PipelineToolbar />
           <PipelineUI />
           <SubmitButton />

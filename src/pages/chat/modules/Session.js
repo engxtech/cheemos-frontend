@@ -49,7 +49,7 @@ function Session(props) {
       setRefresh(false);
       refreshChat();
     };
-
+    
     socket.onopen = () => {
       console.log("Connected to the server");
     };

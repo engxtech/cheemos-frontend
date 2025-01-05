@@ -162,11 +162,6 @@ const ToolsGrid = () => {
       <div className="bg-black h-screen fixed top-0 left-0 right-0 z-10">
         <ToolHeader />
         <EmptyContent message="No Tools Found" />
-        {/* <div className="bg-black flex-1 overflow-y-auto p-4">
-          <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2 overflow-auto scroll ">
-            <div className="text-gray-300 text-center">No Tools Found</div>
-          </div>
-        </div> */}
       </div>
     );
   }
@@ -175,7 +170,7 @@ const ToolsGrid = () => {
     <div className="bg-black h-screen fixed top-0 left-0 right-0 z-10">
       <ToolHeader />
       <div className="bg-black flex-1 overflow-y-auto p-4">
-        <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2 overflow-auto scroll ">
+        <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2 overflow-auto scroll">
           {tools.map((tool, index) => (
             <ToolCard
               id={tool.id}

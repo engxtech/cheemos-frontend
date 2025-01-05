@@ -7,25 +7,6 @@ import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { Button } from "antd";
 import { CloseOutlined } from "@mui/icons-material";
 
-// export default function InitialChatPage2() {
-//   const [sessionList, setSessionList] = React.useState([]);
-//   return (
-//     <div className="h-full w-full">
-//       <div className="flex justify-between w-full">
-//         <TasksPanel />
-//         <div className="w-[52vw]">
-//           <Session sessionList={sessionList} setSessionList={setSessionList} />
-//           <InputPanel
-//             sessionList={sessionList}
-//             setSessionList={setSessionList}
-//           />
-//         </div>
-//         <PropertiesPanel />
-//       </div>
-//     </div>
-//   );
-// }
-
 
 export default function InitialChatPage2() {
   const [sessionList, setSessionList] = React.useState([]);

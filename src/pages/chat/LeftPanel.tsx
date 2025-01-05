@@ -112,7 +112,7 @@ const TasksPanel: React.FC<TasksPanelProps> = ({ setActivePanel }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        setChatList(data.data);
+        setChatList(data.data.content);
         // navigate(`./${data.data[0].id}`); // if you want to navigate to first chat
       }
       setLoading(false)

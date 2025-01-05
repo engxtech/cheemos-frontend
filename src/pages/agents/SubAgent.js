@@ -23,7 +23,7 @@ const SubAgentUI = () => {
         },
       });
       const data = await response.json();
-      setAgents(data.data);
+      setAgents(data.data.content);
       setLoading(false);
     };
     getAgents();
@@ -54,7 +54,7 @@ const SubAgentUI = () => {
   };
 
   return (
-    <div className="flex bg-gray-50 border w-full">
+    <div className="flex bg-gray-50 border border-gray-500 h-[97vh] w-full">
       {/* Sidebar */}
       <aside className="w-1/3 bg-white  p-4 hidden sm:block">
         <h2 className="text-sm text-gray-200 mb-4">Added Sub-Agents</h2>

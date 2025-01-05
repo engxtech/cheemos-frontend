@@ -65,7 +65,7 @@ export const Sidebar = ({ visible, setVisible }) => {
         },
       });
       const data = await response.json();
-      setAgents(data.data);
+      setAgents(data.data.content);
     };
     getAgents();
   }, []);

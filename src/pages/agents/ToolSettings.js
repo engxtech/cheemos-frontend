@@ -32,7 +32,7 @@ const ToolSettingsAgent = () => {
         },
       });
       const data = await response.json();
-      setTools(data);
+      setTools(data.data.content);
       setLoading(false);
     };
     getAgents();
@@ -76,7 +76,7 @@ const ToolSettingsAgent = () => {
   };
 
   return (
-    <div className="flex  bg-gray-50 border w-full rounded-md">
+    <div className="flex  bg-gray-50 sm:border w-full  border-gray-500 h-[97vh]">
       {/* Sidebar */}
       <aside className="w-1/3 hidden sm:block bg-white -r p-4">
         <h2 className="text-sm text-gray-200 mb-4">Tools Added</h2>

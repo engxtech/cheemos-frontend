@@ -82,6 +82,7 @@ function App() {
               <Route path="/tools" element={<ToolsGrid />} />
               <Route path="/tools/:toolId" element={<OneTool />} />
               <Route path="/tools/create-tool" element={<PythonSandbox />} />
+              <Route path="/tools/edit-tool/:toolId" element={<PythonSandbox />} />
               <Route path="/agents/create-agent/*" element={<CreateAgent />} />
               <Route path="/onboarding" element={<RightSignUp />} />
               <Route path="/signup" element={<MultiStepForm />} />

@@ -39,7 +39,7 @@ const AgentsDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const createAgent = useSelector((state) => state.agent);
-
+  const [loadingEdit,setLoadingEdit] =useState(false)
   useEffect(() => {
     setLoading(true);
     const getAgents = async () => {
@@ -51,7 +51,7 @@ const AgentsDashboard = () => {
         },
       });
       const data = await response.json();
-      setAgents(data.data);
+      setAgents(data.data.content);
       setLoading(false);
     };
     getAgents();
@@ -69,9 +69,18 @@ const AgentsDashboard = () => {
       setRefresh(!refresh);
     }
   };
-  const editAgent = (agent) => {
-  
-    const ids = agent.toolsList.map(tool => tool.id);
+  const editAgent = async(agent1) => {
+    setLoadingEdit(true);
+    const url = process.env.REACT_APP_API_URL + `/api/v1/agent/${agent1.id}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const data = await response.json();
+      const agent =data.data;
+      const ids = agent.toolsList.map(tool => tool.id);
     // call that api and set the value then!
     dispatch(setEditing(true));
     dispatch(
@@ -91,6 +100,7 @@ const AgentsDashboard = () => {
         toolRetries: 3,
       })
     );
+    setLoadingEdit(false);
     navigate("/agents/create-agent");
   };
   const images = [image1, image2, image3, image4, image5];
@@ -100,7 +110,7 @@ const AgentsDashboard = () => {
     return images[randomIndex];
   }
 
-  if (loading) {
+  if (loading || loadingEdit) {
     return (
       <div className="mb-10 fixed top-0 left-0 right-0 z-10">
         <AgentHeader />
@@ -138,11 +148,6 @@ const AgentsDashboard = () => {
       <div className="bg-black h-screen fixed top-0 left-0 right-0 z-10">
         <AgentHeader />
         <EmptyContent message="No Agent Found" />
-        {/* <div className="bg-black flex-1 overflow-y-auto p-4">
-          <div className="grid sm:grid-cols-4 grid-cols-1  gap-4 mt-2 overflow-auto scroll ">
-            <div className="text-gray-300 text-center">No Tools Found</div>
-          </div>
-        </div> */}
       </div>
     );
   }

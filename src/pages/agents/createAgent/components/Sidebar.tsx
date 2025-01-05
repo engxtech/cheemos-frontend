@@ -58,13 +58,14 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
       trigger={
           <MenuOutlined style={{ fontSize: "36px" }} /> // Default icon when expanded
       }
+      style={{backgroundColor: "#1f1f1f" }}
     >
       <Menu
         mode="inline"
         theme="dark"
         selectedKeys={[defMenuKey.toString()]}
-        style={{ backgroundColor: "#1f1f1f" }}
-        className="h-[96vh]  shadow-md  border py-10 text-[0.9rem] "
+        style={{  backgroundColor: "#1f1f1f" }}
+        className="h-[97vh]  shadow-md  sm:border border-gray-500 py-10 text-[0.9rem] "
       >
         <Menu.Item
           key="1"
@@ -147,8 +148,8 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
 
         <div className="flex space-x-3 ml-6 mt-6">
           <Button
-            type="text"
-            className="mt-2 ml-2 text-gray-200"
+            type="default"
+            className="mt-2 ml-2 text-gray-900 "
             onClick={() => navigate("/agents")}
           >
             Cancel

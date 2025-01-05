@@ -159,7 +159,7 @@ export const TemplateHeader = () => {
         },
       });
       const data = await response.json();
-      setAgents(data.data);
+      setAgents(data.data.content);
     };
     getAgents();
   }, []);

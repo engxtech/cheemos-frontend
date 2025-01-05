@@ -16,7 +16,7 @@ export const DraggableNode = ({ type, label }) => {
         style={{ 
           cursor: 'grab', 
           minWidth: '80px', 
-          height: '60px',
+          height: '40px',
           display: 'flex', 
           alignItems: 'center', 
           borderRadius: '8px',

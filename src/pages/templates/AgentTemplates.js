@@ -35,7 +35,7 @@ const AgentTemplates = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setTemplates(data.data);
+        setTemplates(data.data.content);
       }
       setLoading(false);
     };

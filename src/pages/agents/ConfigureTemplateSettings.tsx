@@ -96,14 +96,14 @@ const ConfigureTemplateSettings = () => {
   
   return (
     <div
-      className={`border p-6 flex justify-center items-start sm:h-[96vh] w-full ${
+      className={`sm:border border-gray-500  p-4 flex justify-center items-start sm:h-[97vh] w-full ${
         isDarkMode ? "bg-gray-100 text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
       <div
         className={`${
           isDarkMode ? "bg-gray-100" : "bg-white"
-        } rounded-lg shadow-sm p-6 w-full sm:max-w-5xl`}
+        } rounded-lg shadow-sm p-4 w-full sm:max-w-5xl`}
       >
         {/* Title */}
         <h2 className="text-2xl font-semibold mb-4">
@@ -131,7 +131,7 @@ const ConfigureTemplateSettings = () => {
         {/* Display Custom Properties */}
         <div className="mt-6">
           <h3 className="text-lg font-semibold">Custom Properties</h3>
-          <div className="mt-2 space-y-4 h-[45vh] overflow-scroll scroll">
+          <div className="mt-2 space-y-4 sm:h-[40vh] h-[30vh] overflow-scroll scroll">
             {Object.entries(customProperties).map(([key, value]) => (
               <div
                 key={key}
@@ -164,17 +164,11 @@ const ConfigureTemplateSettings = () => {
           <Button
             type="primary"
             className="bg-blue-500"
-            onClick={() => navigate("../instructions")}
+            onClick={() => navigate("../tools")}
           >
             Prev
           </Button>
-          <Button
-            type="primary"
-            className="bg-blue-500"
-            onClick={() => navigate("../configure-templates")}
-          >
-            Next
-          </Button>
+         
         </div>
       </div>
 
