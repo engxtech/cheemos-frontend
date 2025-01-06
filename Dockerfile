@@ -10,8 +10,7 @@ RUN apk update && apk add --no-cache \
     curl \
     nginx
 
-# Create necessary directories and Nginx user
-RUN addgroup -S nginx && adduser -S -G nginx nginx
+# Create necessary directories for Nginx logs
 RUN mkdir -p /var/log/nginx /etc/nginx/logs
 
 # Copy the build files
@@ -34,3 +33,6 @@ EXPOSE 80
 
 # Set the entrypoint
 ENTRYPOINT ["/app/entrypoint.sh"]
+
+# Default command to run Nginx
+CMD ["nginx", "-g", "daemon off;"]
