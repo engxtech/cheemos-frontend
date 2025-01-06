@@ -2,24 +2,26 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 # Update and install necessary packages
-RUN apt-get update && \
-    apt-get install -y \
+RUN apk update && apk add --no-cache \
     wget \
-    gnupg2 \
+    gnupg \
     curl \
     nginx
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 RUN groupadd -r nginx && useradd -r -g nginx nginx
 RUN mkdir /etc/nginx/logs
 
-COPY /app/build /usr/share/nginx/html
+COPY ./build /usr/share/nginx/html
 
-RUN rm /etc/nginx/sites-enabled/default
+RUN rm -f /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+
 COPY scripts/entrypoint.sh /app/entrypoint.sh
 COPY ssl/531d9484512856a3.pem /app/
 COPY ssl/generated-private-key.key /app/
+
+RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 80
 ENTRYPOINT ["/app/entrypoint.sh"]
