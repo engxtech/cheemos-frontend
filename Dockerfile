@@ -1,7 +1,6 @@
 FROM node:18-alpine AS build
 
 WORKDIR /app
-SSL_DIR="/etc/ssl/"
 # Update and install necessary packages
 RUN apt-get update && \
     apt-get install -y \
