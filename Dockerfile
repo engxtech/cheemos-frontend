@@ -13,10 +13,6 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN groupadd -r nginx && useradd -r -g nginx nginx
 RUN mkdir /etc/nginx/logs
 
-COPY package*.json ./
-
-COPY . .
-
 COPY --from=build /app/build /usr/share/nginx/html
 
 RUN rm /etc/nginx/sites-enabled/default
