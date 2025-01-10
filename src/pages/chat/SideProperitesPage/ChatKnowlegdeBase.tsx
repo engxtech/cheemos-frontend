@@ -278,7 +278,7 @@ const YourTablesPopup = ({ visible, setVisible }) => {
               onChange={(e) => setInputValue(e.target.value)}
             />
           )}
-          {selectedmenu != "" && inputValue != "" && name != "" && (
+          {selectedmenu != "" && inputValue != "" && (name != "" || (selectedmenu =="Query")) && (
             <p className="flex p-2 justify-end">
               {" "}
               <Button
