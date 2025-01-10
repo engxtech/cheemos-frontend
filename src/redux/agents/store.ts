@@ -2,6 +2,13 @@ import { createReducer } from "@reduxjs/toolkit";
 import { setCreateAgent, setEditing, setRefresh } from "./action";
 import image1 from "../../assets/Aatar.png";
 import { ToolDto } from "../tools/store";
+export interface Knowledge{
+  id?:string;
+  name:string;
+  inputData:string;
+  inputType:string;
+  agentId?:string;
+}
 export interface Agent {
     id?: string;
     name: string;
@@ -15,6 +22,7 @@ export interface Agent {
     };
     iconName:string;
     toolsList?: number[];
+    knowledgeList:Knowledge[]
     toolsListCore?:ToolDto[]; // for setting core instructions only!
     subAgents?: number[];
     customProperties?: Record<string, any>;
@@ -23,6 +31,8 @@ export interface Agent {
     agentGuideText?: string;
     createdAt?: string;
     updatedAt?: string;
+    temperature:string
+
   }
   export const defaultAgent :Agent={
       name:'',
@@ -30,7 +40,9 @@ export interface Agent {
       coreInstructions:{
         
       },
-      iconName:'image1'
+      knowledgeList:[],
+      iconName:'image1',
+      temperature:"0"
   } 
   export interface ChatList {
     id?: string;
@@ -53,10 +65,12 @@ const initialState: StoreType = {
     coreInstructions:{
       
     },
-    iconName:image1
+    knowledgeList:[],
+    iconName:image1,
+    temperature:"0"
   },
   refresh:false,
-  editing:false
+  editing:false,
 };
 
 export const agentsReducer =createReducer(initialState,(builder)=>{

@@ -93,10 +93,14 @@ const AgentsDashboard = () => {
         toolsList: ids,
         toolsListCore:agent.toolsList,
         description: agent.description,
+        welcomeMessage:agent.welcomeMessage,
+        agentGuideText:agent.agentGuideText,
+        temperature:agent.temperature,
         coreInstructions: {
           _SYSTEM_CORE_INSTRUCTIONS_PROMPT:
-            agent.coreInstructions._SYSTEM_CORE_INSTRUCTIONS_PROMPT.content,
+            agent.coreInstructions?._SYSTEM_CORE_INSTRUCTIONS_PROMPT?.content,
         },
+        knowledgeList:agent.knowledgeList,
         toolRetries: 3,
       })
     );

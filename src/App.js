@@ -24,6 +24,7 @@ import PaymentPage from "./pages/payments/VerifyPayment";
 import { PythonSandbox } from "./pages/pythoncompiler/pages/PythonSandbox";
 import { OneTool } from "./pages/tools/OneTool";
 import SettingsPage from "./pages/settings/SettingsPage";
+import AnalyticsPage from "./pages/analytics/AnalyticsPage";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100vw", // Corrected from "100wh" to "100vw" for width
@@ -87,6 +88,7 @@ function App() {
               <Route path="/onboarding" element={<RightSignUp />} />
               <Route path="/signup" element={<MultiStepForm />} />
               <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/payment/:agentId/:cloneType/*" element={<PaymentPage />} />
             </Routes>
           </Root>

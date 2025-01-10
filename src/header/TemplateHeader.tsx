@@ -301,7 +301,7 @@ export const TemplateHeader = () => {
           ))}
         </Drawer>
         <Drawer
-          title={<span className="text-gray-800">What's new on Cheemos!</span>}
+          title={<span className="text-gray-800">What's new on Vikton AI!</span>}
           placement="right"
           width={400}
           onClose={() => setDrawerVisibleN(false)}

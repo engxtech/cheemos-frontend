@@ -186,7 +186,9 @@ export const Sidebar = ({ visible, setVisible }) => {
             Settings
           </Menu.Item>
 
-          <Menu.Item key="analytics" icon={<LineChartOutlined />}>
+          <Menu.Item key="analytics" icon={<LineChartOutlined />}
+            onClick={() => navigate("/analytics")}
+          >
             Analytics
           </Menu.Item>
 

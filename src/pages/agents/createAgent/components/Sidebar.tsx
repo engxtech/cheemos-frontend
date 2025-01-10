@@ -1,19 +1,25 @@
 // Sidebar Component
 import { Layout, Menu, Avatar, Input, Button, Divider } from "antd";
 import { InboxOutlined, SettingOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Sider from "antd/es/layout/Sider";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux";
 import BiMap from "../../../../utils/BiMap";
 import { MenuOpenOutlined, MenuOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "react-responsive";
+import { useState } from "react";
+import AgentInProgressModal from "../../../../utils/AgentCreationInProgress";
 
 export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
   const navigate = useNavigate();
   const editing = useSelector((state: RootState) => state.agents.editing);
   const CreateAgent = useSelector((State: RootState) => State.agents.agent);
+  const [loading, setLoading] = useState(false);
   const handleSave = async () => {
+    console.log(CreateAgent);
+    setSidebarVisible(true);
+    setLoading(true);
     console.log(CreateAgent);
     // return
     let url = process.env.REACT_APP_API_URL + "/api/v1/agent/new";
@@ -25,11 +31,14 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
         Authorization: "Bearer " + localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
+      
       body: JSON.stringify(CreateAgent),
     });
     if (response.ok) {
       navigate("/agents");
     }
+    setLoading(false);
+    setSidebarVisible(false);
   };
   const prmMpKey = new BiMap();
   prmMpKey.addMapping(1, "profile");
@@ -39,6 +48,7 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
   prmMpKey.addMapping(5, "tools");
   prmMpKey.addMapping(6, "configure-templates");
   prmMpKey.addMapping(7, "subagents");
+  prmMpKey.addMapping(8, "knowledge-base");
   const location = useLocation();
   const match = location.pathname.match(
     /\/agents\/create-agent\/([^/]+)(?=\/|$)/
@@ -46,6 +56,11 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
   const section = match ? match[1] : null;
   const isDesktop = useMediaQuery({ minWidth: 1024 });
   let defMenuKey = prmMpKey.getNumber(section) || 1;
+  const agentId =useParams().agentId;
+  if (loading) {
+    return <AgentInProgressModal text= {agentId?"Updation":"Creation"} />;
+  }
+
   // add a condition to check if this mobile view or not
   return (
     <Sider
@@ -56,15 +71,15 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
       collapsed={!sidebarVisible && !isDesktop} // check if desktop view then it should not collapse
       onCollapse={(collapsed) => setSidebarVisible(!collapsed)}
       trigger={
-          <MenuOutlined style={{ fontSize: "36px" }} /> // Default icon when expanded
+        <MenuOutlined style={{ fontSize: "36px" }} /> // Default icon when expanded
       }
-      style={{backgroundColor: "#1f1f1f" }}
+      style={{ backgroundColor: "#1f1f1f" }}
     >
       <Menu
         mode="inline"
         theme="dark"
         selectedKeys={[defMenuKey.toString()]}
-        style={{  backgroundColor: "#1f1f1f" }}
+        style={{ backgroundColor: "#1f1f1f" }}
         className="h-[97vh]  shadow-md  sm:border border-gray-500 py-10 text-[0.9rem] "
       >
         <Menu.Item
@@ -143,7 +158,17 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
             setSidebarVisible(false);
           }}
         >
-          Abilities
+          Test Data Templates
+        </Menu.Item>
+        <Menu.Item
+          key="8"
+          icon={<SettingOutlined />}
+          onClick={() => {
+            navigate("./knowledge-base");
+            setSidebarVisible(false);
+          }}
+        >
+          Knowledge Base
         </Menu.Item>
 
         <div className="flex space-x-3 ml-6 mt-6">

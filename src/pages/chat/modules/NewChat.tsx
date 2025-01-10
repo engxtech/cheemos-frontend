@@ -1,13 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button, message } from "antd";
 import { SendOutlined } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
+import { DynamicBoxGrid } from "./components/WelcomeGuide";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux";
+import { setCreateAgent } from "../../../redux/agents/action";
 
 const NewChat: React.FC = () => {
   const [prompts, setPrompts] = useState("");
-
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const agentId = useParams().agentId;
+  const createAgent = useSelector((state: RootState) => state.agents.agent);
+  useEffect(() => {
+    const loadData = async () => {
+      const url = process.env.REACT_APP_API_URL + `/api/v1/agent/${agentId}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const data = await response.json();
+      const agent = data.data;
+      const ids = agent.toolsList.map((tool) => tool.id);
+
+      dispatch(
+        setCreateAgent({
+          ...createAgent,
+          name: agent.name,
+          id: agent.id,
+          iconName: agent.iconName,
+          customProperties: agent.customProperties,
+          toolsList: ids,
+          toolsListCore: agent.toolsList,
+          description: agent.description,
+          welcomeMessage: agent.welcomeMessage,
+          agentGuideText: agent.agentGuideText,
+          temperature: agent.temperature,
+          // coreInstructions: {
+          //   _SYSTEM_CORE_INSTRUCTIONS_PROMPT:
+          //     agent.coreInstructions._SYSTEM_CORE_INSTRUCTIONS_PROMPT.content,
+          // },
+          toolRetries: 3,
+        })
+      );
+     
+    };
+    loadData()
+  },[]);
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const handleFirstSend = async () => {
     setLoading(true);
@@ -66,6 +109,9 @@ const NewChat: React.FC = () => {
         <h1 className="text-xl md:text-2xl font-bold text-center">
           What can I help with?
         </h1>
+
+        <DynamicBoxGrid data={createAgent.welcomeMessage} title="Welcome Message" />
+        <DynamicBoxGrid data={createAgent.agentGuideText}title="Agent Guide Text"  />
         <div className="p-4 rounded-lg flex flex-col md:flex-row items-center">
           <Input
             className="border w-full md:flex-grow mb-4 md:mb-0"
@@ -84,14 +130,6 @@ const NewChat: React.FC = () => {
               </span>
             }
           />
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 w-full">
-          <Button className="hover:bg-gray-600">Create image</Button>
-          <Button className="hover:bg-gray-600">Summarize text</Button>
-          <Button className="hover:bg-gray-600">Code</Button>
-          <Button className="hover:bg-gray-600">Get advice</Button>
-          <Button className="hover:bg-gray-600">Help me write</Button>
-          <Button className="hover:bg-gray-600 w-full">More</Button>
         </div>
       </div>
     </div>

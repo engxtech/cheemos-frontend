@@ -11,11 +11,11 @@ import SendIcon from "@mui/icons-material/Send";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import { sendPrompts } from "../../../interface/api";
-import { message } from "antd";
+import { message, Spin } from "antd";
 import { useParams } from "react-router-dom";
 import { setRefresh } from "../../../redux/agents/action";
 import { useDispatch, useSelector } from "react-redux";
-import { MusicNoteOutlined, RunCircle, StopCircleRounded } from "@mui/icons-material";
+import { MusicNoteOutlined, RunCircle, RunCircleOutlined, StopCircleRounded } from "@mui/icons-material";
 
 const Division = styled("div")(({ theme }) => ({
   padding: theme.spacing(1, 2, 2, 2),
@@ -295,9 +295,9 @@ function InputPanel(props) {
                 disabled={prompts.length === 0 || loading || refresh}
                 loading={loading}
                 loadingPosition="end"
-                endDecorator={!refresh?<SendIcon />:<StopCircleRounded/>}
+                endDecorator={!refresh?<SendIcon />:<Spin/>}
                 variant="solid"
-                children="SEND"
+                children={!refresh?"SEND":<> Running </> }
                 onClick={handleClickSend}
                 className="bg-gray-50"
               />

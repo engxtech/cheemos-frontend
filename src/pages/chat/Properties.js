@@ -6,11 +6,13 @@ import {
   FileOutlined,
 } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
+import YourTablesPopup from "./SideProperitesPage/ChatKnowlegdeBase";
 
 const PropertiesPanel = () => {
   const [agent, setAgent] = useState();
   const agentId = useParams().agentId;
   const [loading, setLoading] = useState(false);
+  const [visible,setVisible]=useState(false)
   useEffect(() => {
     setLoading(true);
     const fetchAgentDetails = async () => {
@@ -43,7 +45,9 @@ const PropertiesPanel = () => {
         <h3 className=" text-xs mb-1">Triggered by</h3>
         <p className="text-blue-500 text-xs ">{agent && agent.name}</p>
       </div>
-
+      
+      <Button type="primary" className=" mb-2 " onClick={()=>setVisible(true)}>Test & Modify your Knowledge Base</Button>
+     
       {/* Status */}
       <div className="mb-4">
         <h3 className="text-xs mb-1">Status</h3>
@@ -89,7 +93,7 @@ const PropertiesPanel = () => {
           agent.toolsList.map((tool, index) => (
             <div key={index} className="flex items-center gap-2 mb-2">
               <BookOutlined className="text-xs" />
-              <span className="text-xs">Read PDF</span>
+              <span className="text-xs">{tool.name}</span>
             </div>
           ))}
       </div>
@@ -100,11 +104,13 @@ const PropertiesPanel = () => {
           agent.subAgents.map((tool, index) => (
             <div key={index} className="flex items-center gap-2 mb-2">
               <BookOutlined className="text-xs" />
-              <span className="text-xs">Read PDF</span>
+              <span className="text-xs">{tool.name}</span>
             </div>
           ))}
       </div>
+      < YourTablesPopup visible={visible} setVisible={setVisible}/>
     </div>
+  
   );
 };
 

@@ -183,6 +183,9 @@ function Session(props) {
             config={item.config}
           /> : null
       )} */}
+      
+
+
         {chats.map((chat) => {
           const isCodeBlock = chat.content.includes("```");
 
@@ -190,7 +193,8 @@ function Session(props) {
           const formattedContent = isCodeBlock
             ? chat.content.split("```")
             : [chat.content];
-
+          
+            
           return (
             <div
               key={chat.id}

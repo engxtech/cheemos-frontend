@@ -123,10 +123,10 @@ const ToolSettingsAgent = () => {
         </div>
 
         {/* Tool Cards */}
-        <div className="mt-6 grid grid-cols-1 gap-4">
+        <div className="mt-6 grid grid-cols-1 gap-4 h-[70vh] overflow-auto scroll">
           {loading
             ? // Render skeleton loader when loading is true
-              Array(5)
+              Array(8)
                 .fill()
                 .map((_, index) => (
                   <li
