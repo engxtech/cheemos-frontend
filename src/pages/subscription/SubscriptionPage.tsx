@@ -64,7 +64,7 @@ export const SubscriptionPopup = ({
       navigate("/agents");
     } else {
       setLoading(false)
-      message.error("Failed to  clone agent!");
+      message.error(result.message);
     }
   };
   return (
