@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "@mui/joy/styles";
-import Bubble from "../../../interface/Bubble";
-import Banner from "../../../interface/Banner";
-import Sequence from "../../../interface/Step";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { useParams } from "react-router-dom";
-import io from "socket.io-client";
-import { Button, message, Spin } from "antd";
+import { Button, Spin } from "antd";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialLight } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useSelector } from "react-redux";
-import { Loader, LucideLoaderCircle } from "lucide-react";
+import { CancelOutlined, ErrorOutlineRounded } from "@mui/icons-material";
 
 const Division = styled(ScrollToBottom)(({ theme }) => ({
   overflow: "auto",
@@ -30,11 +25,12 @@ const Division = styled(ScrollToBottom)(({ theme }) => ({
 function Session(props) {
   const { sessionList } = props;
   const { refresh, setRefresh } = props;
-
+  const [popupErrorVisible,setPopupErrorVisible]=useState(false)
+  const [error,setError]=useState('')
   const chatId = useParams().chatId;
   //integrate socket
   const url =
-    "ws://api-p-sirius.aqumenlabs.ai:8080/chat?" +
+    "ws://localhost:8080/chat?" +
     "token=" +
     localStorage.getItem("token") +
     "&chatId=" +
@@ -45,6 +41,10 @@ function Session(props) {
 
     socket.onmessage = (event) => {
       const data = event.data;
+      if(data!="OK"){
+        setPopupErrorVisible(true)
+        setError(data)
+      }
       console.log("Connected and received data: " + data);
       setRefresh(false);
       refreshChat();
@@ -237,6 +237,25 @@ function Session(props) {
           );
         })}
       </Division>
+      {popupErrorVisible  && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              
+              <div className="flex items-center space-x-3">
+                <ErrorOutlineRounded className="h-6 w-6" />
+                <h2 className="text-sm  text-red-400">
+                 Error Occured
+                </h2>
+              </div>
+              <div>
+                <CancelOutlined onClick={()=>setPopupErrorVisible(false)}/>
+              </div>
+            </div>
+           {error}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

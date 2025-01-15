@@ -32,7 +32,7 @@ const ToolTemplates = () => {
   if (loading) {
     return (
       <div className="mb-10">
-        <span className="text-xl font-medium ml-1">Top Agents</span>
+        <span className="text-xl font-medium ml-1">All Tools</span>
         <div className="grid sm:grid-cols-4 grid-cols-1 gap-4 mt-2">
         {Array.from({ length: 6 }).map((_, index) => (
             <Card

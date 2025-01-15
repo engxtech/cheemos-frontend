@@ -62,7 +62,7 @@ const ToolCard = ({
         <Button
           key="delete"
           className="px-1 py-1"
-          // onClick={() => handleDelete(agent.id)}
+          onClick={() => handleDelete(id)}
         >
           <DeleteOutlined />
         </Button>

@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCreateAgent, setEditing } from "../../redux/agents/action";
 import Meta from "antd/es/card/Meta";
 import EmptyContent from "../../components/zeroContent";
+import AgentInProgressModal from "../../utils/AgentCreationInProgress";
 
 const { Sider, Content } = Layout;
 
@@ -102,6 +103,9 @@ const AgentsDashboard = () => {
         },
         knowledgeList:agent.knowledgeList,
         toolRetries: 3,
+        slackBotId:agent.slackBotId,
+        jiraUrl:agent.jiraUrl,
+        githubUrl:agent.githubUrl
       })
     );
     setLoadingEdit(false);
@@ -113,8 +117,10 @@ const AgentsDashboard = () => {
     const randomIndex = Math.floor(Math.random() * images.length);
     return images[randomIndex];
   }
-
-  if (loading || loadingEdit) {
+  if (loadingEdit){
+    return <AgentInProgressModal text="loading to edit"/>
+  }
+  if (loading ) {
     return (
       <div className="mb-10 fixed top-0 left-0 right-0 z-10">
         <AgentHeader />

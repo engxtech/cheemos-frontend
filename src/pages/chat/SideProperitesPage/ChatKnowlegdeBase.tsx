@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Menu, Dropdown, Input, Button, message, Tooltip } from "antd";
 import {
+  AddCardOutlined,
+  AddOutlined,
   CloseOutlined,
   DeleteOutlineOutlined,
   MoreOutlined,
@@ -168,10 +170,10 @@ const YourTablesPopup = ({ visible, setVisible }) => {
   return (
     visible && (
       <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center">
-        <div className="bg-gray-900 px-4 py-4 rounded-lg shadow-lg  w-[60%] min-h-[53vh]">
+        <div className="bg-gray-900 px-4 py-4 rounded-lg shadow-lg  sm:w-[60%] w-[95%] min-h-[53vh]">
           <div className="flex justify-between items-center p-4">
             <p
-              className="text-xl  text-white "
+              className="sm:text-xl  text-white "
               onClick={() => {
                 setMenu("");
                 setOutput("");
@@ -181,18 +183,18 @@ const YourTablesPopup = ({ visible, setVisible }) => {
             </p>
             <Dropdown overlay={menu} trigger={["click"]}>
               <button className=" px-4 py-2 bg-gray-800 hover:text-white rounded-md hover:bg-gray-700">
-                Add New Table
+                <AddCardOutlined className="text-sm"/> Table
               </button>
             </Dropdown>
             <button
-              className=" px-4 py-2 bg-gray-800 hover:text-white rounded-md hover:bg-gray-700"
+              className=" px-4 ml-4 py-2 bg-gray-800 hover:text-white rounded-md hover:bg-gray-700"
               onClick={() => {
                 setMenu("Query");
                 setOutput("");
                 setInputValue("");
               }}
             >
-              Test Your Knowledge
+              Test Knowledge
             </button>
             <button
               onClick={() => setVisible(false)}

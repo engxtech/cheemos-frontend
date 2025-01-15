@@ -35,7 +35,9 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
       body: JSON.stringify(CreateAgent),
     });
     if (response.ok) {
-      navigate("/agents");
+      const data= await response.json()
+      const agentId = data.data.id
+      navigate(`/agents/${agentId}/new`);
     }
     setLoading(false);
     setSidebarVisible(false);
@@ -58,7 +60,7 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
   let defMenuKey = prmMpKey.getNumber(section) || 1;
   const agentId =useParams().agentId;
   if (loading) {
-    return <AgentInProgressModal text= {agentId?"Updation":"Creation"} />;
+    return <AgentInProgressModal text= {editing?"Updation":"Creation"} />;
   }
 
   // add a condition to check if this mobile view or not

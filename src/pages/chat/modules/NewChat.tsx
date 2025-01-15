@@ -115,7 +115,7 @@ const NewChat: React.FC = () => {
         <div className="p-4 rounded-lg flex flex-col md:flex-row items-center">
           <Input
             className="border w-full md:flex-grow mb-4 md:mb-0"
-            placeholder="Message ChatGPT"
+            placeholder="Message ViktonAi"
             onChange={(e) => setPrompts(e.target.value)}
           />
           <Button

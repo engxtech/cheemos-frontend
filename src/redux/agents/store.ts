@@ -31,8 +31,10 @@ export interface Agent {
     agentGuideText?: string;
     createdAt?: string;
     updatedAt?: string;
-    temperature:string
-
+    temperature:string;
+    slackBotId?:string;
+    githubUrl?:string;
+    jiraUrl?:string;
   }
   export const defaultAgent :Agent={
       name:'',

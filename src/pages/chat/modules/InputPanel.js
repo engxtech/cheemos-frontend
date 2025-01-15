@@ -160,10 +160,12 @@ function InputPanel(props) {
       },
       body: JSON.stringify(payload), // If you want to send an empty body, this is fine
     });
-    if(response.ok){
-      const data = await response.json();
+    const data = await response.json();
+    if(data.success){
       // message.success("Successfully sent message");
       setRefresh(true)
+    }else{
+      message.error(data.message)
     }
     setPrompts('')
     setLoading(false)

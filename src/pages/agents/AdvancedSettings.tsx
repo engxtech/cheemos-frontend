@@ -118,6 +118,66 @@ const AdvancedSettings = () => {
         </div>
 
         <div className="space-y-2 hidden sm:block">
+          <h3 className="font-medium text-gray-800">
+           Slack Trigger
+          </h3>
+          <p className="text-sm text-gray-500">
+            Enter slack bot Id to integrate Slack triggers. To look how to obtain slack bot Id read documentation in integrations section.
+          </p>
+          <textarea
+          value={createAgent.slackBotId}
+          onChange={(e) => dispatch(
+              setCreateAgent({
+                ...createAgent,
+                slackBotId:e.target.value //adding for frontend purpose in core instructions
+              })
+            )}
+            className="border bg-gray-200  border-gray-300 text-blue-600  rounded-md p-2 w-full text-sm"
+            placeholder="Enter slack bot Id..."
+          ></textarea>
+        </div>
+
+        <div className="space-y-2 hidden sm:block">
+          <h3 className="font-medium text-gray-800">
+            Jira Trigger
+          </h3>
+          <p className="text-sm text-gray-500">
+          Enter jiraUrl  to integrate Jira triggers. To look how to obtain jiraUrl read documentation in integrations section.
+          </p>
+          <input
+          value={createAgent.jiraUrl}
+          onChange={(e) => dispatch(
+              setCreateAgent({
+                ...createAgent,
+                 jiraUrl:e.target.value //adding for frontend purpose in core instructions
+              })
+            )}
+            className="border bg-gray-200  border-gray-300 text-blue-600  rounded-md p-2 w-full text-sm"
+            placeholder="Enter jiraUrl ..."
+          ></input>
+        </div>
+
+        <div className="space-y-2 hidden sm:block">
+          <h3 className="font-medium text-gray-800">
+            Github Trigger
+          </h3>
+          <p className="text-sm text-gray-500">
+          Enter GithubUrl  to integrate Github triggers. To look how to obtain GihtubUrl read documentation in integrations section.
+          </p>
+          <textarea
+          value={createAgent.githubUrl}
+          onChange={(e) => dispatch(
+              setCreateAgent({
+                ...createAgent,
+                 githubUrl:e.target.value //adding for frontend purpose in core instructions
+              })
+            )}
+            className="border bg-gray-200  border-gray-300 text-blue-600  rounded-md p-2 w-full text-sm"
+            placeholder="Enter GithubUrl..."
+          ></textarea>
+        </div>
+
+        <div className="space-y-2 hidden sm:block">
           <h3 className="font-medium text-gray-800">Guide for using agent</h3>
           <p className="text-sm text-gray-500">
             Provide instructions for how to use or set up this agent. This will
