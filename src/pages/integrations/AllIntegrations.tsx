@@ -14,6 +14,8 @@ import jiraImg5 from "../../assets/Jira/5.jpeg"
 import jiraImg6 from "../../assets/Jira/6.jpeg"
 import jiraImg7 from "../../assets/Jira/7.jpeg"
 
+import slackImg1 from "../../assets/slack/1.jpeg"
+
 import {
     Github,
     Slack,
@@ -160,7 +162,7 @@ interface IntegrationsName {
 const integrationName: IntegrationsName[] = [
     {
         name: "Slack",
-        images:[]
+        images:[slackImg1]
     },
     {
         name: "Github",
