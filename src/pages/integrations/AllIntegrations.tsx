@@ -364,6 +364,15 @@ function App() {
                             </div>
 
                             <div className="relative">
+
+                                {/* Dropdown Button */}
+                                <button
+                                    className="text-gray-400 hover:text-gray-300 transition-colors duration-200 mr-10"
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                >
+                                    <span className="h-5 w-5 font-bold text-white text-wod">⋮</span> {/* Three dots for dropdown */}
+                                </button>
+
                                 <button
                                     onClick={() => setIsStepModalOpen(false)}
                                     className="text-gray-400 hover:text-gray-300 transition-colors duration-200"
@@ -371,21 +380,20 @@ function App() {
                                     <X className="h-5 w-5"/>
                                 </button>
 
-                                {/* Dropdown Button */}
-                                <button
-                                    className="text-gray-400 hover:text-gray-300 transition-colors duration-200 ml-4"
-                                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                                >
-                                    <span className="h-5 w-5">⋮</span> {/* Three dots for dropdown */}
-                                </button>
-
                                 {/* Dropdown Menu */}
                                 {dropdownOpen && (
-                                    <div className="absolute right-0 mt-2 w-40 bg-gray-700 text-white rounded-lg shadow-lg z-50">
+                                    <div
+                                        className="absolute right-0 mt-2 w-40 bg-gray-700 text-white rounded-lg shadow-lg z-50">
                                         <ul>
-                                            <li className="px-4 py-2 hover:bg-gray-600 cursor-pointer" onClick={() => handleSelectOption('Slack')}>Slack</li>
-                                            <li className="px-4 py-2 hover:bg-gray-600 cursor-pointer" onClick={() => handleSelectOption('GitHub')}>GitHub</li>
-                                            <li className="px-4 py-2 hover:bg-gray-600 cursor-pointer" onClick={() => handleSelectOption('Jira')}>Jira</li>
+                                            <li className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
+                                                onClick={() => handleSelectOption('Slack')}>Slack
+                                            </li>
+                                            <li className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
+                                                onClick={() => handleSelectOption('GitHub')}>GitHub
+                                            </li>
+                                            <li className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
+                                                onClick={() => handleSelectOption('Jira')}>Jira
+                                            </li>
                                         </ul>
                                     </div>
                                 )}
