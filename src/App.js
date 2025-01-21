@@ -21,10 +21,11 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Provider } from "react-redux";
 import store from "./redux";
 import PaymentPage from "./pages/payments/VerifyPayment";
-import { PythonSandbox } from "./pages/pythoncompiler/pages/PythonSandbox";
+import { PythonSandbox } from "./pages/tools/EditTool";
 import { OneTool } from "./pages/tools/OneTool";
 import SettingsPage from "./pages/settings/SettingsPage";
 import AnalyticsPage from "./pages/analytics/AnalyticsPage";
+import GitHubLoginPage, { GitHubLoginButton } from "./pages/testgithubclient";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100vw", // Corrected from "100wh" to "100vw" for width
@@ -89,6 +90,7 @@ function App() {
               <Route path="/signup" element={<MultiStepForm />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="/github" element={<GitHubLoginButton />} />
               <Route path="/payment/:agentId/:cloneType/*" element={<PaymentPage />} />
             </Routes>
           </Root>

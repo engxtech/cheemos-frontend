@@ -11,6 +11,7 @@ import ReactFlow from "../../../reactFlow/reactFlow";
 import { useState } from "react";
 import YourTablesPopup from "../../chat/SideProperitesPage/ChatKnowlegdeBase";
 import KnowledgeBase from "./knowledgebase/KnowledgeBase";
+import PlanningPrompt from "./components/prompts/PlanningPrompt";
 
 const { Sider, Content } = Layout;
 
@@ -42,6 +43,10 @@ export const CreateAgent = () => {
         <Route
           path="/instructions"
           element={sidebarVisible ? null : <CoreInstructions />}
+        />
+        <Route
+          path="/prompts"
+          element={sidebarVisible ? null : <PlanningPrompt />}
         />
         <Route
           path="/subagents"

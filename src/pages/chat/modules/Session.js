@@ -30,7 +30,7 @@ function Session(props) {
   const chatId = useParams().chatId;
   //integrate socket
   const url =
-    "ws://api-p-sirius.aqumenlabs.a:8080/chat?" +
+    "ws://localhost:8080/chat?" +
     "token=" +
     localStorage.getItem("token") +
     "&chatId=" +

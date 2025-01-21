@@ -51,6 +51,7 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
   prmMpKey.addMapping(6, "configure-templates");
   prmMpKey.addMapping(7, "subagents");
   prmMpKey.addMapping(8, "knowledge-base");
+  prmMpKey.addMapping(9, "prompts");
   const location = useLocation();
   const match = location.pathname.match(
     /\/agents\/create-agent\/([^/]+)(?=\/|$)/
@@ -171,6 +172,17 @@ export const Sidebar = ({ sidebarVisible, setSidebarVisible }) => {
           }}
         >
           Knowledge Base
+        </Menu.Item>
+
+        <Menu.Item
+          key="9"
+          icon={<SettingOutlined />}
+          onClick={() => {
+            navigate("./prompts");
+            setSidebarVisible(false);
+          }}
+        >
+          Prompts
         </Menu.Item>
 
         <div className="flex space-x-3 ml-6 mt-6">

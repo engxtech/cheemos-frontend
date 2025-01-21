@@ -90,12 +90,6 @@ const ToolSettingsAgent = () => {
                 <h4 className="font-medium text-gray-200">{tool.name}</h4>
                 <p className="text-sm text-gray-400">{tool.description}</p>
               </div>
-              {/* <button
-                    onClick={() => handleRemoveTool(tool.id)}
-                    className="text-red-500 hover:underline"
-                >
-                    Remove
-                </button> */}
             </div>
           ))}
         </div>

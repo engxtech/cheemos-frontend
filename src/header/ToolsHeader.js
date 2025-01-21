@@ -8,10 +8,14 @@ import {
 } from "@ant-design/icons";
 import Sidebar from "../pages/sider/SiderMainPage";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setCreateTool, setEditingTool } from "../redux/tools/action";
 
 const ToolHeader = () => {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+  const  dispatch =useDispatch()
+  const createTool = useSelector((state)=>state.tools.tool)
   return (
     <div className="flex items-center justify-between p-5 bg-gray-900 shadow-sm">
       {/* Left Section */}
@@ -31,12 +35,21 @@ const ToolHeader = () => {
       </div>
       {/* Right Section */}
       <div className="flex items-center space-x-4">
-        {/* <Button className="flex items-center bg-gray-200">
-          <SettingOutlined className="mr-1 text-[1rem]" /> Custom actions
-        </Button> */}
+
         <Button
           type="primary"
-          onClick={() => navigate("/tools/create-tool")}
+          onClick={() => {
+            dispatch(
+              setCreateTool({
+                ...createTool,
+                name: "",
+                description:"",
+                toolType:"Python",
+                content:"",
+              })
+            )
+            dispatch(setEditingTool(false))
+            navigate("/tools/create-tool")}}
           shape=""
           icon={<PlusOutlined />}
         >

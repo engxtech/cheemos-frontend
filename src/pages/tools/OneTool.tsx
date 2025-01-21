@@ -122,8 +122,8 @@ export function OneTool() {
   const [llmResponse, setLLMresponse] = useState("");
   return (
     <div className=" flex sm:p-2 p-1 sm:px-6 justify-between  ">
-      <div className=" overflow-x-auto  scroll h-[98vh] sm:w-[70%] bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 text-sm border rounded-sm shadow-sm">
-        <div className="max-w-4xl mx-auto space-y-2">
+      <div className=" overflow-x-auto w-[100%]  scroll h-[98vh] sm:w-[70%] bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 text-sm border rounded-sm shadow-sm">
+        <div className="sm:max-w-4xl w-full mx-auto space-y-2">
           <div className="flex justify-between items-center  mb-6">
             <div className="flex items-center gap-2">
             <span

@@ -1,3 +1,7 @@
+::selection {
+  background-color: rgb(31, 31, 145);
+  color: white;
+}
 .dark-mode {
     background: linear-gradient(to bottom, #100f0f 30%, #000000 80%);
     color: white;
