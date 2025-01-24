@@ -26,6 +26,7 @@ import { OneTool } from "./pages/tools/OneTool";
 import SettingsPage from "./pages/settings/SettingsPage";
 import AnalyticsPage from "./pages/analytics/AnalyticsPage";
 import GitHubLoginPage, { GitHubLoginButton } from "./pages/testgithubclient";
+import IntegrationCallBack from "./pages/integrations/IntegrationCallBack";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100vw", // Corrected from "100wh" to "100vw" for width
@@ -92,6 +93,7 @@ function App() {
               <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/github" element={<GitHubLoginButton />} />
               <Route path="/payment/:agentId/:cloneType/*" element={<PaymentPage />} />
+              <Route path="/auth/:provider/callback" element={<IntegrationCallBack />} />
             </Routes>
           </Root>
         </GoogleOAuthProvider>
