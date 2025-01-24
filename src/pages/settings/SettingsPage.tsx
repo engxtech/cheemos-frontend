@@ -24,6 +24,8 @@ export const SettingsPage = () => {
     name: string;
     surname: string;
     profilePic: string;
+    tokensAvailable: string;
+    tokensUsed: string;
   }
   const models = ["GPT-3", "GPT-4", "GPT-4 Turbo"];
   const [userData, setUserData] = useState<UserType>();
@@ -78,11 +80,12 @@ export const SettingsPage = () => {
       {/* {loading ? (
         <div>Loading...</div>
       ) : ( */}
-        <div
-          className={`min-h-full ${
-            isDarkMode ? "bg-black text-white" : "bg-white text-black"
-          } p-6`}
-        >
+      <div
+        className={`min-h-full ${
+          isDarkMode ? "bg-black text-white" : "bg-white text-black"
+        } p-6`}
+      >
+        <div className="flex justify-between">
           <div
             style={{
               display: "flex",
@@ -97,7 +100,7 @@ export const SettingsPage = () => {
               style={{ backgroundColor: "#333" }}
               src={userData?.profilePic}
             >
-              A
+              {userData?.name.substr(0, 1)}
             </Avatar>
 
             <div style={{ marginLeft: "10px" }}>
@@ -110,57 +113,59 @@ export const SettingsPage = () => {
               </span>
             </div>
           </div>
+          <div className="text-sm mt-4 mr-5">
+            <div>Tokens Available: {userData?.tokensAvailable}</div>
 
-          <Card
-            className=""
-            style={{
-              border: "none",
-              background: isDarkMode
-                ? "radial-gradient(circle, #181717 20%, #000 80%)"
-                : "#f9f9f9",
-            }}
-          >
-            <Title level={5}>OpenAI API Settings</Title>
-            <Input.Password
-              placeholder="Enter OpenAI API Key"
-              value={openAiKey}
-              onChange={(e) => setOpenAIKey(e.target.value)}
-              className="mb-2"
-            />
-            <span className="text-gray-200"> Select Model</span>
-            <Select
-              placeholder="Select Model"
-              value={openAiModel}
-              onChange={setModelName}
-              className=" w-full"
-            >
-              {models.map((model) => (
-                <Option key={model} value={model}>
-                  {model}
-                </Option>
-              ))}
-            </Select>
-            <span className="text-gray-200 mt-2 block">
-              {" "}
-              Select OpenAI OrganizationID (Optional)
-            </span>
-            <Input
-              placeholder="Enter OpenAI API Organization ID"
-              value={openAiOrgId}
-              onChange={(e) => setOpenAiOrgId(e.target.value)}
-              className="mb-2"
-            />
-          </Card>
-          <Divider />
-
-          <Button
-            type="primary"
-            className="mt-1"
-            onClick={() => saveSettings()}
-          >
-            Save Settings
-          </Button>
+            <div>Tokens Used: {userData?.tokensUsed}</div>
+          </div>
         </div>
+        <Card
+          className=""
+          style={{
+            border: "none",
+            background:
+              isDarkMode ?
+                "radial-gradient(circle, #181717 20%, #000 80%)"
+              : "#f9f9f9",
+          }}
+        >
+          <Title level={5}>OpenAI API Settings</Title>
+          <Input.Password
+            placeholder="Enter OpenAI API Key"
+            value={openAiKey}
+            onChange={(e) => setOpenAIKey(e.target.value)}
+            className="mb-2"
+          />
+          <span className="text-gray-200"> Select Model</span>
+          <Select
+            placeholder="Select Model"
+            value={openAiModel}
+            onChange={setModelName}
+            className=" w-full"
+          >
+            {models.map((model) => (
+              <Option key={model} value={model}>
+                {model}
+              </Option>
+            ))}
+          </Select>
+          <span className="text-gray-200 mt-2 block">
+            {" "}
+            Select OpenAI OrganizationID (Optional)
+          </span>
+          <Input
+            placeholder="Enter OpenAI API Organization ID"
+            value={openAiOrgId}
+            onChange={(e) => setOpenAiOrgId(e.target.value)}
+            className="mb-2"
+          />
+        </Card>
+        <Divider />
+
+        <Button type="primary" className="mt-1" onClick={() => saveSettings()}>
+          Save Settings
+        </Button>
+      </div>
       {/* )} */}
     </div>
   );

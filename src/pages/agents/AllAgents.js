@@ -100,12 +100,15 @@ const AgentsDashboard = () => {
         coreInstructions: {
           _SYSTEM_CORE_INSTRUCTIONS_PROMPT:
             agent.coreInstructions?._SYSTEM_CORE_INSTRUCTIONS_PROMPT?.content,
+          _SYSTEM_TASK_DECOMPOSE_PROMPT:
+             agent.coreInstructions?._SYSTEM_TASK_DECOMPOSE_PROMPT?.content  
         },
         knowledgeList:agent.knowledgeList,
         toolRetries: 3,
         slackBotId:agent.slackBotId,
         jiraUrl:agent.jiraUrl,
-        githubUrl:agent.githubUrl
+        githubUrl:agent.githubUrl,
+        useUserPlanningPrompt:agent.useUserPlanningPrompt
       })
     );
     setLoadingEdit(false);
